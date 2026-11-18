@@ -39,7 +39,7 @@ def chat():
 
     greetings = ("hello", "hi", "hey", "good morning", "good afternoon", "good evening")
     if q in greetings or q.startswith(("hello ", "hi ", "hey ")):
-        return answer("Hello! I’m the CMS AI Assistant. I can answer questions about TECHNOVA 2026 using the event information currently available. Try asking for all events, event dates, venues, teachers-in-charge, the schedule, registration or contact details.")
+        return answer("Hi! I’m the CMS Events Chatbot. Feel free to ask me anything about CMS events, competitions, schedules, teachers, and registrations.")
 
     # Show complete event directory in a readable table.
     if any(term in q for term in ("all events", "list of events", "event list", "competitions", "competition list", "show events", "what events", "which events")):
@@ -65,7 +65,6 @@ def chat():
         ])
 
     if any(term in q for term in ("contact", "phone", "help desk", "coordinator", "call", "email")):
-        contact = data["contact"]
         return answer("Official contact information listed for TECHNOVA 2026:", ["Role", "Contact details"], [
             ["Help Desk", "Mr. Shubham Asthana"],
             ["Technical Coordinator", "Ms. Swaranjali Rawat — 8090365217"],
