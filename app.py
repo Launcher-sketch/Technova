@@ -18,6 +18,7 @@ import qrcode
 
 BASE_DIR = Path(__file__).resolve().parent
 DATA_FILE = BASE_DIR / "data" / "technova.json"
+CULTURAL_DATA_FILE = BASE_DIR / "data" / "cultural_events.json"
 ALLOWED_IMAGE_TYPES = {"JPEG", "PNG", "WEBP"}
 STORAGE_BUCKET = os.environ.get("SUPABASE_STORAGE_BUCKET", "technova-gallery")
 
@@ -137,6 +138,10 @@ def get_data():
     return json.loads(DATA_FILE.read_text(encoding="utf-8"))
 
 
+def get_cultural_data():
+    return json.loads(CULTURAL_DATA_FILE.read_text(encoding="utf-8"))
+
+
 if not os.environ.get("SECRET_KEY"):
     app.logger.warning("A temporary SECRET_KEY is active. Set a stable SECRET_KEY in the deployment environment.")
 if not SUPABASE_URL or not SUPABASE_KEY:
@@ -184,7 +189,7 @@ def home():
     except SupabaseError:
         app.logger.exception("Could not load homepage announcements")
         announcements = []
-    return render_template("home.html", announcements=announcements)
+    return render_template("home.html", announcements=announcements, celesta=get_cultural_data())
 
 
 @app.get("/technova")
@@ -198,8 +203,7 @@ def technova():
         announcements, results, gallery = [], [], []
         flash("Live updates are temporarily unavailable. Please try again later.", "error")
     site_data = get_data()
-    celesta_data = site_data.get("celesta") or {"title": "CELESTA International 2026", "events": [], "status_note": "Cultural event details are being refreshed."}
-    return render_template("index.html", data=site_data, celesta=celesta_data, announcements=announcements, results=results, gallery=gallery)
+    return render_template("index.html", data=site_data, announcements=announcements, results=results, gallery=gallery)
 
 
 @app.get("/media/<path:filename>")
@@ -435,7 +439,7 @@ def chat():
     q = " ".join(message.lower().replace("?", " ").replace("!", " ").split())
     events = data.get("events", [])
     teachers = data.get("teachers", [])
-    celesta = data.get("celesta", {})
+    celesta = get_cultural_data()
     celesta_events = celesta.get("events", [])
     if any(term in q for term in ("celesta", "nazakat", "cultural event", "cultural competition", "folk dance", "choreography", "orchestra", "choir", "crescendo", "harmonic clash", "mix media", "painting", "timeless frames", "through my lens", "3d collage", "photography", "videography")):
         matched_celesta = next((e for e in celesta_events if e["name"].lower() in q or any(k in q for k in e["name"].lower().replace("’", "'").split() if len(k) > 4)), None)
