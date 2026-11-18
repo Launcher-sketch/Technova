@@ -197,7 +197,9 @@ def technova():
         app.logger.exception("Could not load TECHNOVA content")
         announcements, results, gallery = [], [], []
         flash("Live updates are temporarily unavailable. Please try again later.", "error")
-    return render_template("index.html", data=get_data(), announcements=announcements, results=results, gallery=gallery)
+    site_data = get_data()
+    celesta_data = site_data.get("celesta") or {"title": "CELESTA International 2026", "events": [], "status_note": "Cultural event details are being refreshed."}
+    return render_template("index.html", data=site_data, celesta=celesta_data, announcements=announcements, results=results, gallery=gallery)
 
 
 @app.get("/media/<path:filename>")
