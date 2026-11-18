@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMS Events</title><link rel="stylesheet" href="{{url_for('static',filename='style.css')}}"></head>
+<body class="events-home">
+<header class="top"><a class="logo" href="/">CMS<span>EVENTS</span></a><nav><a href="#all-events">All events</a></nav><span class="pill">CITY MONTESSORI SCHOOL</span></header>
+<main class="home-main">
+<section class="home-hero"><p class="eyebrow">CITY MONTESSORI SCHOOL</p><h1>Discover <span>CMS Events.</span></h1><p>One place for school events, competitions and activities. Choose an event to explore its details.</p></section>
+<section id="all-events" class="home-events"><div class="section-head"><div><p class="eyebrow">WHAT'S HAPPENING</p><h2>All events</h2></div></div>
+<div class="home-event-grid">
+<a class="home-event-card featured" href="/technova"><div class="home-card-top"><span>FEATURED EVENT</span><span>2026</span></div><div><p class="home-card-kicker">ROBOTICS · ARTIFICIAL INTELLIGENCE</p><h3>TECHNOVA 2026</h3><p>Explore competitions, dates, teachers-in-charge, venues and registration information.</p></div><span class="home-card-link">Explore TECHNOVA <b>↗</b></span></a>
+<article class="home-event-card coming"><div class="home-card-top"><span>MORE EVENTS</span><span>CMS</span></div><div><p class="home-card-kicker">SCHOOL EVENTS DIRECTORY</p><h3>More events coming soon</h3><p>Other CMS event listings will appear here as their details are added.</p></div><span class="home-card-link">Details to be added</span></article>
+</div></section></main>
+<footer>CMS EVENTS <span>LEARN · CREATE · PARTICIPATE</span></footer>
+<button class="chat-launch" id="chatLaunch" aria-label="Open CMS AI Assistant">✳</button>
+<aside class="chat" id="chat"><div class="chat-head"><div><strong>CMS AI Assistant</strong><small>Ask about CMS and TECHNOVA</small></div><button id="chatClose" aria-label="Close chatbot">×</button></div><div class="chat-body" id="chatBody"><p class="bot">Hello! I’m the CMS AI Assistant. Ask me about school information, teachers, academics, activities, admissions or TECHNOVA 2026.</p></div><div class="chat-suggestions"><button type="button" data-prompt="Tell me about TECHNOVA 2026">TECHNOVA</button><button type="button" data-prompt="Show all teachers">Teachers</button><button type="button" data-prompt="Tell me about school admissions">Admissions</button></div><form id="chatForm"><input id="chatInput" placeholder="Ask me anything about CMS…" autocomplete="off"><button>Send</button></form></aside>
+<script src="{{url_for('static',filename='script.js')}}"></script></body></html>
