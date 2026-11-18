@@ -741,7 +741,7 @@ footer{
 @media(prefers-reduced-motion:reduce){.globe-motto-orbit{animation:none;offset-distance:0%}}
 
 
-/* Hindi motto sits on the globe's surface, following its lower curve */
+/* Hindi motto pops straight from the centre of the globe */
 .earth-orbit-text{
   position:absolute;z-index:4;left:50%;top:50%;
   width:100%;height:100%;overflow:visible;
@@ -755,8 +755,8 @@ footer{
   100%{opacity:1;transform:translate(-50%,-50%) scale(1)}
 }
 .earth-orbit-text text{
-  fill:#fff;font-family:"Noto Sans Devanagari","Nirmala UI","Mangal",sans-serif;
-  font-size:13px;font-weight:800;letter-spacing:1.1px;
-  paint-order:stroke;stroke:rgba(5,43,78,.8);stroke-width:2.8px;stroke-linejoin:round;
+  fill:#062b45;font-family:"Noto Sans Devanagari","Nirmala UI","Mangal",sans-serif;
+  font-size:13px;font-weight:900;letter-spacing:.7px;
+  paint-order:stroke;stroke:rgba(255,255,255,.88);stroke-width:1.5px;stroke-linejoin:round;
 }
-@media(max-width:600px){.earth-orbit-text text{font-size:12px;letter-spacing:.8px}}
+@media(max-width:600px){.earth-orbit-text text{font-size:12px;letter-spacing:.5px}}
