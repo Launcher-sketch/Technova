@@ -433,6 +433,17 @@ def chat():
     q = " ".join(message.lower().replace("?", " ").replace("!", " ").split())
     events = data.get("events", [])
     teachers = data.get("teachers", [])
+    celesta = data.get("celesta", {})
+    celesta_events = celesta.get("events", [])
+    if any(term in q for term in ("celesta", "nazakat", "cultural event", "cultural competition", "folk dance", "choreography", "orchestra", "choir", "crescendo", "harmonic clash", "mix media", "painting", "timeless frames", "through my lens", "3d collage", "photography", "videography")):
+        matched_celesta = next((e for e in celesta_events if e["name"].lower() in q or any(k in q for k in e["name"].lower().replace("’", "'").split() if len(k) > 4)), None)
+        if matched_celesta:
+            e = matched_celesta
+            return answer(f"Brochure details for {e['name']}:", ["Detail", "Information"], [["Topic", e["topic"]], ["Type", e["type"]], ["Duration / deadline", e["duration"]], ["Rules and overview", e["summary"]], ["Evaluation parameters", e["criteria"]]])
+        if any(term in q for term in ("date", "when", "schedule", "programme", "program", "timing")):
+            return answer("CELESTA International 2026 dates and programme note:", ["Item", "Information"], [["Festival dates on cover", celesta.get("dates", "Not specified")], ["Programme date note", celesta.get("status_note", "")], ["Schedule", "21–25 August 2026; see the brochure programme for day-wise events."]])
+        rows = [[e["name"], e["type"], e["topic"], e["duration"]] for e in celesta_events]
+        return answer(f"{celesta.get('title', 'CELESTA')} cultural competitions from the brochure:", ["Competition", "Format", "Topic", "Duration / deadline"], rows)
     if q in ("jai jagat", "जय जगत"):
         return answer("Jai Jagat!")
     if q in ("hello", "hi", "hey", "good morning", "good afternoon", "good evening") or q.startswith(("hello ", "hi ", "hey ")):
