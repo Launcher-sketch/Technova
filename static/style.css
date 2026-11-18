@@ -581,3 +581,39 @@ footer{
   .home-event-card{padding:22px}
   .home-event-card h3{font-size:25px}
 }
+
+
+/* Consistent CMS-style heading system across every page */
+:where(h1,h2,h3,h4,h5,h6){
+  font-family:'Open Sans',Arial,Helvetica,sans-serif !important;
+  color:#173b65;
+  font-weight:700;
+  letter-spacing:-.025em;
+  line-height:1.22;
+  text-wrap:balance;
+}
+:where(h1){font-size:clamp(2.15rem,5vw,3.35rem);font-weight:800;letter-spacing:-.04em;line-height:1.12}
+:where(h2){font-size:clamp(1.65rem,3.5vw,2.35rem);font-weight:700;letter-spacing:-.03em}
+:where(h3){font-size:clamp(1.2rem,2.4vw,1.55rem);font-weight:700;letter-spacing:-.02em}
+:where(h4){font-size:1.1rem;font-weight:700}
+:where(h5){font-size:1rem;font-weight:700}
+:where(h6){font-size:.9rem;font-weight:700;letter-spacing:.01em}
+/* Preserve the larger editorial titles while standardising their type */
+.hero h1{font-size:clamp(3.2rem,8vw,6rem);font-weight:800;letter-spacing:-.055em;line-height:1.02}
+.home-hero h1{font-size:clamp(2.6rem,6.4vw,4.75rem);font-weight:800;letter-spacing:-.045em;line-height:1.06}
+.academic-results-heading h1,.sports-page-heading h1{font-size:clamp(2.6rem,6.5vw,4.5rem);font-weight:800;letter-spacing:-.045em;line-height:1.08}
+.intro h2,.section-head h2,.schedule h2,#teachers h2,.about h2,
+.updates-section h2,.results-section h2,.gallery-section h2,
+.academic-results-list h2,.sports-offerings h2{font-weight:700;letter-spacing:-.03em}
+.event-card h3,.home-event-card h3,.teacher-grid h3,.day-grid h3,
+.announcement-card h3,.academic-results-card h2,.sports-detail-card h2{
+  font-weight:700;letter-spacing:-.025em;line-height:1.25
+}
+.celesta-heading h2,.celesta-card h3{font-family:'Open Sans',Arial,Helvetica,sans-serif;font-weight:700;letter-spacing:-.025em}
+@media(max-width:600px){
+  :where(h1){font-size:clamp(2rem,10vw,2.8rem)}
+  :where(h2){font-size:clamp(1.5rem,7vw,2rem)}
+  :where(h3){font-size:1.2rem}
+  .hero h1{font-size:clamp(2.8rem,13vw,4.2rem)}
+  .home-hero h1{font-size:clamp(2.35rem,11vw,3.6rem)}
+}
