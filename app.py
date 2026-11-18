@@ -221,6 +221,11 @@ def sports_page():
     return render_template("sports.html")
 
 
+@app.get("/cmsmun")
+def cmsmun_page():
+    return render_template("cmsmun.html")
+
+
 @app.get("/media/<path:filename>")
 def media(filename):
     # Gallery files are served from the public Supabase Storage bucket, not local disk.
@@ -456,6 +461,39 @@ def chat():
     teachers = data.get("teachers", [])
     celesta = get_cultural_data()
     celesta_events = celesta.get("events", [])
+    # CMSMUN 5th Edition — details transcribed from the 24-page Aliganj Campus I brochure.
+    mun_terms = ("cmsmun", "cms mun", "model united nations", "mun conference", "mun 2026", "lok sabha", "unga", "un general assembly", "united nations general assembly", "unsc", "security council", "organization of american states", "oas", "house committee", "oversight and government reform", "iaea", "atomic energy agency", "copuos", "peaceful uses of outer space", "international court of justice", "icj", "international press", "peru crisis", "moquegua", "cms aliganj mun")
+    if any(term in q for term in mun_terms):
+        committees = [
+            ["Lok Sabha", "India’s approach to regulation and oversight in hate speech and media trials; reviewing India’s federal structure and state autonomy."],
+            ["United Nations General Assembly (UNGA)", "Strengthening and advancing the global framework for arms control, disarmament and non-proliferation treaties."],
+            ["United Nations Security Council (UNSC)", "The situation in Central Africa; reviewing regional strategy to combat the Lord’s Resistance Army and the repatriation of former combatants."],
+            ["Organization of American States (OAS)", "Strengthening multilateral security cooperation to combat transnational narcotics networks and organised crime in Latin America."],
+            ["U.S. House Committee on Oversight and Government Reform", "Legislative reform and intelligence accountability following the 2013 NSA surveillance disclosures."],
+            ["International Atomic Energy Agency (IAEA)", "Long-term international safety oversight at the Chernobyl Nuclear Power Plant and the New Safe Confinement."],
+            ["Emergency Council of Advisors — Republic of Peru", "A simulated emergency session addressing the aftermath of the Moquegua explosion and escalating geopolitical tension; the brochure gives a freeze date of 3 May 2043."],
+            ["Committee on the Peaceful Uses of Outer Space (COPUOS)", "Reviewing and advancing the Space 2030 Agenda for sustainable and equitable use of outer space."],
+            ["International Court of Justice (ICJ)", "Jadhav (India v. Pakistan), General List No. 168; freeze date 8 May 2017."],
+            ["International Press", "Journalism, photography and caricature, reporting on conference proceedings and debate."]
+        ]
+        if any(term in q for term in ("committee", "committees", "agenda", "agendas", "topics", "topic", "portfolio", "council", "press", "journalism", "photography", "caricature", "copuos", "iaea", "lok sabha", "unga", "unsc", "oas", "icj", "peru", "moquegua", "chernobyl", "arms control", "central africa", "narcotics", "surveillance", "jadhav", "outer space")):
+            selected = next((row for row in committees if row[0].lower() in q or any(alias in q for alias in {
+                "United Nations General Assembly (UNGA)": ("unga", "un general assembly"),
+                "United Nations Security Council (UNSC)": ("unsc", "security council"),
+                "Organization of American States (OAS)": ("oas", "american states"),
+                "U.S. House Committee on Oversight and Government Reform": ("house committee", "oversight", "nsa"),
+                "International Atomic Energy Agency (IAEA)": ("iaea", "chernobyl", "atomic energy"),
+                "Emergency Council of Advisors — Republic of Peru": ("peru", "moquegua"),
+                "Committee on the Peaceful Uses of Outer Space (COPUOS)": ("copuos", "outer space"),
+                "International Court of Justice (ICJ)": ("icj", "jadhav"),
+                "International Press": ("press", "journalism", "photography", "caricature")
+            }.get(row[0], ()))) , None)
+            if selected:
+                return answer("CMSMUN brochure agenda:", ["Committee / forum", "Agenda"], [selected])
+            return answer("Committees and forums listed in the CMSMUN 5th Edition brochure:", ["Committee / forum", "Agenda"], committees)
+        if any(term in q for term in ("date", "when", "venue", "where", "campus", "edition", "fifth", "5th", "about", "what is", "overview", "registration", "register", "fee", "fees", "eligibility", "age", "contact", "email", "phone", "guideline", "guidelines")):
+            return answer("CMS Model United Nations 2026 was the 5th Edition, organised by City Montessori School, Aliganj Campus I. The brochure cover lists 24–25 April; the conference is now a past event. Registration and fee information below is historical brochure information, not an active offer.", ["Detail", "Brochure information"], [["Event", "CMS Model United Nations 2026 · 5th Edition"], ["Dates", "24–25 April 2026"], ["Host", "CMS Aliganj Campus I, Sector O, Aliganj, Lucknow, India"], ["Eligibility", "Grades 8–12; brochure states ages 13–19"], ["School delegation", "At least 8 students"], ["Registration fee", "INR 2,700 per participant (Lucknow delegates and outstation delegates not opting for accommodation); INR 3,500 for outstation delegates opting for accommodation"], ["Accommodation", "Brochure says accommodation included all meals on both conference days and dinner at the CISV/KAIZEN Guest House, CMS Kanpur Road"], ["Status", "Completed · 2026 archive"], ["Registration link printed in brochure", "https://linktr.ee/cmsagmun2026 (historical; availability not verified)"], ["Contact email", "mun.aliganj1@cmseducation.org"], ["Conference phone", "+91 522-2320897"]])
+        return answer("CMSMUN 2026 was the 5th Edition of the Model United Nations conference hosted by CMS Aliganj Campus I on 24–25 April 2026. Ask me about its committees, agendas, eligibility or brochure details.")
     if any(term in q for term in ("celesta", "nazakat", "cultural event", "cultural competition", "folk dance", "choreography", "orchestra", "choir", "crescendo", "harmonic clash", "mix media", "painting", "timeless frames", "through my lens", "3d collage", "photography", "videography")):
         # Competition aliases make brochure details available for every listed category.
         # Keep generic festival questions ("What is CELESTA?") separate from individual entries.
