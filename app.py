@@ -54,7 +54,6 @@ def supabase_request(path, method="GET", payload=None, params=None, content_type
         body = payload if isinstance(payload, bytes) else json.dumps(payload).encode("utf-8")
     headers = {
         "apikey": key,
-        "Authorization": f"Bearer {key}",
         "Accept": "application/json",
     }
     if body is not None:
