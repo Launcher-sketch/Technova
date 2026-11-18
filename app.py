@@ -433,6 +433,8 @@ def chat():
     q = " ".join(message.lower().replace("?", " ").replace("!", " ").split())
     events = data.get("events", [])
     teachers = data.get("teachers", [])
+    if q in ("jai jagat", "जय जगत"):
+        return answer("Jai Jagat!")
     if q in ("hello", "hi", "hey", "good morning", "good afternoon", "good evening") or q.startswith(("hello ", "hi ", "hey ")):
         return answer("Hi! I’m the CMS Events Chatbot. Feel free to ask me anything about CMS events, competitions, schedules, teachers, and registrations.")
     if any(term in q for term in ("all events", "list of events", "event list", "competitions", "competition list", "show events", "what events", "which events")):
