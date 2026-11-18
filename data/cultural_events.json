@@ -1,0 +1,97 @@
+{
+  "title": "CELESTA International 2026",
+  "subtitle": "NAZAKAT · Echoes of Awadh: A Symphony of Art, Culture & Heritage",
+  "host": "City Montessori School, Aliganj Campus I, Lucknow",
+  "dates": "21–25 August 2026",
+  "status_note": "The brochure cover states 21–25 August 2026. The programme page has one inconsistent heading reading 25 August 2025; confirm the final programme with the organisers.",
+  "events": [
+    {
+      "name": "Art and Painting",
+      "topic": "The World I want to See",
+      "duration": "2 hours",
+      "type": "Non-stage",
+      "summary": "Individual art entry. Participants bring their own materials and colours; drawing paper is provided by the host school.",
+      "criteria": "Artistic skill; quality of artwork; originality; interpretation of the theme; ideas and concepts."
+    },
+    {
+      "name": "Mix Media Art",
+      "topic": "Ways to Wonder Art",
+      "duration": "3 hours",
+      "type": "Non-stage",
+      "summary": "Create mixed-media artwork on an A3 sheet. Participants bring materials; recycling and upcycling are the focus. Hazardous materials and power tools are prohibited.",
+      "criteria": "Visual impact; creativity; aesthetic display; clarity in response to theme; originality."
+    },
+    {
+      "name": "Choreography",
+      "topic": "Expressions of Life",
+      "duration": "3 minutes performance + 1 minute setup",
+      "type": "Stage",
+      "summary": "Teams of 6–8. Pre-recorded instrumental music is allowed; lyrics-based songs are not. Alaap and shlokas are allowed.",
+      "criteria": "Interpretation of topic; appeal; translation of emotional content of music; natural expression and body language; creativity and originality."
+    },
+    {
+      "name": "Traditional Folk Dance",
+      "topic": "Rhythm Roots: Where every step tells a story",
+      "duration": "3 minutes performance + 1 minute setup",
+      "type": "Stage",
+      "summary": "Teams of 6–8. Traditional folk songs and music are allowed; commercial songs are not. Traditional costumes relevant to the folklore are mandatory.",
+      "criteria": "Authenticity of folk style; costume and cultural representation; energy and rhythm; coordination and group unity; confidence and stage presence."
+    },
+    {
+      "name": "Orchestra",
+      "topic": "Symphony Ensemble",
+      "duration": "4 minutes performance + 1 minute setup",
+      "type": "Stage",
+      "summary": "Teams of 6–10 (8 students and 2 teachers); teachers are not counted in the participant limit. Commercial songs or tunes are not permitted.",
+      "criteria": "Rhythmic interpretation; melody; appeal; originality; creativity."
+    },
+    {
+      "name": "Choir",
+      "topic": "From Darkness to Light",
+      "duration": "3 minutes performance + 1 minute setup",
+      "type": "Stage",
+      "summary": "6–8 student singers, with up to 2 teacher accompanists (maximum team size 10). Song may be in any language; commercial or pre-recorded music is not allowed. Lyrics must be submitted in triplicate.",
+      "criteria": "Synchronisation; melody; appeal; diction; intonation."
+    },
+    {
+      "name": "Harmonic Clash",
+      "topic": "Jingle Making Competition",
+      "duration": "1 minute 30 seconds",
+      "type": "Stage / video submission",
+      "summary": "Team of 3: two vocalists and one instrumentalist. English only; original music only. Jingle video must be MP4 and submitted at offline registration.",
+      "criteria": "Rhythm; tonality; originality; coordination; overall performance and showmanship."
+    },
+    {
+      "name": "Crescendo (ABRSM)",
+      "topic": "Solo Singing",
+      "duration": "3 minutes 30 seconds",
+      "type": "Stage",
+      "summary": "Solo performance of a piece from ABRSM Grade 3 to Grade 5 only. Three copies of notation sheet are required; karaoke or one teacher accompanist is allowed. Formal dress; English performance.",
+      "criteria": "Pitch; accuracy of notes; tempo; selection of song; overall presentation."
+    },
+    {
+      "name": "Celesta’s Timeless Frames",
+      "topic": "Celesta International 2026",
+      "duration": "Submission deadline: 24 August 2026, 2:00 p.m.",
+      "type": "Photography",
+      "summary": "Submit a portrait photograph. JPEG/JPG/PNG, minimum 2000 pixels on the longest side, 2–10 MB, with a 50–100 word caption. Basic edits only; generative AI images and downloaded/copyrighted images are prohibited.",
+      "criteria": "Originality of concept; relevance of theme; impact; exposure; image quality."
+    },
+    {
+      "name": "Celesta Through My Lens",
+      "topic": "Celesta International 2026",
+      "duration": "30 seconds to 1 minute",
+      "type": "Videography",
+      "summary": "Vertical 9:16 MP4/MPEG video, 30 or 60 fps, Full HD, 10–20 MB, with a 50–100 word caption. Generative AI and copyrighted music are prohibited; use royalty-free or self-recorded audio.",
+      "criteria": "Originality of concept; relevance of theme; impact; exposure; video quality."
+    },
+    {
+      "name": "3D Collage",
+      "topic": "Not specified in the visible event detail pages",
+      "duration": "Not specified",
+      "type": "Non-stage",
+      "summary": "Listed in the brochure’s programme schedule alongside Orchestra as a non-stage event. Detailed rules and evaluation criteria are not available in the schedule text.",
+      "criteria": "Not specified in the available brochure details."
+    }
+  ]
+}
