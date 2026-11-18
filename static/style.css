@@ -668,3 +668,38 @@ footer{
   object-position:center;
   border-radius:50%;
 }
+
+
+/* Earth reveal + CMS signature welcome intro */
+.cms-intro.cms-earth-signature{
+  position:fixed;inset:0;z-index:1000;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:clamp(20px,4vh,34px);
+  padding:28px 18px;overflow:hidden;
+  background:linear-gradient(180deg,#fff 0%,#f5faff 100%);color:#102f55;
+}
+.cms-earth-signature::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 38%,#dceeff 0%,#f5faff 34%,transparent 70%);
+  opacity:0;animation:cmsBgBloom 1.5s ease-out .2s forwards;
+}
+.earth-stage{position:relative;width:clamp(150px,25vw,230px);aspect-ratio:1;display:grid;place-items:center;isolation:isolate}
+.earth-halo{position:absolute;inset:-16%;border:1px solid #9ac8ef;border-radius:50%;box-shadow:0 0 42px #65a9e855,inset 0 0 30px #9ccdf333;opacity:0;transform:scale(.7);animation:earthHaloIn 1.2s ease-out .55s forwards}
+.intro-earth{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;border-radius:50%;opacity:0;transform:scale(.62) rotate(-18deg);box-shadow:0 16px 48px #164f7a30,0 0 0 5px #fff,0 0 0 7px #a9d5f3;animation:earthArrive 1.65s cubic-bezier(.16,.8,.2,1) .25s forwards}
+.earth-sweep{position:absolute;z-index:2;left:-15%;top:48%;width:130%;height:2px;opacity:0;background:linear-gradient(90deg,transparent,#fff,#168bd8,#fff,transparent);filter:drop-shadow(0 0 7px #168bd8);transform:rotate(-24deg) scaleX(0);animation:earthSweep 1.05s ease-in-out 1.45s forwards}
+.signature-wordmark{position:relative;z-index:2;text-align:center;opacity:0;transform:translateY(14px);animation:signatureReveal .8s ease-out 2.1s forwards}
+.signature-jai{font-size:clamp(1.25rem,3vw,1.8rem);font-weight:800;letter-spacing:.24em;color:#1268a8}
+.signature-cms{margin-top:9px;font-size:clamp(.68rem,1.8vw,.85rem);font-weight:700;letter-spacing:.22em;color:#526b84}
+.signature-welcome{margin-top:13px;font-size:clamp(1.1rem,3vw,1.65rem);font-weight:700;letter-spacing:-.025em;color:#102f55}
+.cms-earth-signature .intro-skip{position:absolute;z-index:4;right:24px;bottom:22px;border:1px solid #b8d2e8;border-radius:999px;padding:10px 16px;background:#fff;color:#315b7e;font-size:.7rem;font-weight:700;letter-spacing:.12em;cursor:pointer}
+.cms-earth-signature.is-leaving{animation:introExit .65s ease-in forwards}
+@keyframes cmsBgBloom{to{opacity:1}}
+@keyframes earthHaloIn{to{opacity:1;transform:scale(1)}}
+@keyframes earthArrive{0%{opacity:0;transform:scale(.62) rotate(-18deg)}70%{opacity:1;transform:scale(1.04) rotate(2deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes earthSweep{0%{opacity:0;transform:rotate(-24deg) scaleX(0)}25%{opacity:1}100%{opacity:0;transform:rotate(-24deg) scaleX(1)}}
+@keyframes signatureReveal{to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){
+ .cms-earth-signature::before,.earth-halo,.intro-earth,.earth-sweep,.signature-wordmark{animation:none!important}
+ .earth-halo,.intro-earth,.signature-wordmark{opacity:1;transform:none}
+ .earth-sweep{display:none}
+}
+@media(max-width:600px){.earth-stage{width:clamp(145px,48vw,190px)}.cms-earth-signature .intro-skip{right:16px;bottom:16px}}
