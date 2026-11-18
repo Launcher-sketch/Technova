@@ -294,3 +294,17 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .sports-offerings-grid span{padding:12px 9px;text-align:center;border:1px solid #2d4c5c;border-radius:9px;background:#142637;color:#d4e5e7;font-size:11px}
 .sports-page-note{margin-top:18px;color:#a9c0c5;font-size:11px;line-height:1.8}
 @media(max-width:750px){.sports-feature-grid{grid-template-columns:1fr}.sports-offerings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Academic results tables */
+.academic-results-list{margin-top:32px;padding-top:25px;border-top:1px solid #42617a88}
+.academic-results-list h2{font-size:clamp(23px,3vw,32px);color:#e5f4ff;margin:0 0 8px}
+.academic-results-list h3{font-size:17px;color:#bfe7fa;margin:22px 0 10px}
+.academic-results-list>p{color:#b9cadb;font-size:12px;line-height:1.8}
+.academic-table-wrap{width:100%;overflow-x:auto;border:1px solid #42617a88;border-radius:10px;margin:14px 0 20px}
+.academic-table-wrap table{width:100%;border-collapse:collapse;min-width:520px;font-size:12px;color:#dce8f5}
+.academic-table-wrap th{position:sticky;top:0;background:#1b354b;color:#9bd5f0;text-align:left}
+.academic-table-wrap th,.academic-table-wrap td{padding:10px 12px;border-bottom:1px solid #30465b;vertical-align:top}
+.academic-table-wrap tr:last-child td{border-bottom:0}
+.academic-results-list>p:not(:first-child){line-height:1.9}
+.academic-source-note,.academic-source-links{margin-top:24px;color:#aebfd0;font-size:11px;line-height:1.8}
+.academic-source-links a{color:#9bd5f0}
