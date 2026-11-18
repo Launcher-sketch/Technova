@@ -698,8 +698,8 @@ footer{
 @keyframes earthSweep{0%{opacity:0;transform:rotate(-24deg) scaleX(0)}25%{opacity:1}100%{opacity:0;transform:rotate(-24deg) scaleX(1)}}
 @keyframes signatureReveal{to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){
- .cms-earth-signature::before,.earth-halo,.intro-earth,.earth-sweep,.signature-wordmark{animation:none!important}
- .earth-halo,.intro-earth,.signature-wordmark{opacity:1;transform:none}
+ .cms-earth-signature::before,.earth-halo,.intro-earth,.earth-sweep,.signature-wordmark,.earth-orbit-text{animation:none!important}
+ .earth-halo,.intro-earth,.signature-wordmark,.earth-orbit-text{opacity:1;transform:none}
  .earth-sweep{display:none}
 }
 @media(max-width:600px){.earth-stage{width:clamp(145px,48vw,190px)}.cms-earth-signature .intro-skip{right:16px;bottom:16px}}
@@ -745,7 +745,14 @@ footer{
 .earth-orbit-text{
   position:absolute;z-index:4;left:50%;top:50%;
   width:100%;height:100%;overflow:visible;
-  transform:translate(-50%,-50%);pointer-events:none;
+  transform:translate(-50%,-50%) scale(0);transform-origin:50% 50%;
+  opacity:0;pointer-events:none;
+  animation:earthMottoPop .85s cubic-bezier(.16,1.35,.35,1) 1.95s forwards;
+}
+@keyframes earthMottoPop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(0)}
+  72%{opacity:1;transform:translate(-50%,-50%) scale(1.13)}
+  100%{opacity:1;transform:translate(-50%,-50%) scale(1)}
 }
 .earth-orbit-text text{
   fill:#fff;font-family:"Noto Sans Devanagari","Nirmala UI","Mangal",sans-serif;
