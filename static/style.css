@@ -269,3 +269,28 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .academic-results-status strong{display:block;color:#9bd5f0;font:10px 'DM Mono',monospace;letter-spacing:.13em}
 .academic-results-status p{margin:9px 0 0;color:#b9cadb;font-size:12px;line-height:1.8}
 @media(max-width:750px){.academic-results-grid{grid-template-columns:1fr}}
+
+/* Dedicated CMS Sports Events page */
+.home-event-card.sports-featured{max-width:760px;border-color:#28636b;background:radial-gradient(ellipse at 88% 10%,#176b70aa,transparent 48%),linear-gradient(145deg,#142e3c,#0b1726)}
+.sports-featured .home-card-kicker{color:#8be0d6}
+.sports-page{margin:35px 0 80px;padding:clamp(25px,5vw,55px);border:1px solid #28636b;border-radius:22px;background:radial-gradient(ellipse at 85% 0%,#176b7044,transparent 42%),linear-gradient(135deg,#142e3c,#101824 65%,#0b1726)}
+.sports-page-heading{max-width:850px;margin-bottom:32px}
+.sports-page-heading h1{font-size:clamp(42px,7vw,72px);letter-spacing:-.05em;margin:12px 0;color:#e8f7f5}
+.sports-page-heading h1 span{color:#78d8cf}
+.sports-page-heading>p:last-child{max-width:700px;color:#b8d0d1;font-size:14px;line-height:1.9}
+.sports-feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.sports-detail-card{padding:23px;border:1px solid #36707888;border-radius:15px;background:linear-gradient(145deg,#183744,#101e2a)}
+.sports-detail-card.concord{border-color:#66563288;background:linear-gradient(145deg,#302b20,#111a26)}
+.sports-detail-card>span{font:9px 'DM Mono',monospace;letter-spacing:.13em;color:#8be0d6}
+.sports-detail-card.concord>span{color:#e3c77d}
+.sports-detail-card h2{font-size:clamp(25px,4vw,34px);margin:13px 0 8px;color:#effaf8}
+.sports-detail-card p{font-size:12px;line-height:1.8;color:#c1d4d6}
+.sports-detail-card ul{padding-left:18px;color:#c1d4d6;font-size:12px;line-height:1.9}
+.sports-detail-card a{display:inline-block;margin-top:12px;color:#8be0d6;font-size:11px;font-weight:700}
+.sports-detail-card.concord a{color:#e3c77d}
+.sports-offerings{margin-top:18px;padding:25px;border:1px solid #345767;border-radius:15px;background:#0d1b29}
+.sports-offerings h2{font-size:23px;margin:8px 0 17px;color:#e8f7f5}
+.sports-offerings-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
+.sports-offerings-grid span{padding:12px 9px;text-align:center;border:1px solid #2d4c5c;border-radius:9px;background:#142637;color:#d4e5e7;font-size:11px}
+.sports-page-note{margin-top:18px;color:#a9c0c5;font-size:11px;line-height:1.8}
+@media(max-width:750px){.sports-feature-grid{grid-template-columns:1fr}.sports-offerings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
