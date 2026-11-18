@@ -24,9 +24,9 @@ def chat():
     data = get_data()
     q = message.lower()
     if any(word in q for word in ("hello", "hi", "hey", "good morning", "good afternoon")):
-        return jsonify(reply="Hello! I am the CMS Event Manager Chatbot. How can I help you with TECHNOVA 2026?")
+        return jsonify(reply="Hello! I’m the CMS AI Assistant. You can ask me about CMS, school activities, teachers, admissions, academics, or TECHNOVA 2026. I’ll share verified information available to me.")
     if "all teacher" in q or "teacher list" in q or "teachers" in q:
-        lines = ["Teachers and event responsibilities:"]
+        lines = ["Teachers and event responsibilities for TECHNOVA 2026:"]
         for item in data["teachers"]:
             lines.append(f"• {item['name']} — {item['event']}")
         lines.append("Technical Coordinators: Ms. Swaranjali Rawat and Mr. Abhishek Sharma.")
@@ -40,6 +40,8 @@ def chat():
     for event in data["events"]:
         if event["name"].lower() in q or event["keywords"] and any(k in q for k in event["keywords"]):
             return jsonify(reply=f"{event['name']}\nDate: {event['date']}\nCategory: {event['category']}\nTeacher in charge: {event['teacher']}\nVenue: {event['venue']}\n{event['summary']}")
+    if any(word in q for word in ("school", "cms", "admission", "academics", "principal", "facility", "facilities", "club", "sports", "history", "address", "location")):
+        return jsonify(reply="I’m the CMS AI Assistant. I currently have verified information about TECHNOVA 2026, but I don’t yet have the school’s complete official information for that question. I won’t guess. Please contact the school office for confirmation.")
     return jsonify(reply=data["fallback"])
 
 if __name__ == "__main__":
