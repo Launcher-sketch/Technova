@@ -756,7 +756,7 @@ footer{
 }
 .earth-orbit-text text{
   fill:#062b45;font-family:"Noto Sans Devanagari","Nirmala UI","Mangal",sans-serif;
-  font-size:13px;font-weight:900;letter-spacing:.7px;
-  paint-order:stroke;stroke:rgba(255,255,255,.88);stroke-width:1.5px;stroke-linejoin:round;
+  font-size:18px;font-weight:900;letter-spacing:.8px;
+  paint-order:stroke;stroke:rgba(255,255,255,.96);stroke-width:1.8px;stroke-linejoin:round;
 }
-@media(max-width:600px){.earth-orbit-text text{font-size:12px;letter-spacing:.5px}}
+@media(max-width:600px){.earth-orbit-text text{font-size:15px;font-weight:900;letter-spacing:.55px}}
