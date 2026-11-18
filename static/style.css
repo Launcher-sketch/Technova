@@ -971,3 +971,133 @@ body>*{position:relative;z-index:1}
     background:rgba(7,22,38,.72)!important;
   }
 }
+
+
+/* White CMS theme: clean backgrounds, dark readable text */
+:root{
+  --bg:#f7faff;--panel:#ffffff;--text:#17324f;--muted:#61758b;
+  --line:#d9e4ef;--glass-panel:rgba(255,255,255,.92);
+  --glass-panel-strong:rgba(255,255,255,.98);
+  --glass-border:rgba(25,75,120,.16);--glass-text:#17324f;
+  --glass-muted:#5d7187;--glass-accent:#1769aa;
+}
+html,body{
+  background:#f5f8fc!important;
+  background-image:linear-gradient(180deg,#ffffff 0%,#f4f8fd 100%)!important;
+  color:#263f59!important;
+}
+body::before{color:rgba(25,75,120,.035)!important}
+body::after{color:rgba(25,75,120,.055)!important}
+.top,footer{
+  background:rgba(255,255,255,.94)!important;
+  color:#173b65!important;border-color:#dce6f0!important;
+  box-shadow:0 3px 16px rgba(25,65,105,.05);
+}
+.top nav a,.logo,footer,footer a{color:#244967!important}
+.logo span,.top nav a:hover,footer a:hover{color:#1769aa!important}
+.home-hero,.intro,.about,.schedule,.sports-offerings,.academic-results-list,
+.sports-page,.academic-results-page{
+  background:rgba(255,255,255,.78)!important;
+  border-color:#e0e9f2!important;
+  box-shadow:0 8px 28px rgba(31,73,115,.045);
+}
+:where(h1,h2,h3,h4,h5,h6),
+.home-hero h1,.home-hero h2,.home-hero p,
+.section-head h2,.category-heading h2,
+.academic-results-heading h1,.sports-page-heading h1,
+.academic-results-list h2,.sports-offerings h2{
+  color:#173b65!important;
+}
+body p,.home-hero p,.home-event-card p,.event-card p,.teacher-grid p,
+.day-grid p,.about p,.sports-intro,.academic-results-heading>p:last-child,
+.announcement-card p,.results-placeholder p,.gallery-placeholder p{
+  color:#526a82;
+}
+.eyebrow,.tag,.card-top,.teacher-grid span,.day-grid span,
+.category-heading span,.home-card-top,.home-card-link{
+  color:#1769aa!important;
+}
+.home-event-card,.event-card,.teacher-grid article,.day-grid article,
+.academic-results-card,.sports-detail-card,.announcement-card,
+.gallery-card,.category-empty,.countdown>div,.results-placeholder,
+.gallery-placeholder,.public-gallery figure,.admin-auth,.admin-main,
+.admin-panel,.admin-top,.event-modal-panel,.pass-details div,.event-pass{
+  background:rgba(255,255,255,.94)!important;
+  color:#263f59!important;
+  border:1px solid #dce6f0!important;
+  box-shadow:0 8px 24px rgba(31,73,115,.07)!important;
+}
+.home-event-card h3,.event-card h3,.teacher-grid h3,.day-grid h3,
+.academic-results-card h2,.sports-detail-card h2,.announcement-card h3,
+.admin-panel h2,.admin-panel h3,.admin-top h1,.event-modal-panel h2,
+.event-modal-panel h3,.pass-details strong,.pass-details b{
+  color:#173b65!important;
+}
+.home-event-card p,.event-card p,.teacher-grid p,.day-grid p,
+.academic-results-card p,.sports-detail-card p,.sports-detail-card ul,
+.announcement-card p,.admin-panel p,.admin-panel label,
+.admin-top p,.event-modal-panel p,.pass-details div{
+  color:#526a82!important;
+}
+.home-event-card.featured,.home-event-card.featured:hover,
+.home-event-card.sports-featured,.home-event-card.concord-featured,
+.sports-detail-card.concord,.celesta-card,.cultural-featured{
+  background:#fff!important;border-color:#dce6f0!important;
+}
+.celesta-card h3,.cultural-featured h3{color:#173b65!important}
+.celesta-card p,.cultural-featured p{color:#526a82!important}
+.sports-offerings-grid span,.academic-results-status{
+  background:#f0f5fa!important;border-color:#dce6f0!important;color:#294b6b!important;
+}
+.academic-table-wrap{background:#fff!important;border-color:#dce6f0!important}
+.academic-table-wrap table{color:#29445f!important}
+.academic-table-wrap th{background:#eaf2fa!important;color:#173b65!important}
+.academic-table-wrap td,.academic-table-wrap th{border-color:#dce6f0!important}
+.section-head input,#dateFilter,.admin-form input,.admin-form textarea,
+#chatInput,.chat form input{
+  background:#fff!important;color:#203e5c!important;border:1px solid #cbd9e7!important;
+}
+.section-head input::placeholder,#dateFilter::placeholder,
+.admin-form input::placeholder,.admin-form textarea::placeholder,
+#chatInput::placeholder{color:#8295a8!important}
+.filter{color:#365875!important;border-color:#cbd9e7!important}
+.filter.active{background:#1769aa!important;color:#fff!important}
+.chat{
+  background:rgba(255,255,255,.98)!important;border:1px solid #d5e1ed!important;
+  color:#203e5c!important;box-shadow:0 18px 55px rgba(24,57,91,.18)!important;
+}
+.chat-head{background:#f0f6fc!important;color:#173b65!important;border-color:#dce6f0!important}
+.chat-head small{color:#61758b!important}
+.chat-head button{color:#1769aa!important}
+.chat-body{background:#fff!important}
+.bot{background:#eef4fa!important;color:#29445f!important}
+.user{background:#dceeff!important;color:#173b65!important}
+.chat form{background:#f7faff!important;border-color:#dce6f0!important}
+.chat form button,.admin-panel button,.admin-top a{background:#1769aa!important;color:#fff!important}
+.event-modal-backdrop{background:rgba(18,43,68,.48)!important}
+.event-modal-panel{background:#fff!important;color:#29445f!important}
+.admin-auth h1,.admin-main h1,.event-pass h1,.event-pass h2,.event-pass h3{color:#173b65!important}
+.admin-auth p,.admin-main p,.event-pass p,.event-pass small{color:#526a82!important}
+.pass-qr{background:#fff!important}
+.countdown strong{color:#1769aa!important}
+.countdown span{color:#61758b!important}
+.category-empty{color:#526a82!important}
+.cms-intro.cms-earth-signature{
+  background:linear-gradient(180deg,#fff 0%,#f5f9fe 100%)!important;color:#173b65!important;
+}
+.cms-earth-signature::before{
+  background:radial-gradient(ellipse at 50% 38%,#e5f2ff 0%,#f8fbff 38%,transparent 72%)!important;
+}
+.earth-halo{border-color:#a8cce9!important;box-shadow:0 0 36px rgba(75,145,205,.18),inset 0 0 24px rgba(120,175,220,.10)!important}
+.earth-orbit-text text{
+  fill:#080f18!important;stroke:#fff!important;stroke-width:1.8px!important;
+  paint-order:stroke fill!important;
+}
+.signature-jai{color:#1769aa!important}
+.signature-cms{color:#526a82!important}
+.signature-welcome{color:#173b65!important}
+.signature-vishva{color:#080f18!important}
+.cms-earth-signature .intro-skip{background:#fff!important;color:#315b7e!important;border-color:#c8d9e8!important}
+@media(max-width:600px){
+  .home-hero,.intro,.about,.schedule,.sports-offerings,.academic-results-list{background:rgba(255,255,255,.9)!important}
+}
