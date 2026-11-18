@@ -3,23 +3,23 @@ import io
 import json
 import re
 import secrets
-import sqlite3
 import base64
+import logging
 from functools import wraps
-from contextlib import contextmanager
 from pathlib import Path
-from flask import Flask, jsonify, render_template, request, redirect, url_for, session, flash, abort, send_from_directory
+from urllib.error import HTTPError, URLError
+from urllib.parse import quote, urlencode
+from urllib.request import Request, urlopen
+
+from flask import Flask, jsonify, render_template, request, redirect, url_for, session, flash, abort
 from werkzeug.security import check_password_hash
-from werkzeug.utils import secure_filename
 from PIL import Image
 import qrcode
 
 BASE_DIR = Path(__file__).resolve().parent
-INSTANCE_DIR = Path(os.environ.get("INSTANCE_DIR", BASE_DIR / "instance"))
-INSTANCE_DIR.mkdir(parents=True, exist_ok=True)
-DATABASE = Path(os.environ.get("DATABASE_PATH", INSTANCE_DIR / "technova.sqlite3"))
-UPLOAD_DIR = Path(os.environ.get("UPLOAD_FOLDER", INSTANCE_DIR / "uploads"))
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+DATA_FILE = BASE_DIR / "data" / "technova.json"
+ALLOWED_IMAGE_TYPES = {"JPEG", "PNG", "WEBP"}
+STORAGE_BUCKET = os.environ.get("SUPABASE_STORAGE_BUCKET", "technova-gallery")
 
 app = Flask(__name__)
 app.config.update(
@@ -29,65 +29,137 @@ app.config.update(
     SESSION_COOKIE_SAMESITE="Lax",
     SESSION_COOKIE_SECURE=os.environ.get("COOKIE_SECURE", "false").lower() == "true",
 )
-DATA_FILE = BASE_DIR / "data" / "technova.json"
-ALLOWED_IMAGE_TYPES = {"JPEG", "PNG", "WEBP"}
+
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY") or os.environ.get("SUPABASE_SECRET_KEY", "")
+
+
+class SupabaseError(RuntimeError):
+    pass
+
+
+def require_supabase():
+    if not SUPABASE_URL or not SUPABASE_KEY:
+        raise SupabaseError("Cloud database is not configured. Set SUPABASE_URL and SUPABASE_KEY in Render.")
+    return SUPABASE_URL, SUPABASE_KEY
+
+
+def supabase_request(path, method="GET", payload=None, params=None, content_type="application/json", extra_headers=None):
+    base_url, key = require_supabase()
+    url = f"{base_url}{path}"
+    if params:
+        url += "?" + urlencode(params, safe="*,().")
+    body = None
+    if payload is not None:
+        body = payload if isinstance(payload, bytes) else json.dumps(payload).encode("utf-8")
+    headers = {
+        "apikey": key,
+        "Accept": "application/json",
+    }
+    if body is not None:
+        headers["Content-Type"] = content_type
+    if extra_headers:
+        headers.update(extra_headers)
+    req = Request(url, data=body, headers=headers, method=method)
+    try:
+        with urlopen(req, timeout=25) as response:
+            raw = response.read()
+            if not raw:
+                return None
+            if "application/json" in response.headers.get("Content-Type", ""):
+                return json.loads(raw.decode("utf-8"))
+            return raw
+    except HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        app.logger.error("Supabase request failed (%s): %s", exc.code, detail[:1000])
+        raise SupabaseError(f"Cloud database request failed ({exc.code}). Check the Supabase setup.") from exc
+    except (URLError, TimeoutError) as exc:
+        app.logger.error("Supabase connection failed: %s", exc)
+        raise SupabaseError("Could not connect to Supabase. Check the project URL and network.") from exc
+
+
+def select_rows(table, order="id.desc", limit=None, filters=None, columns="*"):
+    params = {"select": columns}
+    if order:
+        params["order"] = order
+    if limit is not None:
+        params["limit"] = str(limit)
+    if filters:
+        params.update(filters)
+    rows = supabase_request(f"/rest/v1/{table}", params=params)
+    return rows or []
+
+
+def insert_row(table, values):
+    rows = supabase_request(
+        f"/rest/v1/{table}",
+        method="POST",
+        payload=values,
+        extra_headers={"Prefer": "return=representation"},
+    )
+    if not rows:
+        raise SupabaseError("Supabase did not confirm the new record.")
+    return rows[0]
+
+
+def delete_row(table, item_id):
+    supabase_request(
+        f"/rest/v1/{table}",
+        method="DELETE",
+        params={"id": f"eq.{int(item_id)}"},
+        extra_headers={"Prefer": "return=minimal"},
+    )
+
+
+def storage_public_url(filename):
+    return f"{SUPABASE_URL}/storage/v1/object/public/{quote(STORAGE_BUCKET)}/{quote(filename)}"
+
+
+def upload_gallery_file(filename, image_bytes):
+    supabase_request(
+        f"/storage/v1/object/{quote(STORAGE_BUCKET)}/{quote(filename)}",
+        method="POST",
+        payload=image_bytes,
+        content_type="image/webp",
+        extra_headers={"Cache-Control": "max-age=31536000", "x-upsert": "false"},
+    )
+
+
+def delete_gallery_file(filename):
+    supabase_request(
+        f"/storage/v1/object/{quote(STORAGE_BUCKET)}",
+        method="DELETE",
+        payload={"prefixes": [filename]},
+    )
+
 
 def get_data():
     return json.loads(DATA_FILE.read_text(encoding="utf-8"))
 
-@contextmanager
-def db():
-    connection = sqlite3.connect(DATABASE)
-    connection.row_factory = sqlite3.Row
-    try:
-        yield connection
-        connection.commit()
-    except Exception:
-        connection.rollback()
-        raise
-    finally:
-        connection.close()
 
-def init_db():
-    with db() as con:
-        con.executescript("""
-        CREATE TABLE IF NOT EXISTS announcements (
-            id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL,
-            body TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-        );
-        CREATE TABLE IF NOT EXISTS results (
-            id INTEGER PRIMARY KEY AUTOINCREMENT, event TEXT NOT NULL,
-            winner TEXT NOT NULL, position TEXT NOT NULL, details TEXT NOT NULL DEFAULT '',
-            created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-        );
-        CREATE TABLE IF NOT EXISTS gallery (
-            id INTEGER PRIMARY KEY AUTOINCREMENT, filename TEXT NOT NULL,
-            caption TEXT NOT NULL DEFAULT '', created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-        );
-        CREATE TABLE IF NOT EXISTS passes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT UNIQUE NOT NULL,
-            participant TEXT NOT NULL, school TEXT NOT NULL, event TEXT NOT NULL,
-            official_ref TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-        );
-        """)
 if not os.environ.get("SECRET_KEY"):
     app.logger.warning("A temporary SECRET_KEY is active. Set a stable SECRET_KEY in the deployment environment.")
-init_db()
+if not SUPABASE_URL or not SUPABASE_KEY:
+    app.logger.warning("Supabase is not configured. Set SUPABASE_URL and SUPABASE_KEY in Render.")
+
 
 def csrf_token():
     if "_csrf" not in session:
         session["_csrf"] = secrets.token_urlsafe(32)
     return session["_csrf"]
 
+
 @app.context_processor
 def inject_csrf():
     return {"csrf_token": csrf_token}
+
 
 def require_csrf():
     supplied = request.form.get("_csrf", "")
     expected = session.get("_csrf", "")
     if not expected or not secrets.compare_digest(supplied, expected):
         abort(400, "Invalid or expired form token. Refresh and try again.")
+
 
 def admin_required(fn):
     @wraps(fn)
@@ -97,35 +169,49 @@ def admin_required(fn):
         return fn(*args, **kwargs)
     return wrapped
 
+
 def answer(reply, headers=None, rows=None):
     result = {"reply": reply}
     if headers is not None and rows is not None:
         result["table"] = {"headers": headers, "rows": rows}
     return jsonify(result)
 
+
 @app.get("/")
 def home():
-    with db() as con:
-        announcements = con.execute("SELECT * FROM announcements ORDER BY id DESC LIMIT 5").fetchall()
+    try:
+        announcements = select_rows("announcements", limit=5)
+    except SupabaseError:
+        app.logger.exception("Could not load homepage announcements")
+        announcements = []
     return render_template("home.html", announcements=announcements)
+
 
 @app.get("/technova")
 def technova():
-    with db() as con:
-        announcements = con.execute("SELECT * FROM announcements ORDER BY id DESC LIMIT 10").fetchall()
-        results = con.execute("SELECT * FROM results ORDER BY id DESC").fetchall()
-        gallery = con.execute("SELECT * FROM gallery ORDER BY id DESC").fetchall()
+    try:
+        announcements = select_rows("announcements", limit=10)
+        results = select_rows("results")
+        gallery = select_rows("gallery")
+    except SupabaseError:
+        app.logger.exception("Could not load TECHNOVA content")
+        announcements, results, gallery = [], [], []
+        flash("Live updates are temporarily unavailable. Please try again later.", "error")
     return render_template("index.html", data=get_data(), announcements=announcements, results=results, gallery=gallery)
+
 
 @app.get("/media/<path:filename>")
 def media(filename):
-    return send_from_directory(UPLOAD_DIR, filename)
+    # Gallery files are served from the public Supabase Storage bucket, not local disk.
+    return redirect(storage_public_url(filename), code=302)
+
 
 @app.get("/admin/login")
 def admin_login():
     if session.get("admin_authenticated"):
         return redirect(url_for("admin_dashboard"))
     return render_template("admin_login.html", setup_ready=bool(os.environ.get("ADMIN_USERNAME") and os.environ.get("ADMIN_PASSWORD_HASH")))
+
 
 @app.post("/admin/login")
 def admin_login_post():
@@ -146,6 +232,7 @@ def admin_login_post():
     flash("Login details were not recognised.", "error")
     return redirect(url_for("admin_login"))
 
+
 @app.post("/admin/logout")
 @admin_required
 def admin_logout():
@@ -153,15 +240,21 @@ def admin_logout():
     session.clear()
     return redirect(url_for("admin_login"))
 
+
 @app.get("/admin")
 @admin_required
 def admin_dashboard():
-    with db() as con:
-        announcements = con.execute("SELECT * FROM announcements ORDER BY id DESC").fetchall()
-        results = con.execute("SELECT * FROM results ORDER BY id DESC").fetchall()
-        gallery = con.execute("SELECT * FROM gallery ORDER BY id DESC").fetchall()
-        passes = con.execute("SELECT * FROM passes ORDER BY id DESC LIMIT 100").fetchall()
+    try:
+        announcements = select_rows("announcements")
+        results = select_rows("results")
+        gallery = select_rows("gallery")
+        passes = select_rows("passes", limit=100)
+    except SupabaseError:
+        app.logger.exception("Could not load admin dashboard")
+        flash("Cloud database is unavailable. Check the Supabase setup.", "error")
+        announcements, results, gallery, passes = [], [], [], []
     return render_template("admin.html", announcements=announcements, results=results, gallery=gallery, passes=passes)
+
 
 @app.post("/admin/announcements")
 @admin_required
@@ -169,21 +262,29 @@ def add_announcement():
     require_csrf()
     title = request.form.get("title", "").strip()[:120]
     body = request.form.get("body", "").strip()[:2000]
-    if title and body:
-        with db() as con:
-            con.execute("INSERT INTO announcements(title, body) VALUES(?, ?)", (title, body))
-        flash("Announcement published.", "success")
-    else:
+    if not (title and body):
         flash("Add both a title and announcement text.", "error")
+    else:
+        try:
+            insert_row("announcements", {"title": title, "body": body})
+            flash("Announcement published.", "success")
+        except SupabaseError:
+            app.logger.exception("Announcement insert failed")
+            flash("Could not publish the announcement. Check the Supabase setup.", "error")
     return redirect(url_for("admin_dashboard"))
+
 
 @app.post("/admin/announcements/<int:item_id>/delete")
 @admin_required
 def delete_announcement(item_id):
     require_csrf()
-    with db() as con:
-        con.execute("DELETE FROM announcements WHERE id=?", (item_id,))
+    try:
+        delete_row("announcements", item_id)
+    except SupabaseError:
+        app.logger.exception("Announcement delete failed")
+        flash("Could not delete that announcement.", "error")
     return redirect(url_for("admin_dashboard"))
+
 
 @app.post("/admin/results")
 @admin_required
@@ -193,21 +294,29 @@ def add_result():
     winner = request.form.get("winner", "").strip()[:120]
     position = request.form.get("position", "").strip()[:60]
     details = request.form.get("details", "").strip()[:500]
-    if event and winner and position:
-        with db() as con:
-            con.execute("INSERT INTO results(event,winner,position,details) VALUES(?,?,?,?)", (event,winner,position,details))
-        flash("Result published.", "success")
-    else:
+    if not (event and winner and position):
         flash("Event, participant/team and position are required.", "error")
+    else:
+        try:
+            insert_row("results", {"event": event, "winner": winner, "position": position, "details": details})
+            flash("Result published.", "success")
+        except SupabaseError:
+            app.logger.exception("Result insert failed")
+            flash("Could not publish the result. Check the Supabase setup.", "error")
     return redirect(url_for("admin_dashboard"))
+
 
 @app.post("/admin/results/<int:item_id>/delete")
 @admin_required
 def delete_result(item_id):
     require_csrf()
-    with db() as con:
-        con.execute("DELETE FROM results WHERE id=?", (item_id,))
+    try:
+        delete_row("results", item_id)
+    except SupabaseError:
+        app.logger.exception("Result delete failed")
+        flash("Could not delete that result.", "error")
     return redirect(url_for("admin_dashboard"))
+
 
 @app.post("/admin/gallery")
 @admin_required
@@ -218,33 +327,45 @@ def add_gallery_image():
     if not upload or not upload.filename:
         flash("Choose an image first.", "error")
         return redirect(url_for("admin_dashboard"))
+    filename = secrets.token_hex(16) + ".webp"
     try:
         image = Image.open(upload.stream)
         if image.format not in ALLOWED_IMAGE_TYPES:
-            raise ValueError("Use a JPG, PNG or WEBP image.")
+            raise ValueError("Unsupported image type")
         image.verify()
         upload.stream.seek(0)
         image = Image.open(upload.stream).convert("RGB")
         image.thumbnail((1800, 1800))
-        filename = secrets.token_hex(16) + ".webp"
-        image.save(UPLOAD_DIR / filename, "WEBP", quality=86, method=6)
-        with db() as con:
-            con.execute("INSERT INTO gallery(filename,caption) VALUES(?,?)", (filename, caption))
+        output = io.BytesIO()
+        image.save(output, "WEBP", quality=86, method=6)
+        image_bytes = output.getvalue()
+        upload_gallery_file(filename, image_bytes)
+        try:
+            insert_row("gallery", {"filename": filename, "caption": caption})
+        except Exception:
+            delete_gallery_file(filename)
+            raise
         flash("Gallery image uploaded.", "success")
     except Exception:
-        flash("That image could not be processed. Try a JPG, PNG or WEBP file under 8 MB.", "error")
+        app.logger.exception("Gallery upload failed")
+        flash("That image could not be uploaded. Check the Supabase Storage bucket and try a JPG, PNG or WEBP under 8 MB.", "error")
     return redirect(url_for("admin_dashboard"))
+
 
 @app.post("/admin/gallery/<int:item_id>/delete")
 @admin_required
 def delete_gallery_image(item_id):
     require_csrf()
-    with db() as con:
-        item = con.execute("SELECT filename FROM gallery WHERE id=?", (item_id,)).fetchone()
-        if item:
-            (UPLOAD_DIR / item["filename"]).unlink(missing_ok=True)
-            con.execute("DELETE FROM gallery WHERE id=?", (item_id,))
+    try:
+        rows = select_rows("gallery", filters={"id": f"eq.{int(item_id)}"}, limit=1)
+        if rows:
+            delete_gallery_file(rows[0]["filename"])
+            delete_row("gallery", item_id)
+    except SupabaseError:
+        app.logger.exception("Gallery delete failed")
+        flash("Could not delete that gallery image.", "error")
     return redirect(url_for("admin_dashboard"))
+
 
 @app.post("/admin/passes")
 @admin_required
@@ -259,18 +380,37 @@ def create_pass():
         flash("Enter the official registration reference and confirm it against the organiser's records before issuing a pass.", "error")
         return redirect(url_for("admin_dashboard"))
     token = secrets.token_urlsafe(32)
-    with db() as con:
-        con.execute("INSERT INTO passes(token,participant,school,event,official_ref) VALUES(?,?,?,?,?)",
-                    (token,participant,school,event,official_ref))
-    flash("Verified event pass created.", "success")
-    return redirect(url_for("pass_view", token=token))
+    try:
+        insert_row("passes", {
+            "token": token,
+            "participant": participant,
+            "school": school,
+            "event": event,
+            "official_ref": official_ref,
+        })
+        flash("Verified event pass created.", "success")
+        return redirect(url_for("pass_view", token=token))
+    except SupabaseError:
+        app.logger.exception("Pass creation failed")
+        flash("Could not create the pass. Check the Supabase setup.", "error")
+        return redirect(url_for("admin_dashboard"))
+
 
 @app.get("/pass/<token>")
 def pass_view(token):
-    with db() as con:
-        item = con.execute("SELECT participant,school,event,created_at FROM passes WHERE token=?", (token,)).fetchone()
-    if not item:
+    try:
+        rows = select_rows(
+            "passes",
+            columns="participant,school,event,created_at",
+            filters={"token": f"eq.{token}"},
+            limit=1,
+        )
+    except SupabaseError:
+        app.logger.exception("Pass lookup failed")
+        abort(503, "Pass verification is temporarily unavailable.")
+    if not rows:
         abort(404)
+    item = rows[0]
     pass_url = url_for("pass_view", token=token, _external=True)
     qr = qrcode.make(pass_url)
     output = io.BytesIO()
@@ -278,9 +418,11 @@ def pass_view(token):
     qr_data = "data:image/png;base64," + base64.b64encode(output.getvalue()).decode("ascii")
     return render_template("pass.html", item=item, qr_data=qr_data)
 
+
 @app.get("/api/data")
 def api_data():
     return jsonify(get_data())
+
 
 @app.post("/api/chat")
 def chat():
@@ -317,18 +459,26 @@ def chat():
         return answer("TECHNOVA 2026 event dates:", ["Item", "Information"], [["Dates",data["dates"]],["19 November","AI & Robotics Quiz Challenge"],["20 November","Other listed competitions"],["Timing note",data["schedule_note"]]])
     if any(word in q for word in ("school", "cms", "admission", "academics", "principal", "facility", "facilities", "club", "sports", "history", "address", "location")):
         return answer("I have verified TECHNOVA 2026 information, but not the complete official CMS school information for this question. I won't guess. Please contact the school office.")
-    with db() as con:
-        latest = con.execute("SELECT title,body FROM announcements ORDER BY id DESC LIMIT 5").fetchall()
+    try:
+        latest = select_rows("announcements", columns="title,body", limit=5)
+    except SupabaseError:
+        latest = []
     if "announcement" in q or "update" in q or "notice" in q:
         if latest:
             return answer("Latest published TECHNOVA announcements:", ["Title", "Update"], [[x["title"],x["body"]] for x in latest])
         return answer("There are no official announcements published yet.")
     return answer(data.get("fallback", "I couldn't find that information in the available TECHNOVA 2026 data. Please contact the event team."))
 
+
 @app.errorhandler(413)
 def too_large(_error):
     return "Upload too large. Maximum file size is 8 MB.", 413
 
+
+@app.errorhandler(SupabaseError)
+def cloud_error(_error):
+    return "The cloud data service is temporarily unavailable. Please try again shortly.", 503
+
+
 if __name__ == "__main__":
-    import os
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
