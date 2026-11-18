@@ -216,3 +216,5 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 }
 @media(prefers-reduced-motion:reduce){.chat-launch{animation:none}}
 @media(max-width:560px){.chat-launch{width:62px;height:62px;right:18px;bottom:18px}}
+
+.chat-launch .chat-globe{width:34px;height:34px;fill:none;stroke:#052b38;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 1px #ffffff88)}
