@@ -250,8 +250,22 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .home-event-card.sports-concord{background:radial-gradient(ellipse at 88% 12%,#67521faa,transparent 48%),linear-gradient(145deg,#302b20,#111a26);border-color:#665632}
 .sports-disciplines{padding-top:12px;border-top:1px solid #ffffff18}
 .sports-disciplines strong{color:#e7f3fa;font-size:11px}
-.sports-offered{margin-top:17px;padding:23px 26px;border:1px solid var(--line);border-radius:14px;background:#0d1725}
-.sports-offered h3{font-size:22px;margin:8px 0}
-.sports-offered p:not(.home-card-kicker){color:#d3deeb;font-size:13px;line-height:1.9}
-.sports-offered small{color:var(--muted);font-size:11px}
 @media(max-width:600px){.sports-event-grid{grid-template-columns:1fr}}
+
+/* Academic Results feature */
+.home-event-card.academic-results-featured{max-width:760px;border-color:#557d9c;background:radial-gradient(ellipse at 88% 10%,#28648a66,transparent 48%),linear-gradient(145deg,#172d43,#0b1726)}
+.academic-results-featured .home-card-kicker{color:#9bd5f0}
+.academic-results-page{margin:35px 0 80px;padding:clamp(25px,5vw,55px);border:1px solid #42617a;border-radius:22px;background:radial-gradient(ellipse at 85% 0%,#28648a44,transparent 42%),linear-gradient(135deg,#14283a,#111824 65%,#101b2b)}
+.academic-results-heading{max-width:850px;margin-bottom:32px}
+.academic-results-heading h1{font-size:clamp(42px,7vw,72px);letter-spacing:-.05em;margin:12px 0;color:#e5f4ff}
+.academic-results-heading h1 span{color:#82c8ed}
+.academic-results-heading>p:last-child{max-width:700px;color:#b9cadb;font-size:14px;line-height:1.9}
+.academic-results-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.academic-results-card{min-height:190px;padding:22px;border:1px solid #42617a88;border-radius:14px;background:linear-gradient(145deg,#1b3044,#121d2b)}
+.academic-results-card>span{font:9px 'DM Mono',monospace;letter-spacing:.13em;color:#9bd5f0}
+.academic-results-card h2{font-size:20px;margin:14px 0 8px;color:#e5f4ff}
+.academic-results-card p{font-size:12px;line-height:1.8;color:#b9cadb}
+.academic-results-status{margin-top:20px;padding:20px 22px;border:1px dashed #557d9c;border-radius:13px;background:#0c1927}
+.academic-results-status strong{display:block;color:#9bd5f0;font:10px 'DM Mono',monospace;letter-spacing:.13em}
+.academic-results-status p{margin:9px 0 0;color:#b9cadb;font-size:12px;line-height:1.8}
+@media(max-width:750px){.academic-results-grid{grid-template-columns:1fr}}
