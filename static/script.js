@@ -88,7 +88,7 @@ if(intro){
   const finishIntro=()=>{if(!intro.classList.contains('is-leaving')){intro.classList.add('is-leaving');setTimeout(()=>intro.remove(),750);}};
   document.getElementById('introSkip')?.addEventListener('click',finishIntro);
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(finishIntro,500);
-  else setTimeout(finishIntro,3900);
+  else setTimeout(finishIntro,4600);
 }
 
 // Live TECHNOVA countdown based on the published local start date
