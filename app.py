@@ -447,15 +447,25 @@ def chat():
     celesta = get_cultural_data()
     celesta_events = celesta.get("events", [])
     if any(term in q for term in ("celesta", "nazakat", "cultural event", "cultural competition", "folk dance", "choreography", "orchestra", "choir", "crescendo", "harmonic clash", "mix media", "painting", "timeless frames", "through my lens", "3d collage", "photography", "videography")):
-        # Match a named competition only when its distinctive words are present.
-        # The generic word "Celesta" identifies the festival, not an individual event.
+        # Competition aliases make brochure details available for every listed category.
+        # Keep generic festival questions ("What is CELESTA?") separate from individual entries.
+        competition_aliases = {
+            "Art and Painting": ("art and painting", "painting competition", "the world i want to see"),
+            "Mix Media Art": ("mix media art", "mixed media art", "mix media", "mixed media", "ways to wonder art"),
+            "Choreography": ("choreography", "expressions of life"),
+            "Traditional Folk Dance": ("traditional folk dance", "folk dance", "rhythm roots"),
+            "Orchestra": ("orchestra", "symphony ensemble"),
+            "Choir": ("choir", "from darkness to light"),
+            "Harmonic Clash": ("harmonic clash", "jingle making", "jingle competition"),
+            "Crescendo (ABRSM)": ("crescendo", "abrsm", "solo singing"),
+            "Celesta’s Timeless Frames": ("timeless frames", "photography", "photo competition"),
+            "Celesta Through My Lens": ("through my lens", "videography", "video submission", "video competition"),
+            "3D Collage": ("3d collage", "3-d collage", "three dimensional collage")
+        }
         matched_celesta = None
         for e in celesta_events:
-            event_name = e["name"].lower().replace("’", "'")
-            distinctive_words = [word.strip(".,!?()'") for word in event_name.split()
-                                 if len(word.strip(".,!?()'")) > 3
-                                 and word.strip(".,!?()'") not in ("celesta", "international")]
-            if event_name in q or (distinctive_words and all(word in q for word in distinctive_words)):
+            aliases = competition_aliases.get(e["name"], ())
+            if any(alias in q for alias in aliases):
                 matched_celesta = e
                 break
         if matched_celesta:
