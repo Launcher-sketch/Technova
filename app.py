@@ -206,6 +206,11 @@ def technova():
     return render_template("index.html", data=site_data, announcements=announcements, results=results, gallery=gallery)
 
 
+@app.get("/celesta")
+def celesta_page():
+    return render_template("celesta.html", celesta=get_cultural_data())
+
+
 @app.get("/media/<path:filename>")
 def media(filename):
     # Gallery files are served from the public Supabase Storage bucket, not local disk.
