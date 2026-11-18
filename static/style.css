@@ -617,3 +617,21 @@ footer{
   .hero h1{font-size:clamp(2.8rem,13vw,4.2rem)}
   .home-hero h1{font-size:clamp(2.35rem,11vw,3.6rem)}
 }
+
+
+/* Green globe chatbot launcher */
+.chat-launch{
+  background:radial-gradient(circle at 32% 25%,#ffffff 0%,#e8f8ec 38%,#c7efcf 100%);
+  border:1px solid #86d69a;
+  box-shadow:0 5px 18px #22a44735,0 0 30px #22a4472b,inset 0 2px 8px #ffffff;
+}
+.chat-launch .chat-globe{
+  stroke:#168536;
+  stroke-width:2.6;
+  filter:drop-shadow(0 1px 1px #ffffff);
+}
+.chat-launch:hover{filter:brightness(1.04)}
+@keyframes cmsLauncherGlow{
+  from{box-shadow:0 0 10px #22a44730,0 0 22px #22a44722,inset 0 2px 8px #ffffff}
+  to{box-shadow:0 0 16px #22a44755,0 0 36px #22a44740,inset 0 2px 8px #ffffff}
+}
