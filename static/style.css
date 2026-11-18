@@ -635,3 +635,18 @@ footer{
   from{box-shadow:0 0 10px #22a44730,0 0 22px #22a44722,inset 0 2px 8px #ffffff}
   to{box-shadow:0 0 16px #22a44755,0 0 36px #22a44740,inset 0 2px 8px #ffffff}
 }
+
+
+/* Illustrated blue-and-green Earth chatbot launcher */
+.chat-launch{
+  background:radial-gradient(circle at 35% 25%,#ffffff 0%,#eaf8ff 42%,#c8eaff 100%);
+  border:1px solid #8bcdf0;
+  box-shadow:0 5px 20px #168bd43b,0 0 30px #168bd42b,inset 0 2px 8px #ffffff;
+}
+.chat-launch .chat-globe{
+  width:38px;
+  height:38px;
+  display:block;
+  filter:drop-shadow(0 2px 2px #06487955);
+}
+.chat-launch:hover{filter:brightness(1.06)}
