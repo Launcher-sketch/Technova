@@ -1101,3 +1101,24 @@ body p,.home-hero p,.home-event-card p,.event-card p,.teacher-grid p,
 @media(max-width:600px){
   .home-hero,.intro,.about,.schedule,.sports-offerings,.academic-results-list{background:rgba(255,255,255,.9)!important}
 }
+
+
+/* Make the Earth photograph vivid and clearly visible behind the motto */
+.earth-stage{width:clamp(190px,29vw,270px)!important}
+.intro-earth{
+  opacity:1!important;
+  filter:brightness(1.16) contrast(1.2) saturate(1.28)!important;
+  box-shadow:0 18px 52px rgba(15,62,105,.28),0 0 0 5px #fff,0 0 0 8px #8dbfe5!important;
+}
+.earth-halo{
+  inset:-13%!important;
+  border:2px solid rgba(74,145,205,.42)!important;
+  box-shadow:0 0 48px rgba(53,133,199,.25),inset 0 0 34px rgba(87,157,214,.18)!important;
+}
+.earth-stage::before{
+  content:"";position:absolute;z-index:0;inset:3%;border-radius:50%;
+  background:radial-gradient(circle,rgba(15,78,132,.16),transparent 72%);
+  pointer-events:none;
+}
+.earth-orbit-text{z-index:5}
+@media(max-width:600px){.earth-stage{width:clamp(175px,54vw,220px)!important}}
