@@ -754,9 +754,10 @@ footer{
   72%{opacity:1;transform:translate(-50%,-50%) scale(1.13)}
   100%{opacity:1;transform:translate(-50%,-50%) scale(1)}
 }
+.earth-orbit-text{z-index:5;overflow:visible;filter:drop-shadow(0 3px 5px rgba(0,25,55,.38))}
 .earth-orbit-text text{
   fill:#062b45;font-family:"Noto Sans Devanagari","Nirmala UI","Mangal",sans-serif;
-  font-size:18px;font-weight:900;letter-spacing:.8px;
-  paint-order:stroke;stroke:rgba(255,255,255,.96);stroke-width:1.8px;stroke-linejoin:round;
+  font-size:25px;font-weight:900;letter-spacing:.7px;
+  stroke:#ffffff;stroke-width:1.2px;paint-order:stroke fill;stroke-linejoin:round;
 }
-@media(max-width:600px){.earth-orbit-text text{font-size:15px;font-weight:900;letter-spacing:.55px}}
+@media(max-width:600px){.earth-orbit-text text{font-size:22px;font-weight:900;letter-spacing:.4px}}
