@@ -37,3 +37,8 @@
 @keyframes particleOrbit{to{transform:rotate(360deg)}}
 @keyframes energyBurst{0%{opacity:0;width:20px;height:20px;border-width:5px;box-shadow:0 0 0 0 #63e6df44}45%{opacity:1}100%{opacity:0;width:260px;height:260px;border-width:1px;box-shadow:0 0 65px 22px #63e6df12}}
 @media(prefers-reduced-motion:reduce){.intro-mark::before,.intro-ring::before,.intro-ring::after,.intro-wordmark::before{animation:none!important;opacity:0}}
+
+/* Chat controls */
+.chat-head-actions{display:flex;align-items:center;gap:7px}
+.chat-head-actions button{width:30px;height:30px;display:grid;place-items:center;border:1px solid #34465c;border-radius:8px;background:#142438;color:var(--cyan);font-size:19px;cursor:pointer;transition:background .2s,transform .2s}
+.chat-head-actions button:hover{background:#1d3a4c;transform:rotate(-25deg)}
