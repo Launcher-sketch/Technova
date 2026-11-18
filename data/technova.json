@@ -1,0 +1,178 @@
+{
+  "site_title": "CMS TECHNOVA 2026",
+  "subtitle": "Robotics & Artificial Intelligence Championship",
+  "host": "City Montessori School, Aliganj-I",
+  "principal": "Ms. Shivani Singh",
+  "dates": "19–20 November 2026",
+  "registration_deadline": "16 November 2026",
+  "registration_url": "https://forms.gle/YT72wa7RzUM5qmGM7",
+  "schedule_note": "The AI & Robotics Quiz Challenge is listed for 19 November; other listed competitions are scheduled for 20 November. Reporting and individual slots should be confirmed with the event team.",
+  "contact": "Help Desk: Mr. Shubham Asthana. Technical Coordinators: Ms. Swaranjali Rawat (8090365217) and Mr. Abhishek Sharma (9670050600).",
+  "fallback": "I couldn't find that information in the TECHNOVA 2026 brochure. Please contact the Help Desk, Mr. Shubham Asthana, or the technical coordinators.",
+  "teachers": [
+    {
+      "name": "Mr. Shantanu Kumar",
+      "event": "Robo Soccer"
+    },
+    {
+      "name": "Ms. Noopur Goel",
+      "event": "Line Follower"
+    },
+    {
+      "name": "Mr. Shubham Asthana",
+      "event": "Obstacle Race and Game Development"
+    },
+    {
+      "name": "Ms. Swaranjali Rawat",
+      "event": "Robo War (Balloon Bust)"
+    },
+    {
+      "name": "Mr. Shobhit Kanchan",
+      "event": "Boat Race (Senior)"
+    },
+    {
+      "name": "Mr. Abhishek Sharma",
+      "event": "AI Innovation Showdown"
+    },
+    {
+      "name": "Ms. Manju Rawat",
+      "event": "AI & Robotics Quiz Challenge"
+    },
+    {
+      "name": "To be announced",
+      "event": "Computer Vision Challenge and NLP Challenge"
+    }
+  ],
+  "events": [
+    {
+      "name": "Robo Soccer",
+      "category": "Robotics",
+      "date": "20 November 2026",
+      "teacher": "Mr. Shantanu Kumar",
+      "venue": "Turf Area, Cambridge Section",
+      "summary": "A robot soccer competition. Refer to the official brochure and event briefing for complete rules.",
+      "keywords": [
+        "soccer",
+        "football"
+      ]
+    },
+    {
+      "name": "Line Follower",
+      "category": "Robotics",
+      "date": "20 November 2026",
+      "teacher": "Ms. Noopur Goel",
+      "venue": "Robotics Lab",
+      "summary": "An autonomous robot line-following competition.",
+      "keywords": [
+        "line follower",
+        "line-following"
+      ]
+    },
+    {
+      "name": "Obstacle Race",
+      "category": "Robotics",
+      "date": "20 November 2026",
+      "teacher": "Mr. Shubham Asthana",
+      "venue": "Back Field",
+      "summary": "A remotely controlled robot obstacle course.",
+      "keywords": [
+        "obstacle"
+      ]
+    },
+    {
+      "name": "Robo War (Balloon Bust)",
+      "category": "Robotics",
+      "date": "20 November 2026",
+      "teacher": "Ms. Swaranjali Rawat",
+      "venue": "Turf Area, Cambridge Section",
+      "summary": "A robot-versus-robot balloon challenge, subject to the event safety rules.",
+      "keywords": [
+        "robo war",
+        "balloon"
+      ]
+    },
+    {
+      "name": "Boat Race (Senior)",
+      "category": "Robotics",
+      "date": "20 November 2026",
+      "teacher": "Mr. Shobhit Kanchan",
+      "venue": "Swimming Pool, CMS Aliganj-I",
+      "summary": "A senior-section model boat race.",
+      "keywords": [
+        "boat race",
+        "boat"
+      ]
+    },
+    {
+      "name": "AI & Robotics Quiz Challenge",
+      "category": "AI & Computing",
+      "date": "19 November 2026",
+      "teacher": "Ms. Manju Rawat",
+      "venue": "Computer / AI Lab",
+      "summary": "A quiz covering AI and robotics topics.",
+      "keywords": [
+        "quiz"
+      ]
+    },
+    {
+      "name": "AI Model Development Challenge",
+      "category": "AI & Computing",
+      "date": "20 November 2026",
+      "teacher": "To be announced",
+      "venue": "AI Lab",
+      "summary": "A challenge focused on developing and testing an AI model.",
+      "keywords": [
+        "model development",
+        "ai model"
+      ]
+    },
+    {
+      "name": "Computer Vision Challenge",
+      "category": "AI & Computing",
+      "date": "20 November 2026",
+      "teacher": "To be announced",
+      "venue": "AI Lab",
+      "summary": "A computer vision challenge using image-based tasks.",
+      "keywords": [
+        "computer vision",
+        "vision"
+      ]
+    },
+    {
+      "name": "NLP Challenge",
+      "category": "AI & Computing",
+      "date": "20 November 2026",
+      "teacher": "To be announced",
+      "venue": "AI Lab",
+      "summary": "A Natural Language Processing challenge.",
+      "keywords": [
+        "nlp",
+        "natural language"
+      ]
+    },
+    {
+      "name": "Game Development",
+      "category": "AI & Computing",
+      "date": "20 November 2026",
+      "teacher": "Mr. Shubham Asthana",
+      "venue": "AI Lab",
+      "summary": "A game design and development competition.",
+      "keywords": [
+        "game",
+        "gaming"
+      ]
+    },
+    {
+      "name": "AI Innovation Showdown",
+      "category": "AI & Computing",
+      "date": "20 November 2026",
+      "teacher": "Mr. Abhishek Sharma",
+      "venue": "AI Lab",
+      "summary": "Present an AI-enabled solution to a meaningful real-world problem.",
+      "keywords": [
+        "innovation",
+        "showdown"
+      ]
+    }
+  ]
+}
