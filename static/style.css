@@ -1122,3 +1122,41 @@ body p,.home-hero p,.home-event-card p,.event-card p,.teacher-grid p,
 }
 .earth-orbit-text{z-index:5}
 @media(max-width:600px){.earth-stage{width:clamp(175px,54vw,220px)!important}}
+
+
+/* Richer white site background with a visible, subtle blue atmosphere */
+html,body{
+  background-color:#f4f8fd!important;
+  background-image:
+    radial-gradient(ellipse at 12% 8%,rgba(111,177,230,.23) 0%,rgba(111,177,230,0) 34%),
+    radial-gradient(ellipse at 88% 28%,rgba(143,196,238,.20) 0%,rgba(143,196,238,0) 36%),
+    radial-gradient(ellipse at 48% 92%,rgba(100,164,220,.15) 0%,rgba(100,164,220,0) 38%),
+    linear-gradient(135deg,#fafdff 0%,#edf5fc 48%,#f8fbff 100%)!important;
+  background-attachment:fixed!important;
+}
+body::before{
+  color:rgba(25,75,120,.065)!important;
+  opacity:1!important;
+}
+body::after{
+  color:rgba(25,75,120,.075)!important;
+  opacity:1!important;
+}
+.home-main,.sports-main,.academic-results-main,.celesta-main,
+main{
+  background:transparent!important;
+}
+.home-hero,.event-category,.home-events,
+.sports-page,.academic-results-page,.celesta-page{
+  background:transparent!important;
+}
+.home-event-card,.event-card,.academic-results-card,
+.sports-detail-card,.announcement-card,.gallery-card,
+.teacher-grid article,.day-grid article{
+  background:rgba(255,255,255,.88)!important;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+}
+@media(max-width:700px){
+  html,body{background-attachment:scroll!important}
+}
