@@ -238,3 +238,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .celesta-note{margin:22px 0 0;color:#c8ad91;font-size:11px;line-height:1.7}
 @media(max-width:850px){.celesta-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.celesta-heading{align-items:flex-start;flex-direction:column}}
 @media(max-width:560px){.celesta-grid{grid-template-columns:1fr}.celesta-section{padding:22px 16px}.celesta-theme{font-size:15px}}
+
+/* CELESTA as a separate Cultural Events listing */
+.cultural-featured{border-color:#9b6948;background:radial-gradient(ellipse at 85% 10%,#9d542b55,transparent 48%),linear-gradient(135deg,#38251b,#21171a 65%,#25180f)}
+.cultural-featured .home-card-kicker{color:#e2ad78}.cultural-featured h3{font-family:Georgia,serif;color:#f2d6ad}
