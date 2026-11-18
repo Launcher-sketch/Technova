@@ -650,3 +650,21 @@ footer{
   filter:drop-shadow(0 2px 2px #06487955);
 }
 .chat-launch:hover{filter:brightness(1.06)}
+
+
+/* Use a real NASA Earth photograph in the chatbot launcher */
+.chat-launch{
+  overflow:hidden;
+  padding:0;
+  background:#061b35;
+  border:2px solid rgba(255,255,255,.9);
+  box-shadow:0 5px 22px rgba(0,115,210,.42),0 0 30px rgba(0,145,255,.25);
+}
+.chat-launch .chat-globe{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  border-radius:50%;
+}
