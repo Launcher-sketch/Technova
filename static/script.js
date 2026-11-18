@@ -39,7 +39,7 @@ const body=document.getElementById('chatBody');
 const input=document.getElementById('chatInput');
 const form=document.getElementById('chatForm');
 const sendButton=form?.querySelector('button[type="submit"],button:not([type])');
-const welcomeMessage="Hello! I’m the CMS AI Assistant. Ask me about school information, teachers, academics, activities, admissions or TECHNOVA 2026.";
+const welcomeMessage="Jai Jagat! I’m the CMS AI Assistant. Ask me about CMS, TECHNOVA 2026, or CELESTA cultural events.";
 document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classList.toggle('open'));
 document.getElementById('chatClose')?.addEventListener('click',()=>chat?.classList.remove('open'));
 function bubble(text,kind,tableData){
