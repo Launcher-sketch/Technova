@@ -42,3 +42,13 @@
 .chat-head-actions{display:flex;align-items:center;gap:7px}
 .chat-head-actions button{width:30px;height:30px;display:grid;place-items:center;border:1px solid #34465c;border-radius:8px;background:#142438;color:var(--cyan);font-size:19px;cursor:pointer;transition:background .2s,transform .2s}
 .chat-head-actions button:hover{background:#1d3a4c;transform:rotate(-25deg)}
+
+/* Readable tables inside chatbot replies */
+.chat-table-wrap{width:100%;overflow-x:auto;margin:8px 0 14px;border:1px solid #30465b;border-radius:9px;background:#0b1522}
+.chat-table{width:100%;border-collapse:collapse;font-size:11px;line-height:1.5;color:#dce8f5}
+.chat-table th{background:#183144;color:var(--cyan);text-align:left;font-weight:700;white-space:nowrap}
+.chat-table th,.chat-table td{padding:9px 10px;border-bottom:1px solid #26394d;vertical-align:top}
+.chat-table tr:last-child td{border-bottom:0}
+.chat-table td{min-width:95px}
+.chat-table-wrap::-webkit-scrollbar{height:6px}
+.chat-table-wrap::-webkit-scrollbar-thumb{background:#3d6675;border-radius:8px}
