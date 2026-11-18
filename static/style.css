@@ -4,3 +4,11 @@
 
 /* CMS-wide events directory */
 .home-main{max-width:1180px;margin:auto;padding:0 28px}.home-hero{padding:110px 0 80px;max-width:850px}.home-hero h1{font-size:clamp(48px,8vw,88px);letter-spacing:-.07em;line-height:1.02;margin:18px 0}.home-hero h1 span{color:var(--cyan)}.home-hero>p:last-child{color:var(--muted);font-size:16px;line-height:1.8;max-width:560px}.home-events{padding:20px 0 110px}.home-event-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:25px}.home-event-card{min-height:310px;padding:28px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#142338,#0d1726);color:var(--text);text-decoration:none;display:flex;flex-direction:column;justify-content:space-between}.home-event-card.featured{background:radial-gradient(ellipse at 85% 25%,#15505a 0,transparent 45%),linear-gradient(145deg,#142b3b,#0d1726)}a.home-event-card{transition:transform .2s ease,border-color .2s ease}a.home-event-card:hover{transform:translateY(-5px);border-color:var(--cyan)}.home-event-card.coming{opacity:.8;border-style:dashed}.home-card-top{display:flex;justify-content:space-between;font:11px 'DM Mono',monospace;letter-spacing:.15em;color:var(--cyan)}.home-card-kicker{font:10px 'DM Mono',monospace;letter-spacing:.13em;color:#91a5ba;margin:24px 0 10px}.home-event-card h3{font-size:clamp(25px,4vw,38px);margin:0 0 12px}.home-event-card p:not(.home-card-kicker){color:var(--muted);font-size:13px;line-height:1.8;max-width:440px}.home-card-link{display:flex;justify-content:space-between;align-items:center;color:var(--cyan);font-size:13px;font-weight:800;margin-top:22px}@media(max-width:600px){.home-event-grid{grid-template-columns:1fr}.home-hero{padding:80px 0 55px}.home-event-card{min-height:270px}}
+
+.event-category{padding:32px 0 42px;border-top:1px solid var(--line)}
+.category-heading{display:flex;justify-content:space-between;align-items:baseline;gap:18px;margin-bottom:20px}
+.category-heading h2{font-size:clamp(23px,3vw,30px);margin:0}
+.category-heading span{font:10px 'DM Mono',monospace;letter-spacing:.13em;color:var(--cyan)}
+.category-empty{border:1px dashed #33465c;border-radius:12px;padding:20px;color:#8798ad;font-size:13px;background:#0c1522}
+.event-category .home-event-grid{margin-top:0}
+@media(max-width:560px){.category-heading{align-items:flex-start;flex-direction:column;gap:8px}}
