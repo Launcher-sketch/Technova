@@ -128,7 +128,7 @@ def upload_gallery_file(filename, image_bytes):
 
 def delete_gallery_file(filename):
     supabase_request(
-        f"/storage/v1/object/{quote(STORAGE_BUCKET)}/delete",
+        f"/storage/v1/object/{quote(STORAGE_BUCKET)}",
         method="DELETE",
         payload={"prefixes": [filename]},
     )
