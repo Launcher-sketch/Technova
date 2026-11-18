@@ -242,3 +242,16 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 /* CELESTA as a separate Cultural Events listing */
 .cultural-featured{border-color:#9b6948;background:radial-gradient(ellipse at 85% 10%,#9d542b55,transparent 48%),linear-gradient(135deg,#38251b,#21171a 65%,#25180f)}
 .cultural-featured .home-card-kicker{color:#e2ad78}.cultural-featured h3{font-family:Georgia,serif;color:#f2d6ad}
+
+/* Sports Events category on the CMS Events homepage */
+.sports-intro{max-width:700px;margin:-4px 0 22px;color:var(--muted);font-size:13px;line-height:1.8}
+.sports-event-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.home-event-card.sports-spardha{background:radial-gradient(ellipse at 88% 12%,#176b70aa,transparent 48%),linear-gradient(145deg,#142e3c,#0b1726);border-color:#28636b}
+.home-event-card.sports-concord{background:radial-gradient(ellipse at 88% 12%,#67521faa,transparent 48%),linear-gradient(145deg,#302b20,#111a26);border-color:#665632}
+.sports-disciplines{padding-top:12px;border-top:1px solid #ffffff18}
+.sports-disciplines strong{color:#e7f3fa;font-size:11px}
+.sports-offered{margin-top:17px;padding:23px 26px;border:1px solid var(--line);border-radius:14px;background:#0d1725}
+.sports-offered h3{font-size:22px;margin:8px 0}
+.sports-offered p:not(.home-card-kicker){color:#d3deeb;font-size:13px;line-height:1.9}
+.sports-offered small{color:var(--muted);font-size:11px}
+@media(max-width:600px){.sports-event-grid{grid-template-columns:1fr}}
