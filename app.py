@@ -216,6 +216,11 @@ def academic_results_page():
     return render_template("academic_results.html")
 
 
+@app.get("/sports")
+def sports_page():
+    return render_template("sports.html")
+
+
 @app.get("/media/<path:filename>")
 def media(filename):
     # Gallery files are served from the public Supabase Storage bucket, not local disk.
@@ -484,6 +489,13 @@ def chat():
         return answer(f"{celesta.get('title', 'CELESTA')} cultural competitions from the brochure:", ["Competition", "Format", "Topic", "Duration / deadline"], rows)
     if any(term in q for term in ("academic result", "academic results", "board result", "board results", "icse result", "isc result", "class 10 result", "class 12 result", "school result", "school results", "exam result", "exam results", "student achievement", "academic achievement")):
         return answer("The Academic Results section on the CMS Events portal is for verified examination results, academic announcements and student achievements. No verified academic result entries have been added to this section yet, so I won’t guess or provide unconfirmed marks or rankings.", ["Section", "Information"], [["Academic Results", "Verified examination results and academic announcements"], ["Student achievements", "Published after confirmation by the school"], ["Current portal status", "No verified academic result entries published yet"]])
+    sports_terms = ("spardha", "concord", "sports event", "sports events", "cms sports", "sports at cms", "international sports olympiad", "track and field", "judo", "karate", "badminton", "dance aerobics", "poster making", "football tournament", "sports offered", "athletics", "roller skating", "table tennis", "basketball", "swimming", "hockey", "cricket", "chess")
+    if any(term in q for term in sports_terms):
+        if any(term in q for term in ("concord", "football tournament", "international football")):
+            return answer("CONCORD 2026 was CMS’s international football tournament, held 2–6 November 2026 at CMS Station Road Campus. It featured boys’ and girls’ matches and is now a completed event.", ["Detail", "Information"], [["Event", "CONCORD 2026"], ["Dates", "2–6 November 2026"], ["Venue", "CMS Station Road Campus"], ["Format", "International football tournament with boys’ and girls’ matches"], ["Status", "Completed · 2026"], ["Official website", "https://cmseducation.org/concord/"]])
+        if any(term in q for term in ("spardha", "international sports olympiad", "track and field", "judo", "karate", "dance aerobics", "poster making")):
+            return answer("SPARDHA 2026 was CMS’s international sports olympiad, held 24–27 October 2026 at CMS RDSO Campus. The listed programme included sports as well as creative movement and poster-making activities. It is now a completed event.", ["Detail", "Information"], [["Event", "SPARDHA 2026"], ["Dates", "24–27 October 2026"], ["Venue", "CMS RDSO Campus"], ["Listed disciplines", "Track & Field; Judo; Karate; Badminton; Move & Groove – Dance Aerobics; Brush & Beyond – Poster Making"], ["Status", "Completed · 2026"], ["Official website", "https://cmseducation.org/spardha/"]])
+        return answer("CMS Sports Events include SPARDHA and CONCORD. SPARDHA 2026 (24–27 October, CMS RDSO Campus) was an international sports olympiad. CONCORD 2026 (2–6 November, CMS Station Road Campus) was an international football tournament. Both are completed. CMS sports offerings listed in the school information include Badminton, Basketball, Cricket, Chess, Swimming, Hockey, Athletics, Football, Roller Skating and Table Tennis.", ["CMS sports offerings", "International event"], [["Badminton", "SPARDHA 2026"], ["Basketball", "Sports offered at CMS"], ["Cricket", "Sports offered at CMS"], ["Chess", "Sports offered at CMS"], ["Swimming", "Sports offered at CMS"], ["Hockey", "Sports offered at CMS"], ["Athletics", "Sports offered at CMS"], ["Football", "CONCORD 2026 and sports offered at CMS"], ["Roller Skating", "Sports offered at CMS"], ["Table Tennis", "Sports offered at CMS"]])
     if q in ("jai jagat", "जय जगत"):
         return answer("Jai Jagat!")
     if q in ("hello", "hi", "hey", "good morning", "good afternoon", "good evening") or q.startswith(("hello ", "hi ", "hey ")):
