@@ -6,6 +6,7 @@ import secrets
 import sqlite3
 import base64
 from functools import wraps
+from contextlib import contextmanager
 from pathlib import Path
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session, flash, abort, send_from_directory
 from werkzeug.security import check_password_hash
@@ -22,7 +23,7 @@ UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 app = Flask(__name__)
 app.config.update(
-    SECRET_KEY=os.environ.get("SECRET_KEY", ""),
+    SECRET_KEY=os.environ.get("SECRET_KEY") or secrets.token_hex(32),
     MAX_CONTENT_LENGTH=8 * 1024 * 1024,
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
@@ -34,10 +35,18 @@ ALLOWED_IMAGE_TYPES = {"JPEG", "PNG", "WEBP"}
 def get_data():
     return json.loads(DATA_FILE.read_text(encoding="utf-8"))
 
+@contextmanager
 def db():
     connection = sqlite3.connect(DATABASE)
     connection.row_factory = sqlite3.Row
-    return connection
+    try:
+        yield connection
+        connection.commit()
+    except Exception:
+        connection.rollback()
+        raise
+    finally:
+        connection.close()
 
 def init_db():
     with db() as con:
@@ -61,8 +70,8 @@ def init_db():
             official_ref TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
         );
         """)
-if not app.config["SECRET_KEY"]:
-    app.logger.warning("SECRET_KEY is not configured. Set it in the deployment environment.")
+if not os.environ.get("SECRET_KEY"):
+    app.logger.warning("A temporary SECRET_KEY is active. Set a stable SECRET_KEY in the deployment environment.")
 init_db()
 
 def csrf_token():
