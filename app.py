@@ -211,6 +211,11 @@ def celesta_page():
     return render_template("celesta.html", celesta=get_cultural_data())
 
 
+@app.get("/academic-results")
+def academic_results_page():
+    return render_template("academic_results.html")
+
+
 @app.get("/media/<path:filename>")
 def media(filename):
     # Gallery files are served from the public Supabase Storage bucket, not local disk.
@@ -477,6 +482,8 @@ def chat():
             return answer(f"{celesta.get('title', 'CELESTA')} is a cultural festival celebrating student creativity and performance. It brings together the competitions listed below. The brochure's competition-specific rules and evaluation details are available by asking about an individual competition.", ["Competition", "Format", "Topic", "Duration / deadline"], [[e["name"], e["type"], e["topic"], e["duration"]] for e in celesta_events])
         rows = [[e["name"], e["type"], e["topic"], e["duration"]] for e in celesta_events]
         return answer(f"{celesta.get('title', 'CELESTA')} cultural competitions from the brochure:", ["Competition", "Format", "Topic", "Duration / deadline"], rows)
+    if any(term in q for term in ("academic result", "academic results", "board result", "board results", "icse result", "isc result", "class 10 result", "class 12 result", "school result", "school results", "exam result", "exam results", "student achievement", "academic achievement")):
+        return answer("The Academic Results section on the CMS Events portal is for verified examination results, academic announcements and student achievements. No verified academic result entries have been added to this section yet, so I won’t guess or provide unconfirmed marks or rankings.", ["Section", "Information"], [["Academic Results", "Verified examination results and academic announcements"], ["Student achievements", "Published after confirmation by the school"], ["Current portal status", "No verified academic result entries published yet"]])
     if q in ("jai jagat", "जय जगत"):
         return answer("Jai Jagat!")
     if q in ("hello", "hi", "hey", "good morning", "good afternoon", "good evening") or q.startswith(("hello ", "hi ", "hey ")):
