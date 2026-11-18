@@ -477,7 +477,7 @@ def chat():
             ["International Press", "Journalism, photography and caricature, reporting on conference proceedings and debate."]
         ]
         if any(term in q for term in ("committee", "committees", "agenda", "agendas", "topics", "topic", "portfolio", "council", "press", "journalism", "photography", "caricature", "copuos", "iaea", "lok sabha", "unga", "unsc", "oas", "icj", "peru", "moquegua", "chernobyl", "arms control", "central africa", "narcotics", "surveillance", "jadhav", "outer space")):
-            selected = next((row for row in committees if row[0].lower() in q or any(alias in q for alias in {
+            aliases_by_committee = {
                 "United Nations General Assembly (UNGA)": ("unga", "un general assembly"),
                 "United Nations Security Council (UNSC)": ("unsc", "security council"),
                 "Organization of American States (OAS)": ("oas", "american states"),
@@ -487,7 +487,12 @@ def chat():
                 "Committee on the Peaceful Uses of Outer Space (COPUOS)": ("copuos", "outer space"),
                 "International Court of Justice (ICJ)": ("icj", "jadhav"),
                 "International Press": ("press", "journalism", "photography", "caricature")
-            }.get(row[0], ()))) , None)
+            }
+            selected = None
+            for row in committees:
+                if row[0].lower() in q or any(alias in q for alias in aliases_by_committee.get(row[0], ())):
+                    selected = row
+                    break
             if selected:
                 return answer("CMSMUN brochure agenda:", ["Committee / forum", "Agenda"], [selected])
             return answer("Committees and forums listed in the CMSMUN 5th Edition brochure:", ["Committee / forum", "Agenda"], committees)
