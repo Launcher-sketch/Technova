@@ -461,6 +461,11 @@ def chat():
     teachers = data.get("teachers", [])
     celesta = get_cultural_data()
     celesta_events = celesta.get("events", [])
+    # Route questions about the homepage's complete event taxonomy.
+    if any(term in q for term in ("all events", "list of events", "event list", "show events", "what events", "which events", "events on the portal", "categories", "event categories")):
+        return answer("Here are the main sections currently featured on the CMS Events portal:", ["Category", "Events / information"], [["Academic Achievements", "ICSE, ISC, JEE Advanced and AP Examination 2026 results"], ["Academic Events", "CMSMUN 5th Edition · 2026 archive"], ["Sports Events", "SPARDHA 2026 and CONCORD 2026"], ["Cultural Events", "CELESTA International 2026 and its brochure competitions"], ["Technology & Innovation", "TECHNOVA 2026 competitions, schedule, updates and results"]])
+    if any(term in q for term in ("academic events", "academic event")):
+        return answer("The Academic Events section features CMSMUN 5th Edition, hosted by CMS Aliganj Campus I on 24–25 April 2026. It is a completed 2026 archive with committee agendas and delegate information.", ["Event", "Details"], [["CMSMUN 5th Edition", "24–25 April 2026 · CMS Aliganj Campus I · Completed archive"], ["Page", "Open Academic Events → CMSMUN on the CMS Events homepage"]])
     # CMSMUN 5th Edition — details transcribed from the 24-page Aliganj Campus I brochure.
     mun_terms = ("cmsmun", "cms mun", "model united nations", "mun conference", "mun 2026", "lok sabha", "unga", "un general assembly", "united nations general assembly", "unsc", "security council", "organization of american states", "oas", "house committee", "oversight and government reform", "iaea", "atomic energy agency", "copuos", "peaceful uses of outer space", "international court of justice", "icj", "international press", "peru crisis", "moquegua", "cms aliganj mun")
     if any(term in q for term in mun_terms):
