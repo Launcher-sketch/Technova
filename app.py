@@ -469,7 +469,7 @@ def chat():
         if latest:
             return answer("Latest published TECHNOVA announcements:", ["Title", "Update"], [[x["title"],x["body"]] for x in latest])
         return answer("There are no official announcements published yet.")
-    return answer(data.get("fallback", "I couldn't find that information in the available TECHNOVA 2026 data. Please contact the event team."))
+    return answer("Sorry, I could not currently find that information in the CMS Events. Please contact the respective coordinators for the same.")
 
 
 @app.errorhandler(413)
