@@ -741,18 +741,15 @@ footer{
 @media(prefers-reduced-motion:reduce){.globe-motto-orbit{animation:none;offset-distance:0%}}
 
 
-/* Curved Devanagari motto following the Earth's circular outline */
+/* Hindi motto sits on the globe's surface, following its lower curve */
 .earth-orbit-text{
   position:absolute;z-index:4;left:50%;top:50%;
-  width:clamp(285px,39vw,340px);height:auto;overflow:visible;
+  width:100%;height:100%;overflow:visible;
   transform:translate(-50%,-50%);pointer-events:none;
-  animation:earthMottoRotate 24s linear infinite;
 }
 .earth-orbit-text text{
-  fill:#176da9;font-family:"Noto Sans Devanagari","Nirmala UI","Mangal",sans-serif;
-  font-size:13px;font-weight:800;letter-spacing:1.2px;
-  paint-order:stroke;stroke:rgba(255,255,255,.9);stroke-width:3px;stroke-linejoin:round;
+  fill:#fff;font-family:"Noto Sans Devanagari","Nirmala UI","Mangal",sans-serif;
+  font-size:13px;font-weight:800;letter-spacing:1.1px;
+  paint-order:stroke;stroke:rgba(5,43,78,.8);stroke-width:2.8px;stroke-linejoin:round;
 }
-@keyframes earthMottoRotate{to{transform:translate(-50%,-50%) rotate(360deg)}}
-@media(max-width:600px){.earth-orbit-text{width:clamp(270px,78vw,310px)}.earth-orbit-text text{font-size:12px;letter-spacing:.8px}}
-@media(prefers-reduced-motion:reduce){.earth-orbit-text{animation:none}}
+@media(max-width:600px){.earth-orbit-text text{font-size:12px;letter-spacing:.8px}}
