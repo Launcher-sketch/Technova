@@ -1160,3 +1160,53 @@ main{
 @media(max-width:700px){
   html,body{background-attachment:scroll!important}
 }
+
+
+/* Wider, tighter page layout and stronger CMS watermark */
+main,.home-main,.sports-page,.academic-results-page,.celesta-page{
+  width:calc(100% - 32px)!important;
+  max-width:1600px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  padding-left:clamp(10px,1.6vw,24px)!important;
+  padding-right:clamp(10px,1.6vw,24px)!important;
+}
+.home-main{max-width:1600px!important}
+.home-hero{max-width:1050px!important}
+.home-events{padding-top:12px!important}
+body::before{
+  right:1vw!important;
+  top:15vh!important;
+  font-size:clamp(220px,39vw,610px)!important;
+  color:rgba(20,69,112,.115)!important;
+  text-shadow:0 2px 18px rgba(33,91,143,.045)!important;
+}
+body::after{
+  right:2vw!important;
+  top:calc(15vh + clamp(190px,31vw,475px))!important;
+  font-size:clamp(13px,2.3vw,30px)!important;
+  letter-spacing:.16em!important;
+  color:rgba(20,69,112,.14)!important;
+  font-weight:800!important;
+}
+.top,footer{
+  padding-left:clamp(14px,2.4vw,38px)!important;
+  padding-right:clamp(14px,2.4vw,38px)!important;
+}
+@media(max-width:700px){
+  main,.home-main,.sports-page,.academic-results-page,.celesta-page{
+    width:calc(100% - 16px)!important;
+    padding-left:8px!important;
+    padding-right:8px!important;
+  }
+  body::before{
+    right:-8vw!important;top:20vh!important;
+    font-size:clamp(170px,46vw,300px)!important;
+    color:rgba(20,69,112,.095)!important;
+  }
+  body::after{
+    right:2vw!important;top:calc(20vh + 34vw)!important;
+    font-size:clamp(10px,2.7vw,14px)!important;
+    color:rgba(20,69,112,.13)!important;
+  }
+}
