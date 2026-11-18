@@ -447,12 +447,24 @@ def chat():
     celesta = get_cultural_data()
     celesta_events = celesta.get("events", [])
     if any(term in q for term in ("celesta", "nazakat", "cultural event", "cultural competition", "folk dance", "choreography", "orchestra", "choir", "crescendo", "harmonic clash", "mix media", "painting", "timeless frames", "through my lens", "3d collage", "photography", "videography")):
-        matched_celesta = next((e for e in celesta_events if e["name"].lower() in q or any(k in q for k in e["name"].lower().replace("’", "'").split() if len(k) > 4)), None)
+        # Match a named competition only when its distinctive words are present.
+        # The generic word "Celesta" identifies the festival, not an individual event.
+        matched_celesta = None
+        for e in celesta_events:
+            event_name = e["name"].lower().replace("’", "'")
+            distinctive_words = [word.strip(".,!?()'") for word in event_name.split()
+                                 if len(word.strip(".,!?()'")) > 3
+                                 and word.strip(".,!?()'") not in ("celesta", "international")]
+            if event_name in q or (distinctive_words and all(word in q for word in distinctive_words)):
+                matched_celesta = e
+                break
         if matched_celesta:
             e = matched_celesta
             return answer(f"Brochure details for {e['name']}:", ["Detail", "Information"], [["Topic", e["topic"]], ["Type", e["type"]], ["Duration / deadline", e["duration"]], ["Rules and overview", e["summary"]], ["Evaluation parameters", e["criteria"]]])
         if any(term in q for term in ("date", "when", "schedule", "programme", "program", "timing")):
             return answer("CELESTA International 2026 dates and programme note:", ["Item", "Information"], [["Festival dates on cover", celesta.get("dates", "Not specified")], ["Programme date note", celesta.get("status_note", "")], ["Schedule", "21–25 August 2026; see the brochure programme for day-wise events."]])
+        if any(term in q for term in ("what is", "tell me about", "about celesta", "explain", "overview", "describe")) or "celesta" in q or "nazakat" in q:
+            return answer(f"{celesta.get('title', 'CELESTA')} is a cultural festival celebrating student creativity and performance. It brings together the competitions listed below. The brochure's competition-specific rules and evaluation details are available by asking about an individual competition.", ["Competition", "Format", "Topic", "Duration / deadline"], [[e["name"], e["type"], e["topic"], e["duration"]] for e in celesta_events])
         rows = [[e["name"], e["type"], e["topic"], e["duration"]] for e in celesta_events]
         return answer(f"{celesta.get('title', 'CELESTA')} cultural competitions from the brochure:", ["Competition", "Format", "Topic", "Duration / deadline"], rows)
     if q in ("jai jagat", "जय जगत"):
