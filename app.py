@@ -9,7 +9,11 @@ def get_data():
     return json.loads(DATA_FILE.read_text(encoding="utf-8"))
 
 @app.get("/")
-def index():
+def home():
+    return render_template("home.html")
+
+@app.get("/technova")
+def technova():
     return render_template("index.html", data=get_data())
 
 @app.get("/api/data")
@@ -30,7 +34,7 @@ def chat():
         for item in data["teachers"]:
             lines.append(f"• {item['name']} — {item['event']}")
         lines.append("Technical Coordinators: Ms. Swaranjali Rawat and Mr. Abhishek Sharma.")
-        return jsonify(reply="\n".join(lines))
+        return jsonify(reply="\\n".join(lines))
     if any(word in q for word in ("date", "when", "schedule", "timing")):
         return jsonify(reply=f"TECHNOVA 2026 takes place on {data['dates']}. {data['schedule_note']}")
     if any(word in q for word in ("register", "registration", "form")):
@@ -39,7 +43,7 @@ def chat():
         return jsonify(reply=data["contact"])
     for event in data["events"]:
         if event["name"].lower() in q or event["keywords"] and any(k in q for k in event["keywords"]):
-            return jsonify(reply=f"{event['name']}\nDate: {event['date']}\nCategory: {event['category']}\nTeacher in charge: {event['teacher']}\nVenue: {event['venue']}\n{event['summary']}")
+            return jsonify(reply=f"{event['name']}\\nDate: {event['date']}\\nCategory: {event['category']}\\nTeacher in charge: {event['teacher']}\\nVenue: {event['venue']}\\n{event['summary']}")
     if any(word in q for word in ("school", "cms", "admission", "academics", "principal", "facility", "facilities", "club", "sports", "history", "address", "location")):
         return jsonify(reply="I’m the CMS AI Assistant. I currently have verified information about TECHNOVA 2026, but I don’t yet have the school’s complete official information for that question. I won’t guess. Please contact the school office for confirmation.")
     return jsonify(reply=data["fallback"])
