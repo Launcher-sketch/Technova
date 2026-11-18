@@ -218,3 +218,23 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 @media(max-width:560px){.chat-launch{width:62px;height:62px;right:18px;bottom:18px}}
 
 .chat-launch .chat-globe{width:34px;height:34px;fill:none;stroke:#052b38;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 1px #ffffff88)}
+
+/* CELESTA cultural festival section */
+.celesta-section{margin:35px 0 80px;padding:clamp(25px,5vw,55px);border:1px solid #72503a;border-radius:22px;background:radial-gradient(ellipse at 85% 0%,#9d542b33,transparent 42%),linear-gradient(135deg,#211710,#17131a 60%,#24180f)}
+.celesta-heading{display:flex;align-items:end;justify-content:space-between;gap:35px;margin-bottom:30px}
+.celesta-heading h2{font-family:Georgia,serif;font-size:clamp(42px,7vw,72px);color:#f2d6ad;margin:12px 0}
+.celesta-heading h2 span{color:#b97745}
+.celesta-theme{color:#e5c39b;font-family:Georgia,serif;font-style:italic;font-size:18px;max-width:560px}
+.celesta-dates{color:#d4b18b;font:12px 'DM Mono',monospace;letter-spacing:.12em}
+.celesta-intro{max-width:340px;color:#d1c0ae;line-height:1.8;font-size:13px}
+.celesta-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.celesta-card{padding:20px;border:1px solid #76543b88;border-radius:13px;background:linear-gradient(145deg,#38261c,#211b1a)}
+.celesta-type{font:9px 'DM Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:#e2ad78}
+.celesta-card h3{font:700 19px Georgia,serif;color:#f5dfc1;margin:13px 0 7px}
+.celesta-topic{color:#e3b98f!important;font-style:italic}
+.celesta-card p{font-size:12px;line-height:1.7;color:#cbbba9}
+.celesta-card details{border-top:1px solid #76543b88;padding-top:12px;margin-top:13px;color:#f0d4b3;font-size:11px}
+.celesta-card summary{cursor:pointer;color:#e5b57f;font-weight:700}
+.celesta-note{margin:22px 0 0;color:#c8ad91;font-size:11px;line-height:1.7}
+@media(max-width:850px){.celesta-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.celesta-heading{align-items:flex-start;flex-direction:column}}
+@media(max-width:560px){.celesta-grid{grid-template-columns:1fr}.celesta-section{padding:22px 16px}.celesta-theme{font-size:15px}}
