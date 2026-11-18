@@ -181,3 +181,38 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .pass-note{max-width:420px;margin:0 auto 20px;color:var(--muted);font-size:11px;line-height:1.7}
 @media(max-width:700px){.admin-grid,.public-gallery{grid-template-columns:1fr}.admin-auth{padding:25px}.admin-top{padding:0 16px}.admin-top>div{gap:10px}.admin-top .logo span{display:none}}
 @media print{body.admin-page{background:white;color:#111}.event-pass{box-shadow:none;background:white;color:#111;border:2px solid #333}.event-pass h2,.pass-details strong{color:#111}.pass-details div{background:white;border-color:#bbb}.pass-details small{color:#135b61}.pass-note,.admin-back,.print-button{display:none}.pass-qr{border:1px solid #ddd}}
+
+
+/* Floating, glowing CMS chatbot launcher */
+.chat-launch{
+  display:grid;
+  place-items:center;
+  width:68px;
+  height:68px;
+  right:28px;
+  bottom:28px;
+  border:1px solid #b7fff8;
+  border-radius:50%;
+  background:radial-gradient(circle at 32% 25%,#ffffff 0%,#9af8f1 12%,#36c9c7 48%,#087b91 100%);
+  color:#05212b;
+  box-shadow:0 0 12px #63e6dfbb,0 0 28px #35d9d988,0 0 58px #35d9d955,inset 0 2px 8px #ffffffaa,inset 0 -7px 14px #034e67aa;
+  animation:cmsLauncherFloat 3s ease-in-out infinite, cmsLauncherGlow 2.2s ease-in-out infinite alternate;
+  transition:transform .2s ease,filter .2s ease;
+}
+.chat-launch span{
+  font:900 18px Manrope,Arial,sans-serif;
+  letter-spacing:.04em;
+  text-shadow:0 1px 0 #ffffff88;
+}
+.chat-launch:hover{transform:translateY(-4px) scale(1.07);filter:brightness(1.12)}
+.chat-launch:active{transform:scale(.96)}
+@keyframes cmsLauncherFloat{
+  0%,100%{translate:0 0}
+  50%{translate:0 -9px}
+}
+@keyframes cmsLauncherGlow{
+  from{box-shadow:0 0 10px #63e6df99,0 0 24px #35d9d966,0 0 42px #35d9d933,inset 0 2px 8px #ffffffaa,inset 0 -7px 14px #034e67aa}
+  to{box-shadow:0 0 18px #a5fff6dd,0 0 38px #35d9d9aa,0 0 68px #35d9d977,inset 0 2px 8px #ffffffbb,inset 0 -7px 14px #034e67aa}
+}
+@media(prefers-reduced-motion:reduce){.chat-launch{animation:none}}
+@media(max-width:560px){.chat-launch{width:62px;height:62px;right:18px;bottom:18px}}
