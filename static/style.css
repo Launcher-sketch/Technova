@@ -52,3 +52,31 @@
 .chat-table td{min-width:95px}
 .chat-table-wrap::-webkit-scrollbar{height:6px}
 .chat-table-wrap::-webkit-scrollbar-thumb{background:#3d6675;border-radius:8px}
+
+
+/* Larger, half-screen chatbot panel */
+.chat{
+  right:4vw;
+  bottom:4vh;
+  width:min(48vw,760px);
+  height:min(82vh,820px);
+  border-radius:20px;
+}
+.chat-head{padding:20px 22px}
+.chat-body{padding:22px}
+.bot,.user{font-size:14px;max-width:88%;padding:14px 16px}
+.chat form{padding:16px;gap:10px}
+#chatInput{font-size:14px;padding:15px 16px}
+#chatForm button{padding:0 22px}
+.chat-table{font-size:12px}
+.chat-table th,.chat-table td{padding:11px 12px}
+@media(max-width:800px){
+  .chat{right:15px;bottom:85px;width:min(620px,calc(100vw - 30px));height:min(76vh,700px)}
+}
+@media(max-width:560px){
+  .chat{right:10px;bottom:80px;width:calc(100vw - 20px);height:calc(100dvh - 105px);max-height:760px;border-radius:16px}
+  .chat-head{padding:15px 16px}
+  .chat-body{padding:14px}
+  .bot,.user{font-size:13px;max-width:94%}
+  .chat form{padding:10px}
+}
