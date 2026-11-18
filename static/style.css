@@ -31,3 +31,10 @@
 @keyframes wordReveal{to{opacity:1;transform:translateY(0)}}
 @keyframes introExit{to{opacity:0;visibility:hidden}}
 @media(prefers-reduced-motion:reduce){.cms-intro *,.cms-intro::before{animation:none!important}.intro-cube{opacity:1;transform:rotateZ(45deg)}.intro-ring{opacity:1;width:132px;height:132px}.intro-wordmark{opacity:1;transform:none}}
+
+/* Refined CMS intro wordmark */
+.intro-wordmark{position:relative}
+.intro-cms{letter-spacing:.08em;padding-left:.08em}
+.intro-cms::after{content:"";display:block;width:76px;height:2px;margin:8px auto 0;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 12px #63e6df88}
+.intro-subtitle{margin-top:8px;letter-spacing:.28em}
+.intro-subtitle::after{content:"";display:block;width:42px;height:1px;margin:9px auto 0;background:#63e6df88}
