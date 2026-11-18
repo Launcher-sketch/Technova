@@ -9,3 +9,20 @@ if(intro){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){setTimeout(finishIntro,500);}
   else{setTimeout(finishIntro,3900);}
 }
+
+
+// Live TECHNOVA countdown; uses the event's published local start date.
+const countdown=document.getElementById('eventCountdown');
+if(countdown){
+  const start=new Date(countdown.dataset.start).getTime();
+  const fields={days:document.getElementById('countDays'),hours:document.getElementById('countHours'),minutes:document.getElementById('countMinutes'),seconds:document.getElementById('countSeconds')};
+  const pad=n=>String(n).padStart(2,'0');
+  const tick=()=>{
+    const remaining=start-Date.now();
+    if(remaining<=0){countdown.innerHTML='<p class="countdown-live">TECHNOVA 2026 IS UNDERWAY</p>';return false;}
+    const values={days:Math.floor(remaining/86400000),hours:Math.floor(remaining%86400000/3600000),minutes:Math.floor(remaining%3600000/60000),seconds:Math.floor(remaining%60000/1000)};
+    Object.keys(values).forEach(key=>{if(fields[key])fields[key].textContent=pad(values[key]);});
+    return true;
+  };
+  if(tick()){const timer=setInterval(()=>{if(!tick())clearInterval(timer);},1000);}
+}
