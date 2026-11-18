@@ -713,3 +713,29 @@ footer{
 /* Hindi motto in the CMS welcome animation */
 .signature-vishva{margin-top:8px;font-family:"Noto Sans Devanagari","Nirmala UI","Mangal",sans-serif;font-size:clamp(1.05rem,2.6vw,1.4rem);font-weight:700;letter-spacing:.035em;line-height:1.6;color:#2879b5;text-shadow:0 1px 0 #fff;}
 @media(max-width:600px){.signature-vishva{font-size:1.08rem;margin-top:6px}}
+
+
+/* Hindi motto orbiting the Earth along its circumference */
+.earth-stage{overflow:visible}
+.earth-orbit{
+  position:absolute;z-index:3;left:50%;top:50%;
+  width:clamp(285px,39vw,340px);aspect-ratio:1;
+  transform:translate(-50%,-50%);pointer-events:none;
+}
+.globe-motto-orbit{
+  position:absolute;left:0;top:0;width:max-content;
+  padding:5px 12px;border:1px solid rgba(40,121,181,.25);
+  border-radius:999px;background:rgba(255,255,255,.94);
+  color:#176da9;font-family:"Noto Sans Devanagari","Nirmala UI","Mangal",sans-serif;
+  font-size:clamp(.78rem,1.8vw,.98rem);font-weight:800;
+  letter-spacing:.025em;line-height:1.5;white-space:nowrap;
+  box-shadow:0 3px 14px rgba(24,91,145,.16);
+  offset-path:circle(44% at 50% 50%);offset-distance:0%;offset-rotate:0deg;
+  animation:mottoOrbit 14s linear infinite;
+}
+@keyframes mottoOrbit{to{offset-distance:100%}}
+@media(max-width:600px){
+  .earth-orbit{width:clamp(270px,78vw,310px)}
+  .globe-motto-orbit{font-size:.76rem;padding:4px 9px}
+}
+@media(prefers-reduced-motion:reduce){.globe-motto-orbit{animation:none;offset-distance:0%}}
