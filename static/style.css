@@ -1711,3 +1711,18 @@ body::after{
     font-size:clamp(1.25rem,5.7vw,1.55rem)!important;
   }
 }
+
+
+/* Slightly smaller square logo while keeping the larger wordmark */
+.cms-intro.cms-earth-signature .earth-stage{
+  width:clamp(180px,25vw,220px)!important;
+  height:clamp(180px,25vw,220px)!important;
+  max-width:220px!important;
+  max-height:220px!important;
+}
+@media(max-width:600px){
+  .cms-intro.cms-earth-signature .earth-stage{
+    width:min(185px,52vw)!important;
+    height:min(185px,52vw)!important;
+  }
+}
