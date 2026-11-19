@@ -310,3 +310,104 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
   .events-home .updates-heading{align-items:flex-start;flex-direction:column}
   .events-home .principal-note{grid-template-columns:1fr;padding:22px}
 }
+
+
+/* Campus facilities directory and principal reference */
+.about-page .campus-spaces{
+  padding:38px 0 14px;
+}
+.about-page .spaces-heading{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:16px;
+}
+.about-page .spaces-heading h2,
+.about-page .principal-profile h2{
+  margin:0 0 8px;
+  color:var(--cms-navy);
+  font-size:clamp(24px,3vw,34px);
+  letter-spacing:-1px;
+}
+.about-page .spaces-heading p:not(.eyebrow),
+.about-page .principal-profile p:not(.eyebrow){
+  margin:0;
+  color:var(--cms-muted);
+  font-size:11px;
+  line-height:1.65;
+}
+.about-page .spaces-heading>a,
+.about-page .principal-name a{
+  color:var(--cms-blue);
+  font-size:10px;
+  font-weight:800;
+  text-decoration:none;
+}
+.about-page .spaces-groups{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:10px;
+}
+.about-page .spaces-group{
+  padding:17px;
+  border:1px solid var(--cms-line);
+  border-radius:14px;
+  background:linear-gradient(145deg,#fff,#f6faff);
+}
+.about-page .spaces-group>span{
+  color:#4388c7;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+.about-page .spaces-group ul{
+  margin:13px 0 0;
+  padding-left:15px;
+  color:#3e5d7b;
+  font-size:10px;
+  line-height:2;
+}
+.about-page .spaces-footnote{
+  margin:12px 0 0;
+  color:var(--cms-muted);
+  font-size:9px;
+}
+.about-page .principal-profile{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(220px,.7fr);
+  gap:24px;
+  align-items:center;
+  margin:28px 0 10px;
+  padding:25px;
+  border:1px solid #d4e5f6;
+  border-radius:18px;
+  background:linear-gradient(110deg,#eaf4ff,#fff 72%);
+}
+.about-page .principal-name{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  padding:16px;
+  border:1px solid #dce9f6;
+  border-radius:13px;
+  background:#fff;
+}
+.about-page .principal-name span{
+  color:#4388c7;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:1.2px;
+}
+.about-page .principal-name strong{
+  color:var(--cms-navy);
+  font-size:18px;
+}
+@media(max-width:900px){
+  .about-page .spaces-groups{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  .about-page .spaces-heading{align-items:flex-start;flex-direction:column}
+  .about-page .spaces-groups{grid-template-columns:1fr}
+  .about-page .principal-profile{grid-template-columns:1fr;padding:18px}
+}
