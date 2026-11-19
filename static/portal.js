@@ -41,7 +41,39 @@ function render(role){
  const modules=$("roleModules");modules.replaceChildren();d.modules.forEach(m=>{const b=addText(modules,"button","","module-card");b.type="button";b.dataset.module=m[0];addText(b,"span",m[1],"module-icon");addText(b,"b",m[0]);addText(b,"small",m[2])});
  $("moduleDetail").hidden=true;
 }
-function showModule(name){const info=moduleInfo[name];if(!info)return;const box=$("moduleDetail");box.replaceChildren();addText(box,"p","DEMO MODULE","eyebrow");addText(box,"h4",info[0]);addText(box,"p",info[1],"module-description");const ul=addText(box,"ul","");info.slice(2).forEach(item=>addText(ul,"li",item));box.hidden=false;box.scrollIntoView({behavior:"smooth",block:"nearest"})}
+function showModule(name){
+ const info=moduleInfo[name];if(!info)return;
+ const box=$("moduleDetail");box.replaceChildren();
+ addText(box,"p","DEMO MODULE","eyebrow");
+ addText(box,"h4",info[0]);
+ addText(box,"p",info[1],"module-description");
+ const ul=addText(box,"ul","");
+ info.slice(2).forEach(item=>addText(ul,"li",item));
+ const actions={
+  "Assignment Manager":["Add a sample task","Task title","Add task","Added to this temporary preview. Nothing was submitted."],
+  "Lesson Planner":["Add a lesson topic","Lesson topic","Add topic","Topic added to this temporary lesson-plan preview."],
+  "Notice Publisher":["Prepare a notice draft","Notice title","Preview draft","Draft added locally. It has not been published or sent."],
+  "Announcement Manager":["Prepare an announcement draft","Announcement title","Preview draft","Draft added locally. It has not been published or sent."],
+  "Teacher Communication":["Prepare a message preview","Message subject","Preview message","Message preview created locally. Nothing was sent."],
+  "Gallery Management":["Add a sample gallery caption","Image caption","Add caption","Caption added to this temporary gallery preview."],
+  "Achievement Portfolio":["Add a project idea","Project or achievement","Add item","Item added to this temporary portfolio preview."]
+ };
+ const config=actions[name];
+ if(config){
+  const form=addText(box,"form","","module-demo-form");
+  const field=addText(form,"input","");
+  field.type="text";field.maxLength=120;field.required=true;field.placeholder=config[1];
+  field.setAttribute("aria-label",config[1]);field.autocomplete="off";
+  const submit=addText(form,"button",config[2]);submit.type="submit";
+  const status=addText(box,"p","This is a temporary demo preview. Changes are not saved to a school system.","module-feedback");
+  status.setAttribute("role","status");
+  form.addEventListener("submit",event=>{
+   event.preventDefault();const value=field.value.trim();if(!value)return;
+   addText(ul,"li",value+" · DEMO PREVIEW");field.value="";status.textContent=config[3];
+  });
+ }
+ box.hidden=false;box.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
 function reply(q){
  const text=q.toLowerCase();let answer;let target="";
  if(/digital id|student id|identity card/.test(text)){target="Digital Student ID";answer="I opened the sample Digital Student ID module. It is a demonstration card, not an official school ID."}
