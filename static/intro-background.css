@@ -3,7 +3,7 @@
   background-color:#0b5798!important;
   background-image:
     linear-gradient(135deg,rgba(4,76,151,.34) 0%,rgba(0,91,176,.27) 48%,rgba(3,49,112,.42) 100%),
-    url("data:image/jpeg;base64,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")!important;
+    url("https://cmseducation.org/aliganj-campus-1/wp-content/uploads/sites/2/2026/08/DSC07138-1024x682.webp")!important;
   background-position:center 38%!important;
   background-size:cover!important;
   background-repeat:no-repeat!important;
@@ -19,14 +19,6 @@
   content:none!important;
   opacity:0!important;
 }
-
-/* Keep the supplied square CMS logo sharp */
-.cms-intro.cms-earth-signature .intro-earth{
-  opacity:1!important;
-  visibility:visible!important;
-  filter:none!important;
-}
-
 
 /* Richer translucent CMS-blue wash from the supplied animation reference */
 .cms-intro.cms-earth-signature::before{
@@ -183,4 +175,80 @@
   .cms-intro.cms-earth-signature .intro-welcome-card{opacity:1}
   .cms-intro.cms-earth-signature .earth-stage,
   .cms-intro.cms-earth-signature .signature-wordmark{opacity:0}
+}
+
+
+/* Final coordinated CMS intro sequence: welcome -> campus photo/logo -> welcome */
+.cms-intro.cms-earth-signature{
+  background-color:#073b75!important;
+  background-image:linear-gradient(118deg,rgba(3,25,65,.82) 0%,rgba(0,68,137,.68) 48%,rgba(2,27,68,.84) 100%),url("https://cmseducation.org/aliganj-campus-1/wp-content/uploads/sites/2/2026/08/DSC07138-1024x682.webp")!important;
+  background-size:cover!important;background-position:center 42%!important;
+}
+.cms-intro.cms-earth-signature::before{
+  display:block!important;content:""!important;position:absolute!important;inset:0!important;
+  width:auto!important;aspect-ratio:auto!important;border:0!important;border-radius:0!important;
+  background:linear-gradient(135deg,rgba(0,116,207,.18),rgba(0,31,81,.18))!important;
+  box-shadow:none!important;opacity:1!important;animation:none!important;
+}
+.cms-intro.cms-earth-signature .intro-welcome-card{
+  z-index:5!important;width:min(520px,calc(100vw - 34px))!important;
+  padding:clamp(25px,4vw,40px)!important;
+  animation:cmsWelcomeCardRepair 6.5s ease-in-out both!important;pointer-events:none!important;
+}
+.cms-intro.cms-earth-signature .intro-welcome-options{display:none!important}
+.cms-intro.cms-earth-signature .earth-stage,
+.cms-intro.cms-earth-signature .signature-wordmark{opacity:0!important;animation:cmsLogoWindowRepair 6.5s linear both!important}
+.cms-intro.cms-earth-signature .earth-stage{
+  width:clamp(170px,23vw,230px)!important;aspect-ratio:1!important;margin:0!important;animation-delay:0s!important;
+}
+.cms-intro.cms-earth-signature .intro-earth{
+  visibility:visible!important;width:100%!important;height:100%!important;object-fit:contain!important;
+  padding:12px!important;border-radius:0!important;background:rgba(255,255,255,.96)!important;
+  box-shadow:0 24px 70px rgba(0,15,45,.48),0 0 0 1px rgba(255,255,255,.8)!important;
+  animation:cmsLogoPopRepair 1.3s cubic-bezier(.16,1.2,.28,1) 1.75s both!important;
+}
+.cms-intro.cms-earth-signature .signature-wordmark{
+  position:relative!important;z-index:2!important;display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;gap:0!important;width:min(92vw,520px)!important;
+  max-width:520px!important;margin:0 auto!important;padding:0 12px!important;text-align:center!important;animation-delay:0s!important;
+}
+.cms-intro.cms-earth-signature .signature-wordmark .signature-jai,
+.cms-intro.cms-earth-signature .signature-wordmark .signature-cms{
+  display:block!important;width:100%!important;margin:0!important;padding:0!important;text-align:center!important;
+  color:#fff!important;-webkit-text-fill-color:#fff!important;text-shadow:0 3px 16px rgba(0,15,40,.55)!important;
+  animation:none!important;opacity:1!important;transform:none!important;filter:none!important;
+}
+.cms-intro.cms-earth-signature .signature-wordmark .signature-jai{
+  font:900 clamp(1.2rem,3vw,1.8rem)/1.2 Arial,sans-serif!important;letter-spacing:.12em!important;
+}
+.cms-intro.cms-earth-signature .signature-wordmark .signature-cms{
+  margin-top:9px!important;font:700 clamp(.8rem,2vw,1rem)/1.3 Arial,sans-serif!important;
+  letter-spacing:.22em!important;color:#d6ecff!important;-webkit-text-fill-color:#d6ecff!important;
+}
+@keyframes cmsWelcomeCardRepair{
+  0%,18%{opacity:1;visibility:visible}
+  24%,74%{opacity:0;visibility:hidden}
+  80%,100%{opacity:1;visibility:visible}
+}
+@keyframes cmsLogoWindowRepair{
+  0%,27%{opacity:0}
+  32%,70%{opacity:1}
+  76%,100%{opacity:0}
+}
+@keyframes cmsLogoPopRepair{
+  0%{opacity:0;transform:translateY(44px) scale(.55) rotate(-7deg);filter:blur(5px)}
+  68%{opacity:1;transform:translateY(-6px) scale(1.08) rotate(1deg);filter:blur(0)}
+  84%{transform:translateY(2px) scale(.98)}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:drop-shadow(0 18px 22px rgba(0,0,0,.3))}
+}
+@media(max-width:600px){
+  .cms-intro.cms-earth-signature .intro-welcome-card{padding:24px 19px!important}
+  .cms-intro.cms-earth-signature .earth-stage{width:clamp(150px,48vw,205px)!important}
+  .cms-intro.cms-earth-signature .signature-wordmark .signature-jai{font-size:clamp(1rem,5vw,1.4rem)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .cms-intro.cms-earth-signature .intro-welcome-card,.cms-intro.cms-earth-signature .earth-stage,
+  .cms-intro.cms-earth-signature .signature-wordmark,.cms-intro.cms-earth-signature .intro-earth{animation:none!important}
+  .cms-intro.cms-earth-signature .intro-welcome-card{opacity:1!important;visibility:visible!important}
+  .cms-intro.cms-earth-signature .earth-stage,.cms-intro.cms-earth-signature .signature-wordmark{opacity:0!important}
 }
