@@ -519,3 +519,41 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
 .events-home .site-nav .nav-dropdown>summary{list-style:none}
 .events-home .site-nav .nav-dropdown>summary::-webkit-details-marker{display:none}
 .events-home .site-nav .nav-dropdown>summary::marker{content:""}
+
+
+/* Learn, Create, Lead: use the same editorial feature rhythm as CMS Universe */
+.events-home .campus-snapshot{
+  display:block;
+  padding:clamp(26px,4vw,48px);
+  margin:34px 0 26px;
+  border:1px solid #dce8f5;
+  border-radius:26px;
+  background:linear-gradient(135deg,#fff 0%,#f3f8ff 100%);
+}
+.events-home .snapshot-intro{max-width:850px;margin-bottom:30px}
+.events-home .snapshot-intro h2{margin:7px 0 10px;color:var(--cms-navy);font-size:clamp(34px,4.5vw,52px);letter-spacing:-1.7px}
+.events-home .snapshot-intro>p:not(.eyebrow){margin:0;color:var(--cms-muted);font-size:16px;line-height:1.8}
+.events-home .snapshot-category{padding:22px 0 28px}
+.events-home .snapshot-category+.snapshot-category{border-top:1px solid #dce8f5}
+.events-home .snapshot-category .category-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:15px}
+.events-home .snapshot-category .category-heading h2{margin:0;color:var(--cms-navy);font-size:clamp(24px,3vw,34px);letter-spacing:-.8px}
+.events-home .snapshot-category .category-heading span{color:#4388c7;font-size:10px;font-weight:900;letter-spacing:1.3px}
+.events-home .snapshot-category .home-event-grid{grid-template-columns:1fr}
+.events-home .snapshot-featured{min-height:220px;padding:clamp(22px,3vw,34px);border-radius:20px}
+.events-home .snapshot-featured h3{font-size:clamp(25px,3vw,36px)}
+.events-home .snapshot-featured>div>p:not(.home-card-kicker){max-width:800px;font-size:15px;line-height:1.8}
+.events-home .snapshot-featured .home-card-link{font-size:13px}
+@media(max-width:650px){
+  .events-home .campus-snapshot{padding:23px 17px}
+  .events-home .snapshot-category .category-heading{align-items:flex-start;flex-direction:column;gap:7px}
+  .events-home .snapshot-featured{min-height:190px}
+}
+
+/* Deep links from the homepage visibly identify the requested information */
+.campus-detail-page .detail-card:target{
+  border-color:#3b91df;
+  box-shadow:0 0 0 4px rgba(59,145,223,.16),0 14px 32px rgba(29,69,111,.09);
+  background:linear-gradient(145deg,#f3f9ff,#fff);
+  scroll-margin-top:28px;
+}
+.campus-detail-page .detail-card:target h2{color:#1769b5}
