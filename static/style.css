@@ -2553,31 +2553,32 @@ body.cms-homepage .home-chat-embedded #chatForm{
   body.cms-homepage .home-chat-embedded{width:min(960px,100%)!important}
 }
 
-/* Dark high-contrast site and reliable floating Campus Genie launcher */
-:root{--bg:#070d18;--panel:#101b2b;--text:#f4f7fc;--muted:#c0ccdc;--line:#34465e}
-html,body{background:#070d18!important;color:#f4f7fc!important}
-body.events-home,body.cms-homepage{background:#070d18!important;color:#f4f7fc!important}
-.top,header,.site-header,nav{background:#0a1322!important;color:#f4f7fc!important;border-color:#26384e!important}
-.top nav a,nav a{color:#e0e9f5!important}
-.home-hero,.hero,.mun-hero,.celesta-section,.sports-hero,.about-hero,.contact-hero{background:radial-gradient(ellipse at 82% 15%,rgba(22,126,190,.20),transparent 42%),linear-gradient(135deg,#0a1424,#101e31 72%)!important;color:#f4f7fc!important}
-h1,h2,h3,h4,strong,.home-hero p,.home-hero h1,.home-hero h2{color:#f4f7fc!important}
-p,li,.date,.note,.home-hero>p{color:#d0dbea!important}
-.event-card,.teacher-grid article,.day-grid article,.home-event-card,.mun-card,.event-modal-panel,.about-tile,.contact-card,.results-card,.academic-card,.detail-card{background:#111e30!important;border:1px solid #344a63!important;color:#f4f7fc!important;box-shadow:0 10px 28px #0005!important}
-.event-card p,.teacher-grid p,.day-grid p,.home-event-card p,.about-tile p,.contact-card p,.results-card p,.academic-card p,.mun-card p,.detail-card p{color:#c6d3e3!important}
-.dropdown-menu{background:#101b2b!important;border-color:#3b506b!important}.dropdown-menu a{color:#edf4fc!important}
-footer{background:#080f1c!important;color:#b9d8f3!important;border-color:#34465e!important}
-.chat,.chat.fullscreen,body.cms-homepage .home-chat-embedded{background:#0d1726!important;border:1px solid #3b536e!important;color:#f4f7fc!important;box-shadow:0 22px 70px #000b!important}
-.chat-head,body.cms-homepage .home-chat-embedded .chat-head{background:linear-gradient(110deg,#092b4d,#075ca9)!important;border-color:#345c80!important}
-.chat-head strong{color:#fff!important}.chat-head small{color:#d8e8f8!important}
-.chat-body,body.cms-homepage .home-chat-embedded .chat-body{background:#101e30!important}
-.bot{background:#1b2c42!important;border:1px solid #3a526d!important;color:#f3f7fc!important}.user{background:#075ca9!important;color:#fff!important}
-.chat form,body.cms-homepage .home-chat-embedded #chatForm{background:#0b1422!important;border-color:#34465e!important}
-#chatInput{background:#142338!important;border:1px solid #526b88!important;color:#fff!important}#chatInput::placeholder{color:#bdcadd!important}
-#chatForm button{background:#0878c9!important;color:#fff!important}.chat-head-actions button{background:#18314d!important;border-color:#52708f!important;color:#fff!important}
-.chat-table-wrap{background:#101e30!important;border-color:#3b536e!important}.chat-table,.chat-table td{color:#f0f5fc!important}.chat-table th{background:#173653!important;color:#fff!important}.chat-table td{border-color:#34465e!important}
-.chat-launch{display:grid!important;place-items:center!important;position:fixed!important;right:26px!important;bottom:26px!important;width:66px!important;height:66px!important;padding:13px!important;border:2px solid #9bd8ff!important;border-radius:50%!important;background:linear-gradient(145deg,#168bd5,#064477)!important;box-shadow:0 8px 30px #000b,0 0 0 5px #168bd533!important;z-index:2147483000!important;visibility:visible!important;opacity:1!important;cursor:pointer!important;pointer-events:auto!important}
+
+/* LIGHT THEME — restore bright CMS blue surfaces across the site */
+:root{--bg:#f4f8fd;--panel:#fff;--text:#18324d;--muted:#61758b;--cyan:#0875cf;--line:#d8e6f4}
+html,body{background:#f4f8fd!important;color:#18324d!important}
+body.events-home,body.cms-homepage{background:linear-gradient(145deg,#f7fbff 0%,#eef6ff 52%,#f8fbff 100%)!important;color:#18324d!important}
+.top,header,.site-header,nav{background:rgba(255,255,255,.96)!important;color:#24415f!important;border-color:#d9e8f6!important}
+.top nav a,nav a{color:#24415f!important}
+.home-hero,.hero,.mun-hero,.celesta-section,.sports-hero,.about-hero,.contact-hero{background:radial-gradient(ellipse at 82% 15%,rgba(62,150,225,.13),transparent 42%),linear-gradient(135deg,#e5f2ff,#f7fbff 72%)!important;color:#18324d!important}
+h1,h2,h3,h4,strong,.home-hero p,.home-hero h1,.home-hero h2{color:#18324d}
+p,li,.date,.note,.home-hero>p{color:#536d86}
+.event-card,.teacher-grid article,.day-grid article,.home-event-card,.mun-card,.event-modal-panel,.about-tile,.contact-card,.results-card,.academic-card,.detail-card{background:linear-gradient(145deg,#fff,#f2f8ff)!important;border:1px solid #d3e4f5!important;color:#18324d!important;box-shadow:0 8px 24px rgba(29,83,132,.07)!important}
+.event-card p,.teacher-grid p,.day-grid p,.home-event-card p,.about-tile p,.contact-card p,.results-card p,.academic-card p,.mun-card p,.detail-card p{color:#5d7187!important}
+.dropdown-menu{background:#fff!important;border-color:#d6e6f5!important}.dropdown-menu a{color:#24415f!important}
+footer{background:#f5faff!important;color:#3978b5!important;border-color:#d7e6f5!important}
+.chat,.chat.fullscreen,body.cms-homepage .home-chat-embedded{background:#fff!important;border:1px solid #c7def2!important;color:#18324d!important;box-shadow:0 22px 65px rgba(12,52,91,.16)!important}
+.chat-head,body.cms-homepage .home-chat-embedded .chat-head{background:linear-gradient(110deg,#075ca9,#258bd8)!important;border-color:#4c9bdb!important}
+.chat-head strong{color:#fff!important}.chat-head small{color:#e1f1ff!important}
+.chat-body,body.cms-homepage .home-chat-embedded .chat-body{background:linear-gradient(180deg,#f7fbff,#edf6ff)!important}
+.bot{background:#fff!important;border:1px solid #d6e5f3!important;color:#193651!important}.user{background:linear-gradient(135deg,#2589df,#0868bb)!important;color:#fff!important}
+.chat form,body.cms-homepage .home-chat-embedded #chatForm{background:#fff!important;border-color:#dce8f3!important}
+#chatInput{background:#f5f9fd!important;border:1px solid #cbdced!important;color:#18334d!important}#chatInput::placeholder{color:#8298af!important}
+#chatForm button{background:linear-gradient(135deg,#2589df,#0868bb)!important;color:#fff!important}.chat-head-actions button{background:#ffffff20!important;border-color:#ffffff66!important;color:#fff!important}
+.chat-table-wrap{background:#fff!important;border-color:#d4e4f3!important}.chat-table,.chat-table td{color:#18324d!important}.chat-table th{background:#e4f1ff!important;color:#075da9!important}.chat-table td{border-color:#e5edf5!important}
+.chat-launch{display:grid!important;place-items:center!important;position:fixed!important;right:26px!important;bottom:26px!important;width:66px!important;height:66px!important;padding:13px!important;border:2px solid #8bc2ef!important;border-radius:50%!important;background:linear-gradient(145deg,#2589df,#0868bb)!important;box-shadow:0 8px 26px rgba(20,80,130,.22)!important;z-index:2147483000!important;visibility:visible!important;opacity:1!important;cursor:pointer!important;pointer-events:auto!important}
 .chat-launch .chat-globe{display:block!important;width:100%!important;height:100%!important;fill:none!important;stroke:#fff!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important;border:0!important;filter:none!important}
 .chat-launch:hover{transform:translateY(-3px) scale(1.04)!important}
 body.cms-homepage .chat-launch{display:none!important}body:not(.cms-homepage) .chat-launch{display:grid!important}
-body.cms-homepage .home-chat-embedded{background:#0d1726!important}body.cms-homepage .home-chat-embedded #chatClose{display:none!important}
+body.cms-homepage .home-chat-embedded{background:#fff!important}body.cms-homepage .home-chat-embedded #chatClose{display:none!important}
 @media(max-width:600px){.chat-launch{right:16px!important;bottom:16px!important;width:60px!important;height:60px!important}}
