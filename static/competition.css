@@ -609,3 +609,26 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
   .academic-results-page .academic-table-wrap th,
   .academic-results-page .academic-table-wrap td{font-size:14px;padding:11px 12px}
 }
+
+/* Event photo slideshows */
+.event-gallery{margin:28px 0 34px;padding:22px;border:1px solid #d7e6f5;border-radius:20px;background:linear-gradient(145deg,#fff,#f2f7fd);box-shadow:0 12px 28px rgba(29,69,111,.06)}
+.event-gallery-top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:15px}
+.event-gallery-top .eyebrow{margin:0 0 5px;color:#4388c7;font-size:10px;font-weight:900;letter-spacing:1.3px}
+.event-gallery-top h2{margin:0;color:#173b65;font-size:clamp(21px,3vw,30px)}
+.event-gallery-controls{display:flex;align-items:center;gap:10px;color:#496782;font-size:12px;font-weight:800}
+.event-gallery-controls button{width:36px;height:36px;border:1px solid #cbdced;border-radius:50%;background:#fff;color:#1769b5;font-size:25px;line-height:1;cursor:pointer}
+.event-gallery-stage{position:relative;overflow:hidden;border-radius:14px;background:#dce8f5;aspect-ratio:16/8;min-height:210px}
+.event-gallery-slide{display:none;position:absolute;inset:0;margin:0}
+.event-gallery-slide.is-active{display:block;animation:eventGalleryFade .35s ease}
+.event-gallery-slide img{width:100%;height:100%;display:block;object-fit:cover}
+.event-gallery-slide figcaption{position:absolute;left:0;right:0;bottom:0;padding:30px 18px 14px;background:linear-gradient(transparent,rgba(7,22,40,.78));color:#fff;font-size:13px;font-weight:700}
+.event-gallery-dots{display:flex;justify-content:center;gap:8px;padding-top:14px}
+.event-gallery-dots button{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:#b7c9dc;cursor:pointer}
+.event-gallery-dots button.is-active{width:22px;border-radius:8px;background:#176fc1}
+@keyframes eventGalleryFade{from{opacity:.35}to{opacity:1}}
+@media(max-width:650px){.event-gallery{padding:14px;margin:20px 0}.event-gallery-top{align-items:flex-start;flex-direction:column}.event-gallery-stage{aspect-ratio:4/3;min-height:190px}.event-gallery-controls{align-self:flex-end;margin-top:-44px}}
+
+.event-gallery-source{margin:18px 0;padding:18px;border:1px solid #d7e6f5;border-radius:14px;background:linear-gradient(145deg,#fff,#f2f7fd)}
+.event-gallery-source strong{display:block;color:#173b65;font-size:16px}
+.event-gallery-source p{margin:6px 0 10px;color:#536e89;font-size:13px}
+.event-gallery-source a{color:#1769b5;font-size:13px;font-weight:800;text-decoration:none}
