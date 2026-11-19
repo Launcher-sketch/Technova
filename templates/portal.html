@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Campus Portal | CMS Digital Campus Demo</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='portal.css') }}?v=5">
+<link rel="stylesheet" href="{{ url_for('static', filename='portal.css') }}?v=7">
 <meta name="description" content="Explore a fictional CMS digital campus demonstration for students, teachers, parents and school administrators."><meta name="theme-color" content="#173b65"></head>
 <body>
+<div class="entry-overlay" id="entryOverlay" role="dialog" aria-modal="true" aria-labelledby="entryTitle"><div class="entry-card"><p class="eyebrow">CMS DIGITAL CAMPUS</p><h2 id="entryTitle">Who is entering the campus?</h2><p class="entry-copy">Choose your space to continue.</p><div class="entry-roles"><button type="button" data-entry-role="student">🎓 <b>Student</b><small>Open student dashboard</small></button><button type="button" data-entry-role="teacher">📚 <b>Teacher</b><small>Coming next</small></button><button type="button" data-entry-role="parent">🏡 <b>Parent</b><small>Coming next</small></button><button type="button" data-entry-role="admin">⚙️ <b>School Admin</b><small>Coming next</small></button></div><form id="studentIdForm" class="student-id-form" hidden><label for="studentDemoId">Enter demo Student ID</label><input id="studentDemoId" autocomplete="off" placeholder="e.g. CMS-DEMO-001" required><button type="submit">Enter student dashboard</button><p class="entry-copy">Demo only: use one of the sample IDs provided. This page does not verify, collect or save real CMS IDs.</p><p id="idFeedback" class="id-feedback" role="status"></p></form></div></div>
 <header class="topbar"><a class="brand" href="/">CMS<span> CAMPUS</span><small>DIGITAL CAMPUS DEMO</small></a><div class="top-actions"><span class="demo-pill">DEMO ENVIRONMENT</span><a href="/">Back to Campus Website ↗</a></div></header>
 <main class="shell">
 <section class="welcome"><div><p class="eyebrow">CITY MONTESSORI SCHOOL · DIGITAL CAMPUS</p><h1>One campus.<br><em>Every possibility.</em></h1><p class="lead">A concept for a connected space for students, teachers and parents, with a Campus Genie assistant preview.</p></div><div class="welcome-art"><div class="orbit o1"></div><div class="orbit o2"></div><div class="orb-label">CG<span>AI</span></div></div></section>
@@ -29,12 +30,12 @@
 </div>
 <div class="lower-grid">
 <section class="panel"><div class="panel-head"><div><p class="eyebrow">SAMPLE CAMPUS BULLETIN</p><h3>Notices & updates</h3></div><span class="count">FICTIONAL</span></div><div class="notice-list"><article><span class="notice-tag blue">SAMPLE · ACADEMICS</span><b>Inter-house quiz registrations open</b><small>Today · Activities Office</small></article><article><span class="notice-tag violet">SAMPLE · CAMPUS</span><b>Campus activity schedule updated</b><small>Yesterday · School Office</small></article><article><span class="notice-tag green">SAMPLE · EVENT</span><b>TECHNOVA showcase schedule published</b><small>18 Nov · Event Team</small></article></div></section>
-<section class="panel quick-panel"><p class="eyebrow">QUICK ACCESS</p><h3>Everything within reach</h3><div class="quick-links" id="quickLinks"></div></section>
+
 </div>
 <section class="panel modules-panel"><div class="panel-head"><div><p class="eyebrow">ROLE-BASED TOOLS</p><h3>Explore your workspace</h3></div><span class="live-dot">INTERACTIVE DEMO</span></div><div id="roleModules" class="role-modules" aria-live="polite"></div><div id="moduleDetail" class="module-detail" aria-live="polite" hidden></div></section>
 <footer>CMS CAMPUS · Campus Genie <span>Concept demonstration · Fictional sample data · Not an official school record system</span></footer>
 </section>
 </section>
 </main>
-<script src="{{ url_for('static', filename='portal.js') }}?v=6" defer></script>
+<script src="{{ url_for('static', filename='portal.js') }}?v=7" defer></script>
 </body></html>
