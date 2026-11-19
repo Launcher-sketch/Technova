@@ -40,6 +40,9 @@ const input=document.getElementById('chatInput');
 const form=document.getElementById('chatForm');
 const sendButton=form?.querySelector('button[type="submit"],button:not([type])');
 const welcomeMessage="Jai Jagat! I’m Campus Genie, your virtual guide to City Montessori School. Where would you like to go today? Try Academic Achievements, Sports, Cultural Events, CMSMUN, CELESTA, TECHNOVA or Contact Us.";
+let pendingCommonQuestion="";
+const commonQuestionTerms=["schedule","timetable","date","dates","timing","timings","venue","venues","location","locations","registration","register","deadline","last date"];
+const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","sports","academic","icse","isc","jee","ap examination","cultural","quiz","robotics","football","international sports"];
 document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classList.toggle('open'));
 
 const leaveGenie=()=>{
@@ -74,6 +77,7 @@ function showTyping(){
 }
 document.getElementById('chatRestart')?.addEventListener('click',()=>{
   if(body)body.replaceChildren();
+  pendingCommonQuestion='';
   bubble(welcomeMessage,'bot');
   if(input)input.value='';
   if(sendButton)sendButton.disabled=false;
@@ -81,12 +85,30 @@ document.getElementById('chatRestart')?.addEventListener('click',()=>{
 form?.addEventListener('submit',async event=>{
   event.preventDefault();const message=input?.value.trim();if(!message||!body)return;
   bubble(message,'user');input.value='';if(sendButton)sendButton.disabled=true;
+  const lowerMessage=message.toLowerCase();
+  if(pendingCommonQuestion){
+    const contextualMessage=pendingCommonQuestion+' for '+message;
+    pendingCommonQuestion='';
+    await askCampusGenie(contextualMessage);
+    return;
+  }
+  const asksCommonDetail=commonQuestionTerms.some(term=>lowerMessage.includes(term))&&!eventContextTerms.some(term=>lowerMessage.includes(term));
+  if(asksCommonDetail){
+    pendingCommonQuestion=message;
+    bubble('Which event are you asking about? Choose TECHNOVA, CELESTA, CMSMUN, SPARDHA, CONCORD, or Academic Achievements.','bot');
+    if(sendButton)sendButton.disabled=false;
+    input?.focus();
+    return;
+  }
   const destination=findCampusDestination(message);
   if(destination){
     bubble('Taking you to '+destination.label+'…','bot');
     setTimeout(()=>{leaveGenie();window.location.href=destination.url;},650);
     return;
   }
+  await askCampusGenie(message);
+});
+async function askCampusGenie(message){
   const typing=showTyping();
   try{
     const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message})});
@@ -94,7 +116,7 @@ form?.addEventListener('submit',async event=>{
     const data=await response.json();typing.remove();bubble(data.reply||'I could not prepare a response.', 'bot',data.table);
   }catch{typing.remove();bubble('The assistant is temporarily unavailable. Please try again.','bot');}
   finally{if(sendButton)sendButton.disabled=false;input?.focus();}
-});
+}
 document.querySelectorAll('[data-prompt]').forEach(button=>button.addEventListener('click',()=>{
   if(input){input.value=button.dataset.prompt||'';form?.requestSubmit();}
 }));
