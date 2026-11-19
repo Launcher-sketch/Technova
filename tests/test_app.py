@@ -66,5 +66,13 @@ class CampusSiteSmokeTests(unittest.TestCase):
         self.assertTrue(payload.get("events"))
 
 
+    @patch.object(app_module, "select_rows", return_value=[{"title": "Campus test notice", "body": "A sample campus update."}])
+    def test_homepage_displays_published_announcements(self, _select_rows):
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Campus test notice", response.data)
+        self.assertIn(b"A sample campus update.", response.data)
+
+
 if __name__ == "__main__":
     unittest.main()
