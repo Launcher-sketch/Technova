@@ -8,9 +8,5 @@
   <path d="M118 154h38M121 144c10 6 22 6 32 0M121 164c10-6 22-6 32 0"/>
 </g>
 <path d="M104 205H343" stroke="#fff" stroke-width="2.5"/>
-<g fill="#fff" font-family="Arial,Helvetica,sans-serif">
-  <text x="342" y="245" text-anchor="end" font-size="34" font-weight="700">CITY</text>
-  <text x="223.5" y="282" text-anchor="middle" font-size="34" font-weight="500" letter-spacing="1">MONTESSORI</text>
-  <text x="223.5" y="326" text-anchor="middle" font-size="34" font-weight="500" letter-spacing="1">SCHOOL</text>
-</g>
+<text x="223.5" y="258" text-anchor="middle" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="600" letter-spacing=".35">CITY MONTESSORI SCHOOL</text>
 </svg>
