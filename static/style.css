@@ -1654,3 +1654,22 @@ body::after{
     animation:none!important;
   }
 }
+
+
+/* Use the independent scale property so the logo pop survives legacy transform overrides */
+@keyframes cmsLogoPop{
+  0%{scale:.52}
+  68%{scale:1.07}
+  84%{scale:.97}
+  100%{scale:1}
+}
+.cms-intro.cms-earth-signature .intro-earth{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  scale:.52;
+  animation:cmsLogoPop 1.25s cubic-bezier(.16,.8,.2,1) .25s forwards!important;
+}
+@media(prefers-reduced-motion:reduce){
+  .cms-intro.cms-earth-signature .intro-earth{scale:1;animation:none!important}
+}
