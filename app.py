@@ -226,6 +226,11 @@ def cmsmun_page():
     return render_template("cmsmun.html")
 
 
+@app.get("/contact")
+def contact_page():
+    return render_template("contact.html")
+
+
 @app.get("/media/<path:filename>")
 def media(filename):
     # Gallery files are served from the public Supabase Storage bucket, not local disk.
