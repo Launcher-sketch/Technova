@@ -115,6 +115,7 @@ document.querySelectorAll("[data-entry-role]").forEach(button=>button.addEventLi
  if(role==="student"){$("studentDemoId").focus();return;}
  if(role==="teacher"){$("teacherDemoId").focus();return;}
  if(role==="parent"){$("parentDemoId").focus();return;}
+ if(role==="admin"){window.location.href="/admin/login";return;}
  activeStudentName=roles[role].name.replace(/^Welcome,?\s*/,"");
  render(role);
  $("entryOverlay").hidden=true;
