@@ -1284,3 +1284,5 @@ body::after{
 @keyframes navDropIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:800px){.top .site-nav{display:flex;gap:12px;margin:0 10px}.top .site-nav>a,.nav-dropdown>summary{font-size:12px}.top .pill{display:none}}
 @media(max-width:560px){.top{gap:8px;padding:0 4%}.top .site-nav{gap:10px;margin:0}.top .site-nav>a,.nav-dropdown>summary{font-size:11px}.dropdown-menu{left:auto;right:-20px;min-width:210px;top:calc(100% + 13px)}.events-menu{min-width:230px}.logo{font-size:11px;letter-spacing:.04em}.logo span{margin-left:4px}}
+
+@media(hover:hover) and (pointer:fine){.nav-dropdown:hover .dropdown-menu,.nav-dropdown:focus-within .dropdown-menu{display:grid}}
