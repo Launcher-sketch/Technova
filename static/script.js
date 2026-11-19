@@ -43,9 +43,11 @@ const welcomeMessage="Jai Jagat! I’m Campus Genie, your virtual guide to City 
 let pendingCommonQuestion="";
 const commonQuestionTerms=["schedule","timetable","date","dates","timing","timings","venue","venues","location","locations","registration","register","deadline","last date"];
 const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","icse","isc","jee","ap examination","quiz","robotics","football"];
-document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classList.toggle('open');
+document.getElementById('chatLaunch')?.addEventListener('click',()=>{
+  chat?.classList.toggle('open');
   if(chat?.classList.contains('open'))document.body.classList.add('genie-mode');
-  else document.body.classList.remove('genie-mode'));
+  else document.body.classList.remove('genie-mode');
+});
 
 const leaveGenie=()=>{
   chat?.classList.remove('open','fullscreen');
