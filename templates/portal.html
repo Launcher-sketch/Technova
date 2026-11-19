@@ -3,25 +3,16 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Campus Portal | CMS Digital Campus Demo</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='portal.css') }}?v=7">
+<link rel="stylesheet" href="{{ url_for('static', filename='portal.css') }}?v=8">
 <meta name="description" content="Explore a fictional CMS digital campus demonstration for students, teachers, parents and school administrators."><meta name="theme-color" content="#173b65"></head>
 <body>
-<div class="entry-overlay" id="entryOverlay" role="dialog" aria-modal="true" aria-labelledby="entryTitle"><div class="entry-card"><p class="eyebrow">CMS DIGITAL CAMPUS</p><h2 id="entryTitle">Who is entering the campus?</h2><p class="entry-copy">Choose your space to continue.</p><div class="entry-roles"><button type="button" data-entry-role="student">🎓 <b>Student</b><small>Open student dashboard</small></button><button type="button" data-entry-role="teacher">📚 <b>Teacher</b><small>Coming next</small></button><button type="button" data-entry-role="parent">🏡 <b>Parent</b><small>Coming next</small></button><button type="button" data-entry-role="admin">⚙️ <b>School Admin</b><small>Coming next</small></button></div><form id="studentIdForm" class="student-id-form" hidden><label for="studentDemoId">Enter demo Student ID</label><input id="studentDemoId" autocomplete="off" placeholder="e.g. CMS-DEMO-001" required><button type="submit">Enter student dashboard</button><p class="entry-copy">Demo only: use one of the sample IDs provided. This page does not verify, collect or save real CMS IDs.</p><p id="idFeedback" class="id-feedback" role="status"></p></form></div></div>
-<header class="topbar"><a class="brand" href="/">CMS<span> CAMPUS</span><small>DIGITAL CAMPUS DEMO</small></a><div class="top-actions"><span class="demo-pill">DEMO ENVIRONMENT</span><a href="/">Back to Campus Website ↗</a></div></header>
+<div class="entry-overlay" id="entryOverlay" role="dialog" aria-modal="true" aria-labelledby="entryTitle"><div class="entry-card"><p class="eyebrow">CMS DIGITAL CAMPUS</p><h2 id="entryTitle">Who is entering the campus?</h2><p class="entry-copy">Choose your space to continue.</p><div class="entry-roles"><button type="button" data-entry-role="student">🎓 <b>Student</b><small>Open student dashboard</small></button><button type="button" data-entry-role="teacher">📚 <b>Teacher</b><small>Open workspace</small></button><button type="button" data-entry-role="parent">🏡 <b>Parent</b><small>Open workspace</small></button><button type="button" data-entry-role="admin">⚙️ <b>School Admin</b><small>Open workspace</small></button></div><form id="studentIdForm" class="student-id-form" hidden><label for="studentDemoId">Enter demo Student ID</label><input id="studentDemoId" autocomplete="off" placeholder="e.g. CMS-DEMO-001" required><button type="submit">Enter student dashboard</button><p class="entry-copy">Demo only: use one of the sample IDs provided. This page does not verify, collect or save real CMS IDs.</p><p id="idFeedback" class="id-feedback" role="status"></p></form></div></div>
+<header class="topbar"><a class="brand" href="/">CMS<span> CAMPUS</span><small>DIGITAL CAMPUS DEMO</small></a><div class="top-actions"><span class="demo-pill">DEMO ENVIRONMENT</span><button type="button" id="switchRole" class="switch-role">Switch space</button><a href="/">Back to Campus Website ↗</a></div></header>
 <main class="shell">
 <section class="welcome"><div><p class="eyebrow">CITY MONTESSORI SCHOOL · DIGITAL CAMPUS</p><h1>One campus.<br><em>Every possibility.</em></h1><p class="lead">A concept for a connected space for students, teachers and parents, with a Campus Genie assistant preview.</p></div><div class="welcome-art"><div class="orbit o1"></div><div class="orbit o2"></div><div class="orb-label">CG<span>AI</span></div></div></section>
 <section class="portal-layout">
-<aside class="side">
-<p class="side-label">CHOOSE YOUR SPACE</p>
-<div class="role-list" role="tablist" aria-label="Choose a demo portal role">
-<button id="role-student" class="role active" role="tab" aria-selected="true" aria-controls="workspacePanel" tabindex="0" data-role="student"><span>🎓</span><b>Student</b><small>Learn & grow</small></button>
-<button id="role-teacher" class="role" role="tab" aria-selected="false" aria-controls="workspacePanel" tabindex="-1" data-role="teacher"><span>📚</span><b>Teacher</b><small>Teach & manage</small></button>
-<button id="role-parent" class="role" role="tab" aria-selected="false" aria-controls="workspacePanel" tabindex="-1" data-role="parent"><span>🏡</span><b>Parent</b><small>Stay connected</small></button>
-<button id="role-admin" class="role" role="tab" aria-selected="false" aria-controls="workspacePanel" tabindex="-1" data-role="admin"><span>⚙️</span><b>School Admin</b><small>Coordinate campus</small></button>
-</div>
-<div class="demo-note"><b>Demo access</b><p>Choose a role to explore sample screens. No real student records or school accounts are connected.</p></div>
-</aside>
-<section class="workspace" id="workspacePanel" role="tabpanel" aria-labelledby="role-student" tabindex="0">
+
+<section class="workspace" id="workspacePanel" role="region" aria-label="Student workspace" tabindex="0">
 <div class="workspace-head"><div><p class="eyebrow" id="roleEyebrow">STUDENT WORKSPACE</p><h2 id="greeting">Good morning, Aarav</h2><p id="roleDesc">Your learning day, organised in one place.</p></div><div class="avatar" id="avatar">A</div></div>
 <div class="stats" id="stats"></div>
 <div class="content-grid">

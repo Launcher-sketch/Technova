@@ -115,3 +115,10 @@
 .lesson time{font-weight:800;color:#397ac4}
 .lesson em{margin-top:auto}
 @media(max-width:650px){.entry-card{padding:22px}.entry-roles{grid-template-columns:1fr 1fr}.notice-list{grid-template-columns:1fr}.lesson{flex-basis:155px;min-width:155px}.genie-panel{min-height:360px}}
+
+/* A single selected role owns the workspace; no persistent role sidebar */
+.portal-layout{display:block;padding:28px 0}
+.side,.role-list,.side-label,.demo-note{display:none!important}
+.switch-role{border:1px solid #d7e5f5;border-radius:20px;padding:8px 12px;background:#f5f9ff;color:#1769d2;font:700 11px 'DM Sans';cursor:pointer}
+.switch-role:focus-visible{outline:3px solid #f0a928;outline-offset:3px}
+@media(max-width:650px){.switch-role{font-size:9px;padding:7px 9px}}
