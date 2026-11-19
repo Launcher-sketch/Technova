@@ -45,7 +45,6 @@
 <aside class="chat" id="chat"><div class="chat-head"><div><strong>CMS AI Assistant</strong><small>Ask about achievers, scores and CMS events</small></div><div class="chat-head-actions"><button id="chatRestart" type="button" aria-label="Restart conversation" title="Restart conversation">↻</button><button id="chatClose" aria-label="Close chatbot">×</button></div></div><div class="chat-body" id="chatBody"><p class="bot">Jai Jagat! Ask me about ICSE, ISC, JEE Advanced or AP 2026 achievers and scores.</p></div><form id="chatForm"><input id="chatInput" placeholder="Ask about an exam or achiever…" autocomplete="off"><button>Send</button></form></aside>
 <script src="{{url_for('static',filename='script.js')}}"></script><script>
 document.querySelectorAll('.nav-dropdown').forEach(menu=>{
- menu.addEventListener('mouseleave',()=>menu.removeAttribute('open'));
  menu.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))menu.removeAttribute('open')});
 });
 </script>
