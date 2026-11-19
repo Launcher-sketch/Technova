@@ -33,7 +33,6 @@
 <aside class="chat" id="chat"><div class="chat-head"><div><strong>CMS AI Assistant</strong><small>Your guide to CMS, events and everything happening</small></div><div class="chat-head-actions"><button id="chatRestart" type="button" aria-label="Restart conversation">↻</button><button id="chatClose" aria-label="Close chatbot">×</button></div></div><div class="chat-body" id="chatBody"><p class="bot">Jai Jagat! Ask me about CMSMUN 2026, its committees, agendas or delegate guidelines.</p></div><form id="chatForm"><input id="chatInput" placeholder="Ask about CMSMUN…" autocomplete="off"><button>Send</button></form></aside>
 <script src="{{url_for('static',filename='script.js')}}"></script><script>
 document.querySelectorAll('.nav-dropdown').forEach(menu=>{
- menu.addEventListener('mouseleave',()=>menu.removeAttribute('open'));
  menu.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))menu.removeAttribute('open')});
 });
 </script>
