@@ -8,6 +8,7 @@ const roles={
 const $=id=>document.getElementById(id);
 let activeRole="student";
 let activeStudentName="Student";
+let activeTeacherName="Teacher";
 const moduleInfo={
  "Assignment Manager":["Assignments","Your sample assignment workspace includes task title, subject, due date and status.","Mathematics practice · Due 21 Nov · In progress","Physics worksheet · Due 22 Nov · Not started","Computer Science project · Due 25 Nov · Submitted"],
  "Digital Student ID":["Sample Digital ID","DEMO ONLY — This is not an official CMS identity card and cannot be used for access or verification.","Name: Aarav Mehta","Class: IX · Section A","Campus: Sample campus record","QR: Demonstration placeholder"],
@@ -31,6 +32,7 @@ function addText(parent,tag,text,className){const el=document.createElement(tag)
 function render(role){
  activeRole=role;const d={...roles[role]};
  if(role==="student"){d.name="Welcome, "+activeStudentName;d.avatar=activeStudentName.split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase()}
+ if(role==="teacher"){d.name="Welcome, "+activeTeacherName;d.avatar=activeTeacherName.split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase()}
  $("workspacePanel").setAttribute("aria-label",d.label);
  $("roleEyebrow").textContent=d.label;$("greeting").textContent=d.name;$("roleDesc").textContent=d.desc;$("avatar").textContent=d.avatar;$("mainTitle").textContent=d.title;
  const stats=$("stats");stats.replaceChildren();d.stats.forEach(s=>{const card=addText(stats,"article","","stat");addText(card,"span",s[0]);addText(card,"b",s[1]);addText(card,"small",s[2])});
@@ -99,20 +101,23 @@ $("quickLinks").addEventListener("click",e=>{const b=e.target.closest("button");
 $("roleModules").addEventListener("click",e=>{const b=e.target.closest("button[data-module]");if(b)showModule(b.dataset.module)});
 render("student");
 const demoStudents={"CMS-DEMO-001":"Shashwat Pandey","CMS-DEMO-002":"Virat Pandey"};
+const demoTeachers={"CMS-TEACHER-001":"Divyansh Mishra","CMS-TEACHER-002":"Ansh Yadav"};
 document.querySelectorAll("[data-entry-role]").forEach(button=>button.addEventListener("click",()=>{
  const role=button.dataset.entryRole;
  const form=$("studentIdForm");
- $("idFeedback").textContent="";
- if(role==="student"){form.hidden=false;$("studentDemoId").focus();return;}
- form.hidden=true;
+ const teacherForm=$("teacherIdForm");
+ $("idFeedback").textContent="";$("teacherIdFeedback").textContent="";
+ form.hidden=role!=="student";teacherForm.hidden=role!=="teacher";
+ if(role==="student"){$("studentDemoId").focus();return;}
+ if(role==="teacher"){$("teacherDemoId").focus();return;}
  activeStudentName=roles[role].name.replace(/^Welcome,?\s*/,"");
  render(role);
  $("entryOverlay").hidden=true;
 }));
 $("switchRole").addEventListener("click",()=>{
  $("entryOverlay").hidden=false;
- $("studentIdForm").hidden=true;
- $("idFeedback").textContent="";
+ $("studentIdForm").hidden=true;$("teacherIdForm").hidden=true;
+ $("idFeedback").textContent="";$("teacherIdFeedback").textContent="";
  document.querySelector("[data-entry-role=student]").focus();
 });
 $("studentIdForm").addEventListener("submit",event=>{
@@ -121,4 +126,11 @@ $("studentIdForm").addEventListener("submit",event=>{
  const name=demoStudents[id];
  if(!name){$("idFeedback").textContent="ID not recognised. Use CMS-DEMO-001 or CMS-DEMO-002.";return;}
  activeStudentName=name;render("student");$("entryOverlay").hidden=true;
+});
+$("teacherIdForm").addEventListener("submit",event=>{
+ event.preventDefault();
+ const id=$("teacherDemoId").value.trim().toUpperCase();
+ const name=demoTeachers[id];
+ if(!name){$("teacherIdFeedback").textContent="ID not recognised. Use CMS-TEACHER-001 or CMS-TEACHER-002.";return;}
+ activeTeacherName=name;render("teacher");$("entryOverlay").hidden=true;
 });
