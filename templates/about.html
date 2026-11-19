@@ -29,7 +29,6 @@
 <footer>CMS EVENTS <span>LEARN · EXPLORE · MAKE YOUR MARK</span><a href="/">Back to Home</a></footer>
 <script>
 document.querySelectorAll('.nav-dropdown').forEach(menu=>{
- menu.addEventListener('mouseleave',()=>menu.removeAttribute('open'));
  menu.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))menu.removeAttribute('open')});
 });
 </script>
