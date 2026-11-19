@@ -87,6 +87,30 @@ class CampusSiteSmokeTests(unittest.TestCase):
         self.assertIn("couldn't find", payload["reply"])
         self.assertNotIn("Vaivaswat", payload["reply"])
 
+    def test_generic_event_questions_ask_which_event_then_use_selection(self):
+        response = self.client.post("/api/chat", json={"message": "Who are the teachers?"})
+        self.assertIn("Which event", response.get_json()["reply"])
+        follow_up = self.client.post("/api/chat", json={"message": "TECHNOVA"})
+        payload = follow_up.get_json()
+        self.assertIn("TECHNOVA 2026 teacher", payload["reply"])
+        self.assertTrue(payload.get("table", {}).get("rows"))
+
+        response = self.client.post("/api/chat", json={"message": "What are the timings?"})
+        self.assertIn("Which event", response.get_json()["reply"])
+        follow_up = self.client.post("/api/chat", json={"message": "TECHNOVA"})
+        self.assertIn("individual reporting times", follow_up.get_json()["reply"])
+
+    def test_generic_student_question_does_not_invent_participants(self):
+        response = self.client.post("/api/chat", json={"message": "Which students are participating?"})
+        self.assertIn("Which event", response.get_json()["reply"])
+        follow_up = self.client.post("/api/chat", json={"message": "CELESTA"})
+        self.assertIn("don't have a verified participant/student roster", follow_up.get_json()["reply"])
+
+    def test_ongoing_event_question_identifies_technova(self):
+        response = self.client.post("/api/chat", json={"message": "What is the ongoing event?"})
+        self.assertIn("TECHNOVA 2026", response.get_json()["reply"])
+        self.assertIn("Ongoing", str(response.get_json().get("table", {})))
+
     def test_technova_generic_venue_query_does_not_guess(self):
         response = self.client.post(
             "/api/chat",
