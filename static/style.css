@@ -1303,3 +1303,27 @@ body::after{
 .about-tile b{margin-top:auto;color:#1769aa;font-size:12px}
 .about-contact{grid-column:1/-1;min-height:175px;background:linear-gradient(135deg,rgba(255,255,255,.96),rgba(225,240,253,.94))}
 @media(max-width:650px){.about-main{padding-left:20px;padding-right:20px}.about-grid{grid-template-columns:1fr}.about-contact{grid-column:auto}.about-tile{min-height:200px}}
+
+
+/* Navigation dropdowns matched to the light blue CMS page background */
+.dropdown-menu{
+  background:rgba(247,251,255,.97)!important;
+  border:1px solid rgba(92,145,190,.24)!important;
+  box-shadow:0 16px 38px rgba(35,82,126,.14)!important;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.dropdown-menu a{
+  color:#244967!important;
+  border-radius:8px;
+}
+.dropdown-menu a:hover,.dropdown-menu a:focus-visible{
+  background:rgba(216,235,251,.9)!important;
+  color:#1769aa!important;
+}
+.nav-dropdown>summary{
+  color:#244967!important;
+}
+.nav-dropdown>summary span{
+  color:#1769aa!important;
+}
