@@ -108,6 +108,12 @@ document.getElementById('chatRestart')?.addEventListener('click',()=>{
 form?.addEventListener('submit',async event=>{
   event.preventDefault();const message=input?.value.trim();if(!message||!body)return;
   bubble(message,'user');input.value='';if(sendButton)sendButton.disabled=true;
+  const destination=findCampusDestination(message);
+  if(destination){
+    bubble('Taking you to '+destination.label+'…','bot');
+    setTimeout(()=>{window.location.href=destination.url;},650);
+    return;
+  }
   const typing=showTyping();
   try{
     const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message})});
@@ -120,13 +126,41 @@ document.querySelectorAll('[data-prompt]').forEach(button=>button.addEventListen
   if(input){input.value=button.dataset.prompt||'';form?.requestSubmit();}
 }));
 
-// CMS intro is present only on the homepage
+// Campus Genie opens after the existing CMS intro has completely finished.
 const intro=document.getElementById('cmsIntro');
 if(intro){
-  const finishIntro=()=>{if(!intro.classList.contains('is-leaving')){intro.classList.add('is-leaving');setTimeout(()=>intro.remove(),750);}};
+  let genieOpened=false;
+  const openCampusGenie=()=>{
+    if(genieOpened)return;
+    genieOpened=true;
+    chat?.classList.add('open');
+    input?.focus();
+  };
+  const finishIntro=()=>{
+    if(!intro.classList.contains('is-leaving')){
+      intro.classList.add('is-leaving');
+      setTimeout(()=>{intro.remove();openCampusGenie();},750);
+    }
+  };
   document.getElementById('introSkip')?.addEventListener('click',finishIntro);
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(finishIntro,500);
   else setTimeout(finishIntro,4600);
+}
+
+// Campus Genie destination shortcuts: send visitors to real sections/pages in this site.
+const campusDestinations=[
+  {terms:['academic achievements','academic results','icse','isc','jee','ap results'],url:'/academic-results',label:'Academic Achievements'},
+  {terms:['academic events','conference','conferences','mun','cmsmun'],url:'/cmsmun',label:'CMSMUN'},
+  {terms:['sports','sport','spardha','concord','football'],url:'/sports',label:'Sports'},
+  {terms:['cultural','culture','celesta','arts','music','dance'],url:'/celesta',label:'Cultural Events / CELESTA'},
+  {terms:['technova','technology','innovation','robotics','artificial intelligence'],url:'/technova',label:'TECHNOVA'},
+  {terms:['contact','contact us','phone','email'],url:'/contact',label:'Contact Us'},
+  {terms:['about','about us','school information'],url:'/about',label:'About CMS'},
+  {terms:['home','homepage','main page','all events'],url:'/',label:'CMS Events Homepage'}
+];
+function findCampusDestination(message){
+  const q=message.toLowerCase().replace(/[^a-z0-9\\s]/g,' ').replace(/\\s+/g,' ').trim();
+  return campusDestinations.find(destination=>destination.terms.some(term=>q===term||q.includes(term)))||null;
 }
 
 // Live TECHNOVA countdown based on the published local start date
