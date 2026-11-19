@@ -566,7 +566,7 @@ def chat():
     typo_aliases = {"schdelue": "schedule", "scheduele": "schedule", "schedual": "schedule", "technovae": "technova", "celestae": "celesta", "kb": "when", "kab": "when", "kahan": "where", "kaha": "where", "kidhar": "where", "kya": "what", "batao": "tell", "btao": "tell", "dikhao": "show"}
     q = " ".join(typo_aliases.get(word, word) for word in q.split())
     # Common event-name variants and everyday wording used by visitors.
-    q = re.sub(r"\\bmun\\b", "cmsmun", q)
+    q = re.sub(r"\bmun\b", "cmsmun", q)
     for phrase, canonical in (("sports olympiad", "spardha"), ("international sports meet", "spardha"), ("football tournament", "concord"), ("international football", "concord"), ("cultural festival", "celesta"), ("cultural fest", "celesta"), ("robotics championship", "technova"), ("ai and robotics event", "technova")):
         q = q.replace(phrase, canonical)
     # Do not silently assume the current page's event for questions shared by many events.
