@@ -45,19 +45,12 @@ const commonQuestionTerms=["schedule","timetable","date","dates","timing","timin
 const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","icse","isc","jee","ap examination","quiz","robotics","football"];
 const isEventsHome=document.body.classList.contains('cms-homepage');
 document.getElementById('chatLaunch')?.addEventListener('click',()=>{
-  if(isEventsHome){
-    chat?.classList.toggle('open');
-    if(chat?.classList.contains('open'))input?.focus();
-    return;
-  }
   chat?.classList.toggle('open');
-  if(chat?.classList.contains('open'))document.body.classList.add('genie-mode');
-  else document.body.classList.remove('genie-mode');
+  if(chat?.classList.contains('open'))input?.focus();
 });
 
 const leaveGenie=()=>{
   chat?.classList.remove('open','fullscreen');
-  document.body.classList.remove('genie-mode');
 };
 document.getElementById('chatClose')?.addEventListener('click',leaveGenie);
 // Returning from a destination with the browser Back button should show the homepage, not the open chat.
