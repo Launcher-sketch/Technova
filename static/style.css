@@ -2582,3 +2582,24 @@ footer{background:#f5faff!important;color:#3978b5!important;border-color:#d7e6f5
 body.cms-homepage .chat-launch{display:none!important}body:not(.cms-homepage) .chat-launch{display:grid!important}
 body.cms-homepage .home-chat-embedded{background:#fff!important}body.cms-homepage .home-chat-embedded #chatClose{display:none!important}
 @media(max-width:600px){.chat-launch{right:16px!important;bottom:16px!important;width:60px!important;height:60px!important}}
+
+
+/* Apollo 17 launcher + half-screen Campus Genie; keep the CMS page visible */
+.chat-launch{padding:0!important;overflow:hidden!important}
+.chat-launch .chat-globe{
+  display:block!important;width:100%!important;height:100%!important;
+  min-width:100%!important;min-height:100%!important;
+  object-fit:cover!important;object-position:center!important;
+  border:0!important;border-radius:50%!important;filter:none!important;
+}
+.chat.open:not(.fullscreen){
+  position:fixed!important;right:3vw!important;bottom:3vh!important;
+  width:min(50vw,760px)!important;height:min(78vh,760px)!important;
+  max-width:calc(100vw - 32px)!important;max-height:calc(100dvh - 32px)!important;
+  z-index:2147482001!important;border-radius:20px!important;
+}
+body:has(#chat.open) .top,body:has(#chat.open) .home-main,
+body:has(#chat.open) main,body:has(#chat.open) footer{opacity:1!important;filter:none!important}
+body:has(#chat.open)::before,body:has(#chat.open)::after{visibility:visible!important;opacity:1!important}
+@media(max-width:900px){.chat.open:not(.fullscreen){right:16px!important;bottom:82px!important;width:min(72vw,680px)!important;height:min(76vh,700px)!important}}
+@media(max-width:560px){.chat.open:not(.fullscreen){right:10px!important;bottom:78px!important;width:calc(100vw - 20px)!important;height:76dvh!important;max-height:calc(100dvh - 96px)!important;border-radius:16px!important}}
