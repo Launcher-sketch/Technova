@@ -1455,20 +1455,3 @@ body::after{
 .cms-intro.cms-earth-signature .earth-stage::before{
   display:none!important;content:none!important;
 }
-
-
-/* CMS logo reveal: pop out from the centre, with the full school name on one line */
-.cms-intro.cms-earth-signature .earth-stage{transform:none!important}
-.cms-intro.cms-earth-signature .intro-earth{
-  opacity:0!important;transform:scale(.12)!important;transform-origin:center center!important;
-  animation:cmsLogoPop 1.25s cubic-bezier(.16,1.15,.28,1) .18s forwards!important;
-}
-@keyframes cmsLogoPop{
-  0%{opacity:0;transform:scale(.12)}
-  68%{opacity:1;transform:scale(1.08)}
-  86%{opacity:1;transform:scale(.97)}
-  100%{opacity:1;transform:scale(1)}
-}
-@media(prefers-reduced-motion:reduce){
-  .cms-intro.cms-earth-signature .intro-earth{animation:none!important;opacity:1!important;transform:none!important}
-}
