@@ -163,11 +163,9 @@
 .cms-intro.cms-earth-signature .earth-stage{animation-delay:0s}
 .cms-intro.cms-earth-signature .signature-wordmark{animation-delay:0s}
 @keyframes cmsWelcomeCard{
-  0%,5%{opacity:0}
-  9%,22%{opacity:1}
-  27%,75%{opacity:0}
-  81%,94%{opacity:1}
-  100%{opacity:0}
+  0%,20%{opacity:1}
+  26%,76%{opacity:0}
+  82%,100%{opacity:1}
 }
 @keyframes cmsLogoWindow{
   0%,25%{opacity:0}
