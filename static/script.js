@@ -102,6 +102,10 @@ document.querySelectorAll('[data-prompt]').forEach(button=>button.addEventListen
 // Campus Genie opens after the existing CMS intro has completely finished.
 const intro=document.getElementById('cmsIntro');
 if(intro){
+  const skipIntro=new URLSearchParams(window.location.search).has('skipIntro');
+  if(skipIntro){
+    intro.remove();
+  }else{
   let genieOpened=false;
   const openCampusGenie=()=>{
     if(genieOpened)return;
@@ -118,6 +122,7 @@ if(intro){
   document.getElementById('introSkip')?.addEventListener('click',finishIntro);
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(finishIntro,500);
   else setTimeout(finishIntro,4600);
+  }
 }
 
 // Campus Genie destination shortcuts: send visitors to real sections/pages in this site.
@@ -129,7 +134,7 @@ const campusDestinations=[
   {terms:['technova','technology','innovation','robotics','artificial intelligence'],url:'/technova',label:'TECHNOVA'},
   {terms:['contact','contact us','phone','email'],url:'/contact',label:'Contact Us'},
   {terms:['about','about us','school information'],url:'/about',label:'About CMS'},
-  {terms:['home','homepage','main page','all events'],url:'/',label:'CMS Events Homepage'}
+  {terms:['home','homepage','main page','all events'],url:'/?skipIntro=1',label:'CMS Events Homepage'}
 ];
 function findCampusDestination(message){
   const q=message.toLowerCase().replace(/[^a-z0-9\\s]/g,' ').replace(/\\s+/g,' ').trim();
