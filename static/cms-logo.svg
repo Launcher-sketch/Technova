@@ -1,20 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 447 447" role="img" aria-labelledby="title">
 <title id="title">City Montessori School logo</title>
 <rect width="447" height="447" fill="#07569d"/>
-<g fill="#fff" font-family="Arial,Helvetica,sans-serif" font-weight="700">
- <text x="92" y="192" font-size="105" letter-spacing="-8">C</text>
- <text x="182" y="192" font-size="105" letter-spacing="-7">M</text>
- <text x="295" y="192" font-size="105" letter-spacing="-5">S</text>
-</g>
-<g fill="none" stroke="#07569d" stroke-width="5">
- <circle cx="139" cy="153" r="27"/>
- <ellipse cx="139" cy="153" rx="12" ry="27"/>
- <path d="M113 153h52M118 140c13 8 29 8 42 0M118 166c13-8 29-8 42 0"/>
+<text x="98" y="192" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="105" font-weight="700" letter-spacing="-5">CMS</text>
+<g fill="none" stroke="#07569d" stroke-width="3.2" stroke-linecap="round">
+  <circle cx="137" cy="154" r="20"/>
+  <ellipse cx="137" cy="154" rx="9" ry="20"/>
+  <path d="M118 154h38M121 144c10 6 22 6 32 0M121 164c10-6 22-6 32 0"/>
 </g>
 <path d="M104 205H343" stroke="#fff" stroke-width="2.5"/>
 <g fill="#fff" font-family="Arial,Helvetica,sans-serif">
- <text x="342" y="245" text-anchor="end" font-size="34" font-weight="700">CITY</text>
- <text x="223.5" y="282" text-anchor="middle" font-size="34" font-weight="500" letter-spacing="1">MONTESSORI</text>
- <text x="223.5" y="326" text-anchor="middle" font-size="34" font-weight="500" letter-spacing="1">SCHOOL</text>
+  <text x="342" y="245" text-anchor="end" font-size="34" font-weight="700">CITY</text>
+  <text x="223.5" y="282" text-anchor="middle" font-size="34" font-weight="500" letter-spacing="1">MONTESSORI</text>
+  <text x="223.5" y="326" text-anchor="middle" font-size="34" font-weight="500" letter-spacing="1">SCHOOL</text>
 </g>
 </svg>
