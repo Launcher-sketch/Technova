@@ -44,44 +44,40 @@ document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classL
 
 document.getElementById('chatClose')?.addEventListener('click',()=>chat?.classList.remove('open'));
 
-// Drag the chatbot anywhere by its title bar; keep the whole panel in view.
+// Drag the chatbot by its header on mouse, pen, or touch.
 const chatHead=chat?.querySelector('.chat-head');
 if(chat&&chatHead){
-  let drag=null;
+  let dragState=null;
   chatHead.addEventListener('pointerdown',event=>{
-    if(event.target.closest('button')||event.button!==0)return;
+    if(event.target.closest('button')||event.isPrimary===false)return;
     const rect=chat.getBoundingClientRect();
-    drag={x:event.clientX,y:event.clientY,left:rect.left,top:rect.top};
+    dragState={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,left:rect.left,top:rect.top};
     chat.style.left=rect.left+'px';
     chat.style.top=rect.top+'px';
     chat.style.right='auto';
     chat.style.bottom='auto';
-    chatHead.setPointerCapture(event.pointerId);
     chat.classList.add('is-dragging');
     event.preventDefault();
   });
-  chatHead.addEventListener('pointermove',event=>{
-    if(!drag)return;
-    const maxLeft=Math.max(0,window.innerWidth-chat.offsetWidth);
-    const maxTop=Math.max(0,window.innerHeight-chat.offsetHeight);
-    const left=Math.min(maxLeft,Math.max(0,drag.left+event.clientX-drag.x));
-    const top=Math.min(maxTop,Math.max(0,drag.top+event.clientY-drag.y));
-    chat.style.left=left+'px';
-    chat.style.top=top+'px';
+  document.addEventListener('pointermove',event=>{
+    if(!dragState||event.pointerId!==dragState.pointerId)return;
+    const left=dragState.left+event.clientX-dragState.startX;
+    const top=dragState.top+event.clientY-dragState.startY;
+    chat.style.left=Math.max(0,Math.min(window.innerWidth-chat.offsetWidth,left))+'px';
+    chat.style.top=Math.max(0,Math.min(window.innerHeight-chat.offsetHeight,top))+'px';
   });
-  const stopDragging=event=>{
-    if(!drag)return;
-    drag=null;
+  const finishChatDrag=event=>{
+    if(!dragState||event.pointerId!==dragState.pointerId)return;
+    dragState=null;
     chat.classList.remove('is-dragging');
-    if(chatHead.hasPointerCapture(event.pointerId))chatHead.releasePointerCapture(event.pointerId);
   };
-  chatHead.addEventListener('pointerup',stopDragging);
-  chatHead.addEventListener('pointercancel',stopDragging);
+  document.addEventListener('pointerup',finishChatDrag);
+  document.addEventListener('pointercancel',finishChatDrag);
   window.addEventListener('resize',()=>{
     if(!chat.style.left||!chat.style.top)return;
     const rect=chat.getBoundingClientRect();
-    chat.style.left=Math.min(Math.max(0,window.innerWidth-chat.offsetWidth),rect.left)+'px';
-    chat.style.top=Math.min(Math.max(0,window.innerHeight-chat.offsetHeight),rect.top)+'px';
+    chat.style.left=Math.max(0,Math.min(window.innerWidth-chat.offsetWidth,rect.left))+'px';
+    chat.style.top=Math.max(0,Math.min(window.innerHeight-chat.offsetHeight,rect.top))+'px';
   });
 }
 function bubble(text,kind,tableData){
