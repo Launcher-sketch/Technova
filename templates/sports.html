@@ -4,8 +4,9 @@
 <body class="events-home">
 <header class="top"><a class="logo" href="/">CMS<span>EVENTS</span></a><nav class="site-nav" aria-label="Main navigation">
 <details class="nav-dropdown"><summary>About Us <span>⌄</span></summary><div class="dropdown-menu about-menu">
-<a href="https://cmseducation.org/about-us/#achievements" target="_blank" rel="noopener noreferrer">Achievements</a><a href="https://cmseducation.org/infrastructure/" target="_blank" rel="noopener noreferrer">Infrastructure</a><a href="https://cmseducation.org/category/child-developement/" target="_blank" rel="noopener noreferrer">Child Development</a><a href="https://cmseducation.org/education-impact/" target="_blank" rel="noopener noreferrer">Education Impact</a><a href="https://cmseducation.org/cms-management/" target="_blank" rel="noopener noreferrer">Our Founders</a><a href="https://cmseducation.org/cms-management/" target="_blank" rel="noopener noreferrer">CMS Management</a></div></details>
-<details class="nav-dropdown"><summary>All Events <span>⌄</span></summary><div class="dropdown-menu events-menu"><a href="/#academic-results">Academic Achievements</a><a href="/#academic-events">Academic Events &amp; Conferences</a><a href="/#sports-events">Sports Events</a><a href="/#cultural-events">Cultural Events</a><a href="/#technology-events">Technology &amp; Innovation</a></div></details><a href="/contact">Contact Us</a></nav><a class="pill" href="https://cmseducation.org/" target="_blank" rel="noopener noreferrer">CITY MONTESSORI SCHOOL ↗</a></header>
+<a href="https://cmseducation.org/about-us/#achievements" target="_blank" rel="noopener noreferrer">Achievements</a><a href="https://cmseducation.org/infrastructure/" target="_blank" rel="noopener noreferrer">Infrastructure</a><a href="https://cmseducation.org/category/child-developement/" target="_blank" rel="noopener noreferrer">Child Development</a><a href="https://cmseducation.org/education-impact/" target="_blank" rel="noopener noreferrer">Education Impact</a><a href="https://cmseducation.org/cms-management/" target="_blank" rel="noopener noreferrer">Our Founders</a><a href="https://cmseducation.org/cms-management/" target="_blank" rel="noopener noreferrer">CMS Management</a><a href="/contact">Contact Us</a>
+</div></details>
+<details class="nav-dropdown"><summary>All Events <span>⌄</span></summary><div class="dropdown-menu events-menu"><a href="/#academic-results">Academic Achievements</a><a href="/#academic-events">Academic Events &amp; Conferences</a><a href="/#sports-events">Sports Events</a><a href="/#cultural-events">Cultural Events</a><a href="/#technology-events">Technology &amp; Innovation</a></div></details></nav><a class="pill" href="https://cmseducation.org/" target="_blank" rel="noopener noreferrer">CITY MONTESSORI SCHOOL ↗</a></header>
 <main class="home-main">
 <section class="sports-page">
 <div class="sports-page-heading"><p class="eyebrow">CITY MONTESSORI SCHOOL · THE SPIRIT OF SPORT</p><h1>Bring on the <span>game.</span></h1><p>Feel the energy of competition. Explore CMS tournaments built on teamwork, determination and the spirit of fair play.</p></div>
@@ -20,4 +21,10 @@
 <footer>CMS EVENTS <span>PLAY · COMPETE · UNITE</span><a href="/">All events</a></footer>
 <button class="chat-launch" id="chatLaunch" aria-label="Open CMS AI Assistant"><img class="chat-globe" src="https://commons.wikimedia.org/wiki/Special:FilePath/As17-148-22727.jpg" alt="Earth photographed by Apollo 17"></button>
 <aside class="chat" id="chat"><div class="chat-head"><div><strong>CMS AI Assistant</strong><small>Your guide to CMS sports and events</small></div><div class="chat-head-actions"><button id="chatRestart" type="button" aria-label="Restart conversation" title="Restart conversation">↻</button><button id="chatClose" aria-label="Close chatbot">×</button></div></div><div class="chat-body" id="chatBody"><p class="bot">Jai Jagat! I’m the CMS AI Assistant. Ask me about Sports Events, SPARDHA, CONCORD, CMS sports, TECHNOVA or CELESTA.</p></div><form id="chatForm"><input id="chatInput" placeholder="Ask about SPARDHA, CONCORD or CMS sports…" autocomplete="off"><button>Send</button></form></aside>
-<script src="{{url_for('static',filename='script.js')}}"></script></body></html>
+<script src="{{url_for('static',filename='script.js')}}"></script><script>
+document.querySelectorAll('.nav-dropdown').forEach(menu=>{
+ menu.addEventListener('mouseleave',()=>menu.removeAttribute('open'));
+ menu.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))menu.removeAttribute('open')});
+});
+</script>
+</body></html>
