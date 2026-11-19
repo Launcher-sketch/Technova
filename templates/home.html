@@ -82,7 +82,7 @@
 <footer>CMS EVENTS <span>LEARN · EXPLORE · MAKE YOUR MARK</span><a href="/admin/login">Admin</a></footer>
 <button class="chat-launch" id="chatLaunch" aria-label="Open Campus Genie"><img class="chat-globe" src="https://commons.wikimedia.org/wiki/Special:FilePath/As17-148-22727.jpg" alt="Earth photographed by Apollo 17"></button>
 <aside class="chat" id="chat"><div class="chat-head"><div><strong>Campus Genie</strong><small>Your smart guide to City Montessori School</small></div><div class="chat-head-actions"><button id="chatRestart" type="button" aria-label="Restart conversation" title="Restart conversation">↻</button><button id="chatClose" aria-label="Close chat" title="Close chat">×</button></div></div><div class="chat-body" id="chatBody"><p class="bot">Jai Jagat! I’m Campus Genie, your virtual guide to City Montessori School. Where would you like to go today? Try Academic Achievements, Sports, Cultural Events, CMSMUN, CELESTA, TECHNOVA or Contact Us.</p></div><form id="chatForm"><input id="chatInput" placeholder="What would you like to explore?" autocomplete="off"><button>Send</button></form></aside>
-<script src="{{url_for('static',filename='script.js',v='campus-genie-back-navigation-2')}}"></script><script>
+<script src="{{url_for('static',filename='script.js',v='campus-genie-home-skip-intro-3')}}"></script><script>
 document.querySelectorAll('.nav-dropdown').forEach(menu=>{
  menu.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))menu.removeAttribute('open')});
 });
