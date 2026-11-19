@@ -2303,3 +2303,144 @@ a{transition:color .18s ease,border-color .18s ease}
   .top{background:rgba(7,23,45,.97)!important}
   .chat{border-color:#4a91d1!important}
 }
+
+
+/* LIGHT BLUE CMS THEME — retain the original light appearance */
+:root{
+  --bg:#f4f8fd;
+  --panel:#ffffff;
+  --text:#18324d;
+  --muted:#61758b;
+  --cyan:#0875cf;
+  --line:#d8e6f4;
+}
+html{background:#f4f8fd!important}
+body{
+  background:
+    radial-gradient(ellipse at 12% 0%,rgba(52,145,225,.10),transparent 38%),
+    radial-gradient(ellipse at 90% 32%,rgba(58,151,226,.07),transparent 34%),
+    linear-gradient(145deg,#f7fbff 0%,#eef6ff 52%,#f8fbff 100%)!important;
+  color:#18324d!important;
+}
+.top{
+  background:rgba(255,255,255,.94)!important;
+  border-bottom:1px solid #d9e8f6!important;
+  box-shadow:0 8px 26px rgba(28,78,124,.07)!important;
+}
+.top nav a,.nav-dropdown summary{color:#24415f!important}
+.top nav a:hover,.dropdown-menu a:hover{color:#0875cf!important}
+.pill,.bright,.filter.active,.chat-launch{
+  background:linear-gradient(135deg,#2589df,#0868bb)!important;
+  color:#fff!important;border-color:#6bb2ef!important;
+}
+.button.outline,.outline{border-color:#8bbce8!important;color:#075da9!important}
+.hero,.home-event-card.featured,.announcement-card,.results-placeholder,.gallery-placeholder{
+  background:
+    radial-gradient(ellipse at 85% 18%,rgba(65,155,231,.15),transparent 48%),
+    linear-gradient(135deg,#e5f2ff,#f5faff 72%)!important;
+  color:#18324d!important;
+}
+.event-card,.teacher-grid article,.day-grid article,.home-event-card,.mun-card,
+.event-modal-panel,.about-tile,.contact-card,.results-card,.academic-card{
+  background:linear-gradient(145deg,#fff,#f2f8ff)!important;
+  border-color:#d3e4f5!important;
+  color:#18324d!important;
+  box-shadow:0 8px 24px rgba(29,83,132,.055);
+}
+.event-card p,.teacher-grid p,.day-grid p,.home-event-card p,.about-tile p,
+.contact-card p,.results-card p,.academic-card p,.mun-card p{
+  color:#5d7187!important;
+}
+.event-card:hover,.home-event-card:hover,.about-tile:hover{
+  border-color:#83b9e8!important;
+  box-shadow:0 16px 38px rgba(24,105,180,.12)!important;
+}
+.eyebrow,.tag,.card-top,.teacher-grid span,.day-grid span,.motto,
+.home-card-top,.category-heading span,.home-card-link,.announcement-tag,
+.results-placeholder>span,.gallery-placeholder>span{
+  color:#0875cf!important;
+}
+.home-hero h1 span,.hero h1 span,.intro h2 span{color:#0875cf!important}
+.event-category,.about,.countdown-section,.updates-section,.results-section,.gallery-section{
+  border-color:#d7e6f5!important;
+}
+.countdown>div{
+  background:linear-gradient(145deg,#eaf5ff,#fff)!important;
+  border-color:#d1e5f8!important;color:#18324d!important;
+}
+.countdown strong{color:#0875cf!important}
+.event-details,.filter,.outline{border-color:#a8cbed!important}
+.event-details{color:#086dbd!important}
+.event-details:hover,.filter:hover{background:#e8f4ff!important}
+.dropdown-menu{
+  background:#fff!important;border:1px solid #d6e6f5!important;
+  box-shadow:0 18px 42px rgba(24,65,104,.13)!important;
+}
+.dropdown-menu a{color:#24415f!important}
+footer{border-color:#d7e6f5!important;color:#3978b5!important}
+::selection{background:#cfe7ff;color:#123451}
+
+/* CMSMUN accents stay blue, with a light surface */
+.mun-hero{
+  background:
+    radial-gradient(ellipse at 82% 15%,rgba(62,150,225,.16),transparent 42%),
+    linear-gradient(135deg,#e4f2ff,#f5faff 65%,#eaf5ff)!important;
+  border-color:#c8def2!important;
+}
+.mun-hero h1,.mun-hero p{color:#18324d!important}
+.mun-hero .eyebrow,.mun-card span,.mun-contact a{color:#0875cf!important}
+.mun-meta span{border-color:#b9d6ef!important;color:#315574!important}
+.mun-note{border-left-color:#2789d8!important;background:#edf6ff!important;color:#385875!important}
+
+/* Campus Genie: light chat surface with CMS blue controls */
+.chat{
+  background:#fff!important;border:1px solid #c7def2!important;
+  box-shadow:0 24px 70px rgba(12,52,91,.20)!important;
+}
+.chat-head{
+  background:linear-gradient(110deg,#075ca9,#258bd8)!important;
+  border-bottom:1px solid #4c9bdb!important;
+}
+.chat-head strong{color:#fff!important}
+.chat-head small{color:#e1f1ff!important}
+.chat-head-actions button{
+  background:#ffffff20!important;border-color:#ffffff66!important;color:#fff!important;
+}
+.chat-head-actions button:hover{background:#ffffff35!important}
+.chat-body{background:linear-gradient(180deg,#f3f8fe,#eaf3fc)!important}
+.bot{
+  background:#fff!important;border:1px solid #d6e5f3!important;
+  color:#193651!important;box-shadow:0 3px 12px rgba(23,69,110,.06);
+}
+.user{
+  background:linear-gradient(135deg,#2589df,#0868bb)!important;
+  border:1px solid #4d9de0!important;color:#fff!important;
+}
+.chat form{background:#fff!important;border-top:1px solid #dce8f3!important}
+#chatInput{
+  background:#f5f9fd!important;border:1px solid #cbdced!important;color:#18334d!important;
+}
+#chatInput::placeholder{color:#8298af!important}
+#chatForm button{
+  background:linear-gradient(135deg,#2589df,#0868bb)!important;color:#fff!important;
+}
+.chat-typing span{background:#2589df!important}
+.chat-table-wrap{border-color:#d4e4f3!important;background:#fff!important}
+.chat-table{color:#18324d!important}
+.chat-table th{background:#e4f1ff!important;color:#075da9!important}
+.chat-table td{color:#294760!important;border-color:#e5edf5!important}
+.chat-launch{border:1px solid #8bc2ef!important}
+.chat-globe{border:2px solid #8bc2ef!important}
+.chat.fullscreen{background:#fff!important;border-color:#b9d8f2!important}
+.chat.fullscreen .chat-body{background:#eef6ff!important}
+.chat.fullscreen .chat-head{background:linear-gradient(120deg,#0756a6,#1684d4)!important}
+.chat.fullscreen .bot{background:#fff!important;color:#17324d!important}
+.chat.fullscreen .user{background:#0875cf!important;color:#fff!important}
+.chat.fullscreen #chatForm{background:#fff!important}
+.chat.fullscreen #chatInput{background:#f4f8fc!important;color:#18334d!important}
+.chat.fullscreen .chat-table{color:#17324d!important}
+.chat.fullscreen .chat-table th{background:#dceeff!important;color:#0756a6!important}
+@media(max-width:700px){
+  .top{background:rgba(255,255,255,.97)!important}
+  .chat{border-color:#b9d8f2!important}
+}
