@@ -557,3 +557,21 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
   scroll-margin-top:28px;
 }
 .campus-detail-page .detail-card:target h2{color:#1769b5}
+
+
+/* Homepage Campus Genie: centred welcome launcher, then floating globe after scrolling */
+.events-home .hero-genie-launch-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;margin:38px auto 0;max-width:440px;text-align:center}
+.events-home .hero-genie-launch{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:148px;height:148px;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:radial-gradient(circle at 35% 25%,#fff 0%,#d9edff 48%,#8fc5f2 100%);color:#124a7d;box-shadow:0 16px 42px rgba(0,25,65,.25),inset 0 2px 8px #fff;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease}
+.events-home .hero-genie-launch:hover{transform:translateY(-4px) scale(1.025);box-shadow:0 22px 48px rgba(0,25,65,.32),inset 0 2px 8px #fff}
+.events-home .hero-genie-icon{display:grid;place-items:center;width:62px;height:62px;border-radius:22px;background:linear-gradient(145deg,#176fc1,#0b4b86);color:#fff;font-size:38px;line-height:1;box-shadow:0 8px 20px #155c9a55}
+.events-home .hero-genie-label{font-size:12px;font-weight:900;letter-spacing:.02em}
+.events-home .hero-genie-greeting{margin:0!important;padding:10px 16px;border:1px solid rgba(255,255,255,.35);border-radius:18px;background:rgba(255,255,255,.13);color:#fff!important;font-size:13px!important;line-height:1.55!important;backdrop-filter:blur(8px)}
+.events-home .chat-launch{display:none;right:25px;bottom:25px}
+.events-home.has-scrolled .chat-launch{display:grid;place-items:center}
+.events-home.has-scrolled .hero-genie-launch-wrap{display:none}
+.events-home .site-nav .nav-dropdown>summary{list-style:none!important}
+.events-home .site-nav .nav-dropdown>summary::-webkit-details-marker{display:none!important}
+.events-home .site-nav .nav-dropdown>summary::marker{content:""!important;font-size:0!important}
+.events-home .site-nav .nav-dropdown>summary::before,
+.events-home .site-nav .nav-dropdown>summary::after{display:none!important;content:none!important}
+@media(max-width:650px){.events-home .hero-genie-launch-wrap{margin-top:28px}.events-home .hero-genie-launch{width:132px;height:132px}.events-home .chat-launch{right:16px;bottom:16px}}
