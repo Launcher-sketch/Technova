@@ -43,7 +43,7 @@ const welcomeMessage="Jai Jagat! I’m Campus Genie, your virtual guide to City 
 let pendingCommonQuestion="";
 const commonQuestionTerms=["schedule","timetable","date","dates","timing","timings","venue","venues","location","locations","registration","register","deadline","last date"];
 const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","icse","isc","jee","ap examination","quiz","robotics","football"];
-const isEventsHome=document.body.classList.contains('events-home');
+const isEventsHome=document.body.classList.contains('cms-homepage');
 document.getElementById('chatLaunch')?.addEventListener('click',()=>{
   if(isEventsHome){
     chat?.classList.toggle('open');
@@ -197,15 +197,4 @@ if(countdown){
 }
 
 
-// The centred homepage Campus Genie icon opens the regular chat panel.
-document.getElementById('heroGenieOpen')?.addEventListener('click',()=>{
-  chat?.classList.add('open');
-  input?.focus();
-});
-
-// On the homepage, move the launcher from the hero to the floating globe as visitors scroll.
-if(isEventsHome){
-  const syncHomeLauncher=()=>document.body.classList.toggle('has-scrolled',window.scrollY>140);
-  syncHomeLauncher();
-  window.addEventListener('scroll',syncHomeLauncher,{passive:true});
-}
+// Homepage Campus Genie is embedded directly in the hero; other pages retain the floating globe launcher.
