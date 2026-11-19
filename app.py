@@ -236,6 +236,11 @@ def contact_page():
     return render_template("contact.html")
 
 
+@app.get("/portal")
+def school_portal():
+    return render_template("portal.html")
+
+
 @app.get("/media/<path:filename>")
 def media(filename):
     # Gallery files are served from the public Supabase Storage bucket, not local disk.
