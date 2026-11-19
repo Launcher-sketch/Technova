@@ -2454,3 +2454,5 @@ footer{border-color:#d7e6f5!important;color:#3978b5!important}
 .home-quick-search p{margin:9px 0 0;color:#668097;font-size:12px}
 .home-event-card.search-hidden{display:none!important}
 @media(max-width:600px){.home-quick-search{padding:14px;margin-top:20px}.home-quick-search input{font-size:16px}}
+
+.event-category.search-hidden{display:none!important}
