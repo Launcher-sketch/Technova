@@ -34,3 +34,85 @@
   opacity:1!important;
   animation:none!important;
 }
+
+
+/* Campus Genie intro typography — clean, readable final override */
+.cms-intro.cms-earth-signature .signature-wordmark{
+  position:relative!important;
+  z-index:2!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:0!important;
+  width:min(92vw,520px)!important;
+  max-width:520px!important;
+  margin:4px auto 0!important;
+  padding:0 12px!important;
+  box-sizing:border-box!important;
+  text-align:center!important;
+  opacity:1!important;
+  transform:none!important;
+  animation:none!important;
+}
+.cms-intro.cms-earth-signature .signature-wordmark .signature-jai,
+.cms-intro.cms-earth-signature .signature-wordmark .signature-cms,
+.cms-intro.cms-earth-signature .signature-wordmark .signature-welcome{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding:0!important;
+  text-align:center!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+  color:#b9e5ff!important;
+  -webkit-text-fill-color:#b9e5ff!important;
+  text-shadow:0 2px 5px rgba(0,15,40,.95),0 0 18px rgba(0,20,55,.75)!important;
+}
+.cms-intro.cms-earth-signature .signature-wordmark .signature-jai{
+  margin-top:0!important;
+  font-family:Arial,sans-serif!important;
+  font-size:clamp(1.7rem,4.4vw,2.45rem)!important;
+  font-weight:900!important;
+  line-height:1.12!important;
+  letter-spacing:.17em!important;
+  animation:introTextReveal .7s cubic-bezier(.2,.8,.2,1) 1.45s both!important;
+}
+.cms-intro.cms-earth-signature .signature-wordmark .signature-cms{
+  margin-top:8px!important;
+  font-family:Arial,sans-serif!important;
+  font-size:clamp(.95rem,2.5vw,1.3rem)!important;
+  font-weight:800!important;
+  line-height:1.25!important;
+  letter-spacing:.075em!important;
+  animation:introTextReveal .7s cubic-bezier(.2,.8,.2,1) 1.7s both!important;
+}
+.cms-intro.cms-earth-signature .signature-wordmark .signature-welcome{
+  margin-top:12px!important;
+  font-family:Arial,sans-serif!important;
+  font-size:clamp(1.55rem,4vw,2.2rem)!important;
+  font-weight:900!important;
+  line-height:1.12!important;
+  letter-spacing:.015em!important;
+  animation:introTextReveal .7s cubic-bezier(.2,.8,.2,1) 1.95s both!important;
+}
+@keyframes introTextReveal{
+  0%{opacity:0;transform:translateY(16px);filter:blur(4px)}
+  70%{opacity:1;filter:blur(0)}
+  100%{opacity:1;transform:translateY(0);filter:blur(0)}
+}
+@media(max-width:600px){
+  .cms-intro.cms-earth-signature .signature-wordmark{width:92vw!important;padding:0 8px!important}
+  .cms-intro.cms-earth-signature .signature-wordmark .signature-jai{font-size:clamp(1.5rem,7vw,2rem)!important}
+  .cms-intro.cms-earth-signature .signature-wordmark .signature-cms{font-size:clamp(.82rem,3.8vw,1.05rem)!important;letter-spacing:.045em!important}
+  .cms-intro.cms-earth-signature .signature-wordmark .signature-welcome{font-size:clamp(1.4rem,6vw,1.8rem)!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .cms-intro.cms-earth-signature .signature-wordmark .signature-jai,
+  .cms-intro.cms-earth-signature .signature-wordmark .signature-cms,
+  .cms-intro.cms-earth-signature .signature-wordmark .signature-welcome{
+    animation:none!important;opacity:1!important;transform:none!important;filter:none!important;
+  }
+}
