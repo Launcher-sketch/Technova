@@ -466,6 +466,10 @@ def chat():
     teachers = data.get("teachers", [])
     celesta = get_cultural_data()
     celesta_events = celesta.get("events", [])
+    # CMS Aliganj Campus I contact directory (details supplied for this site).
+    aliganj_contact_terms = ("contact us", "cms contact", "cms contacts", "aliganj contact", "aliganj contacts", "aliganj campus contact", "campus phone", "cms phone", "school phone", "cms mobile", "cms email", "aliganj email", "calling hours", "calling time", "info@cmseducation.org", "aliganj1@cmseducation.org", "96484 29071", "2320897", "phone number", "contact details")
+    if any(term in q for term in aliganj_contact_terms) or q in ("contact", "phone", "mobile", "email", "call", "calling hours"):
+        return answer("Official contact details listed for CMS Aliganj Campus I:", ["Contact", "Details"], [["Campus", "CMS Aliganj Campus I"], ["Phone", "+91 522 2320897"], ["Mobile", "+91 96484 29071"], ["General email", "info@cmseducation.org"], ["Aliganj campus email", "aliganj1@cmseducation.org"], ["Calling hours", "8:30 AM to 5:00 PM"], ["Contact page", "https://chatbot-19fg.onrender.com/contact"]])
     # Route questions about the homepage's complete event taxonomy.
     if any(term in q for term in ("all events", "list of events", "event list", "show events", "what events", "which events", "events on the portal", "categories", "event categories")):
         return answer("Here are the main sections currently featured on the CMS Events portal:", ["Category", "Events / information"], [["Academic Achievements", "ICSE, ISC, JEE Advanced and AP Examination 2026 results"], ["Academic Events", "CMSMUN 5th Edition · 2026 archive"], ["Sports Events", "SPARDHA 2026 and CONCORD 2026"], ["Cultural Events", "CELESTA International 2026 and its brochure competitions"], ["Technology & Innovation", "TECHNOVA 2026 competitions, schedule, updates and results"]])
