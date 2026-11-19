@@ -1350,3 +1350,10 @@ body::after{
 .cms-earth-signature .earth-halo{display:none!important}
 .cms-earth-signature .earth-orbit-text{display:none!important}
 @media(max-width:600px){.cms-earth-signature .earth-stage{width:clamp(175px,54vw,220px)!important}}
+
+
+/* Verified online CMS logo in a square blue intro frame */
+.cms-earth-signature .earth-stage{width:clamp(190px,29vw,270px)!important;aspect-ratio:1/1!important;height:auto!important;display:grid!important;place-items:center!important;background:#07569d!important;border-radius:8px!important;overflow:hidden!important;box-shadow:0 18px 48px rgba(0,30,70,.25)!important}
+.cms-earth-signature .intro-earth{display:block!important;width:82%!important;height:auto!important;max-height:82%!important;object-fit:contain!important;border-radius:0!important;opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;box-shadow:none!important;animation:none!important}
+.cms-earth-signature .earth-halo,.cms-earth-signature .earth-stage::before{display:none!important;opacity:0!important}
+@media(max-width:600px){.cms-earth-signature .earth-stage{width:clamp(175px,54vw,220px)!important}}
