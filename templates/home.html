@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMS Events | Discover. Experience.</title><link rel="stylesheet" href="{{url_for('static',filename='style.css')}}?v=cms-logo-clean-3"><link rel="stylesheet" href="{{url_for('static',filename='intro-background.css')}}"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMS Events | Discover. Experience.</title><link rel="stylesheet" href="{{url_for('static',filename='style.css')}}?v=campus-genie-fullscreen-1"><link rel="stylesheet" href="{{url_for('static',filename='intro-background.css')}}"></head>
 <body class="events-home">
 <div class="cms-intro cms-earth-signature" id="cmsIntro" aria-label="City Montessori School welcome">
   <div class="earth-stage">
@@ -81,7 +81,7 @@
 </section></main>
 <footer>CMS EVENTS <span>LEARN · EXPLORE · MAKE YOUR MARK</span><a href="/admin/login">Admin</a></footer>
 <button class="chat-launch" id="chatLaunch" aria-label="Open CMS AI Assistant"><img class="chat-globe" src="https://commons.wikimedia.org/wiki/Special:FilePath/As17-148-22727.jpg" alt="Earth photographed by Apollo 17"></button>
-<aside class="chat" id="chat"><div class="chat-head"><div><strong>CMS AI Assistant</strong><small>Your guide to CMS, events and everything happening</small></div><div class="chat-head-actions"><button id="chatRestart" type="button" aria-label="Restart conversation" title="Restart conversation">↻</button><button id="chatClose" aria-label="Close chatbot">×</button></div></div><div class="chat-body" id="chatBody"><p class="bot">Welcome to City Montessori School! I’m Campus Genie, your virtual campus guide. Where would you like to go today? You can enter a section such as Academic Achievements, Sports, Cultural Events, CMSMUN, CELESTA, TECHNOVA or Contact Us.</p></div><form id="chatForm"><input id="chatInput" placeholder="What would you like to explore?" autocomplete="off"><button>Send</button></form></aside>
+<aside class="chat" id="chat"><div class="chat-head"><div><strong>CMS AI Assistant</strong><small>Your guide to CMS, events and everything happening</small></div><div class="chat-head-actions"><button id="chatRestart" type="button" aria-label="Restart conversation" title="Restart conversation">↻</button><button id="chatClose" aria-label="Back to website" title="Back to website">×</button></div></div><div class="chat-body" id="chatBody"><p class="bot">Welcome to City Montessori School! I’m Campus Genie, your virtual campus guide. Where would you like to go today? You can enter a section such as Academic Achievements, Sports, Cultural Events, CMSMUN, CELESTA, TECHNOVA or Contact Us.</p></div><form id="chatForm"><input id="chatInput" placeholder="What would you like to explore?" autocomplete="off"><button>Send</button></form></aside>
 <script src="{{url_for('static',filename='script.js',v='4f2de39')}}"></script><script>
 document.querySelectorAll('.nav-dropdown').forEach(menu=>{
  menu.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))menu.removeAttribute('open')});
