@@ -226,6 +226,78 @@ def cmsmun_page():
     return render_template("cmsmun.html")
 
 
+CAMPUS_INFORMATION_PAGES = {
+    "infrastructure": {
+        "title": "Infrastructure",
+        "eyebrow": "CAMPUS & FACILITIES",
+        "intro": "Explore the learning environments and facilities listed by CMS Aliganj Campus I.",
+        "sections": [
+            {"heading": "Classrooms & academic spaces", "body": "The campus describes spacious classrooms supported by smart panels, creating a technology-enabled setting for lessons, discussion and collaborative work."},
+            {"heading": "Science, computing & innovation", "body": "Facilities named by CMS include Physics, Chemistry, Biology, Biotechnology, Computer and Robotics laboratories, along with the Design & Technology Lab, Maker Space and Studio Pod. These spaces support practical exploration, experimentation and project-based learning."},
+            {"heading": "Reading, arts & expression", "body": "The campus facilities directory lists a Library, Music Room and Art Room, providing dedicated spaces for reading, creative practice and expression."},
+            {"heading": "Sport, health & wellbeing", "body": "Published campus facilities include a swimming pool, children’s splash pool, basketball court, playground and infirmary. Access and availability are subject to school arrangements."}
+        ],
+        "source": "CMS Aliganj Campus I official website"
+    },
+    "child-development": {
+        "title": "Child Development",
+        "eyebrow": "WHOLE-CHILD LEARNING",
+        "intro": "CMS describes education as a combination of academic growth, creativity, character, wellbeing and opportunities to contribute.",
+        "sections": [
+            {"heading": "The 6 Cs", "body": "The campus highlights Critical Thinking, Creativity, Collaboration, Communication, Character and Citizenship as important capabilities for students to develop."},
+            {"heading": "Learning beyond lessons", "body": "Sports, music, fine arts, literature, cultural activities and collaborative projects complement classroom learning and give students opportunities to discover interests and build confidence."},
+            {"heading": "Service & responsibility", "body": "CMS campus information describes initiatives such as the Junior Youth Empowerment Programme and “Each One–Teach One”, alongside environmental responsibility and community service activities."},
+            {"heading": "A supportive environment", "body": "The campus profile presents student development as a shared effort involving teachers, school leaders, counsellors, co-curricular teams and families."}
+        ],
+        "source": "CMS Aliganj Campus I official website"
+    },
+    "education-impact": {
+        "title": "Education Impact",
+        "eyebrow": "VALUES IN ACTION",
+        "intro": "CMS connects education with peace, global understanding, universal values and service to the wider community.",
+        "sections": [
+            {"heading": "Peace education", "body": "CMS places emphasis on peace education, interfaith understanding and human unity. The school reports receiving the UNESCO Prize for Peace Education in 2002."},
+            {"heading": "Global citizenship", "body": "The school-wide vision encourages students to understand global issues, respect different perspectives and see themselves as responsible members of a shared world."},
+            {"heading": "Community initiatives", "body": "Official campus information describes student participation in social service, peer mentoring, environmental initiatives, water and energy conservation and animal care."},
+            {"heading": "Learning through action", "body": "These opportunities connect classroom knowledge with practical responsibility, helping students consider how their choices can contribute to their communities."}
+        ],
+        "source": "CMS official About Us and Aliganj Campus I pages"
+    },
+    "our-founders": {
+        "title": "Our Founders",
+        "eyebrow": "THE FOUNDING VISION",
+        "intro": "City Montessori School was founded in Lucknow in 1959 by Dr Jagdish Gandhi and Dr Bharti Gandhi, beginning with five children.",
+        "sections": [
+            {"heading": "A vision rooted in peace", "body": "Inspired by the ideals of Mahatma Gandhi and Sant Vinoba Bhave, the founders emphasised peace, human unity, values-based education and service to humanity."},
+            {"heading": "Jai Jagat", "body": "The CMS motto, “Jai Jagat”, expresses a universal outlook that reaches beyond borders and encourages students to think about the wellbeing of all people."},
+            {"heading": "The world is one family", "body": "The idea of “Vasudhaiva Kutumbakam” — the world is one family — is central to the school's stated vision of mutual respect, understanding and shared responsibility."},
+            {"heading": "A continuing legacy", "body": "The founding vision continues through CMS's emphasis on peace education, character, global citizenship and preparing young people to contribute thoughtfully to society."}
+        ],
+        "source": "CMS official About Us and CMS Founders pages"
+    },
+    "management": {
+        "title": "CMS Management",
+        "eyebrow": "LEADERSHIP & CAMPUS TEAMS",
+        "intro": "CMS's published information describes a school community supported by central leadership, campus principals, teachers and administrative teams.",
+        "sections": [
+            {"heading": "School leadership", "body": "CMS publishes information about its management and leadership structure, including senior leadership and campus-level responsibilities."},
+            {"heading": "Aliganj Campus I leadership", "body": "The official Aliganj Campus I website identifies Mrs Shivani Singh as Principal and Ms Lovey Khan as Vice-Principal."},
+            {"heading": "Teaching & student support", "body": "Teaching and support teams work across Pre-Primary, Primary, Junior, Senior and Cambridge sections, helping coordinate academic and co-curricular learning."},
+            {"heading": "A connected school community", "body": "Campus councils, teachers, counsellors and administrative staff contribute to the day-to-day environment in which students learn and participate."}
+        ],
+        "source": "CMS Aliganj Campus I official website"
+    }
+}
+
+
+@app.get("/campus/<slug>")
+def campus_information_page(slug):
+    page = CAMPUS_INFORMATION_PAGES.get(slug)
+    if page is None:
+        abort(404)
+    return render_template("campus_detail.html", page=page)
+
+
 @app.get("/about")
 def about_page():
     return render_template("about.html")

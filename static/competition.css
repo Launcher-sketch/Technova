@@ -494,3 +494,22 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
   .events-home .snapshot-grid{grid-template-columns:1fr}
   .events-home .snapshot-grid a{min-height:150px;padding:22px}
 }
+
+
+/* Dedicated campus information pages */
+.campus-detail-page{min-height:100vh;background:#f5f9fe;color:#173b65}
+.campus-detail-page .detail-main{max-width:1120px;margin:0 auto;padding:42px 5.5% 72px}
+.campus-detail-page .detail-back{display:inline-block;margin:0 0 20px;color:#1769b5;font-size:13px;font-weight:800;text-decoration:none}
+.campus-detail-page .detail-hero{padding:clamp(30px,5vw,58px);border-radius:24px;background:linear-gradient(115deg,#12385f,#176fc1);color:#fff}
+.campus-detail-page .detail-hero .eyebrow{color:#c3e0ff;font-size:11px;font-weight:900;letter-spacing:1.5px}
+.campus-detail-page .detail-hero h1{margin:8px 0 14px;font-size:clamp(38px,6vw,62px);letter-spacing:-2px}
+.campus-detail-page .detail-hero>p:last-child{max-width:780px;color:#e1efff;font-size:16px;line-height:1.8}
+.campus-detail-page .detail-sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+.campus-detail-page .detail-card{padding:26px;border:1px solid #dce8f5;border-radius:18px;background:#fff;box-shadow:0 10px 25px rgba(29,69,111,.045)}
+.campus-detail-page .detail-card h2{margin:0 0 10px;color:#173b65;font-size:22px}
+.campus-detail-page .detail-card p{margin:0;color:#536e89;font-size:14px;line-height:1.85}
+.campus-detail-page .detail-source{margin:20px 0 0;color:#71869b;font-size:12px;line-height:1.7}
+.campus-detail-page .detail-source a{color:#1769b5;font-weight:800}
+.campus-detail-page footer{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:25px 5.5%;background:#102f53;color:#e7f2ff;font-size:11px;font-weight:800}
+.campus-detail-page footer a{color:#fff;text-decoration:none}
+@media(max-width:700px){.campus-detail-page .detail-main{padding:26px 16px 48px}.campus-detail-page .detail-sections{grid-template-columns:1fr}.campus-detail-page .detail-card{padding:21px}}

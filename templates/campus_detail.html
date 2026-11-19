@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ page.title }} | CMS Aliganj Campus I</title>
+<meta name="description" content="{{ page.intro }}">
+<meta name="theme-color" content="#173b65">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=campus-genie-blue-1">
+<link rel="stylesheet" href="{{ url_for('static', filename='competition.css') }}?v=campus-detail-pages-1">
+</head>
+<body class="events-home campus-detail-page">
+<header class="top">
+<a class="logo cms-site-brand" href="/" aria-label="City Montessori School Aliganj Campus I home">
+<img src="{{ url_for('static', filename='cms-logo.svg') }}" alt="" width="42" height="42">
+<span class="brand-copy"><strong>City Montessori School</strong><small>ALIGANJ CAMPUS I · EVENTS</small></span>
+</a>
+<nav class="site-nav" aria-label="Main navigation">
+<a class="nav-extra" href="/">Home</a><a class="nav-extra" href="/about">About Campus</a><a class="nav-extra" href="/contact">Contact</a>
+</nav>
+<a class="pill" href="https://cmseducation.org/aliganj-campus-1/" target="_blank" rel="noopener noreferrer">OFFICIAL CAMPUS WEBSITE ↗</a>
+</header>
+<main class="detail-main">
+<a class="detail-back" href="/about">← Back to About Campus</a>
+<section class="detail-hero">
+<p class="eyebrow">{{ page.eyebrow }}</p>
+<h1>{{ page.title }}</h1>
+<p>{{ page.intro }}</p>
+</section>
+<section class="detail-sections" aria-label="{{ page.title }} information">
+{% for section in page.sections %}
+<article class="detail-card"><h2>{{ section.heading }}</h2><p>{{ section.body }}</p></article>
+{% endfor %}
+</section>
+<p class="detail-source">Information adapted from {{ page.source }}. For current official information, visit the <a href="https://cmseducation.org/aliganj-campus-1/" target="_blank" rel="noopener noreferrer">CMS Aliganj Campus I website ↗</a>.</p>
+</main>
+<footer><span>CMS EVENTS · LEARN · EXPLORE · MAKE YOUR MARK</span><a href="/">Back to Home</a></footer>
+</body>
+</html>

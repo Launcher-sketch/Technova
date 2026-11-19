@@ -21,6 +21,25 @@ class CampusSiteSmokeTests(unittest.TestCase):
                 response = self.client.get(path)
                 self.assertEqual(response.status_code, 200)
 
+    def test_campus_information_pages_render_as_separate_pages(self):
+        pages = {
+            "/campus/infrastructure": b"Infrastructure",
+            "/campus/child-development": b"Child Development",
+            "/campus/education-impact": b"Education Impact",
+            "/campus/our-founders": b"Our Founders",
+            "/campus/management": b"CMS Management",
+        }
+        for path, expected_title in pages.items():
+            with self.subTest(path=path):
+                response = self.client.get(path)
+                self.assertEqual(response.status_code, 200)
+                self.assertIn(expected_title, response.data)
+                self.assertIn(b"Back to About Campus", response.data)
+
+    def test_unknown_campus_information_page_returns_404(self):
+        response = self.client.get("/campus/not-a-page")
+        self.assertEqual(response.status_code, 404)
+
     def test_chat_rejects_empty_message_gracefully(self):
         response = self.client.post("/api/chat", json={"message": "   "})
         self.assertEqual(response.status_code, 200)
