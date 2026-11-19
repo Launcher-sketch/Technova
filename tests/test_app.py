@@ -24,7 +24,7 @@ class CampusSiteSmokeTests(unittest.TestCase):
     def test_campus_information_pages_render_as_separate_pages(self):
         pages = {
             "/campus/infrastructure": b"Infrastructure",
-            "/campus/child-development": b"Child Development",
+            "/campus/child-development": b"Student Development",
             "/campus/education-impact": b"Education Impact",
             "/campus/our-founders": b"Our Founders",
             "/campus/management": b"CMS Management",
@@ -35,6 +35,19 @@ class CampusSiteSmokeTests(unittest.TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertIn(expected_title, response.data)
                 self.assertIn(b"Back to About Campus", response.data)
+
+    def test_campus_pages_include_deeper_content_and_homepage_destinations(self):
+        infra = self.client.get("/campus/infrastructure")
+        child = self.client.get("/campus/child-development")
+        home = self.client.get("/")
+        self.assertIn(b"id=" + b"\\"learning-spaces\\"", infra.data)
+        self.assertIn(b"id=" + b"\\"student-development\\"", child.data)
+        self.assertIn(b"Robotics and Artificial Intelligence Lab", infra.data)
+        self.assertIn(b"Each One", child.data)
+        self.assertIn(b"/campus/infrastructure#learning-spaces", home.data)
+        self.assertIn(b"/campus/child-development#student-development", home.data)
+        self.assertIn(b"Academic Milestones", home.data)
+        self.assertIn(b"Digital Campus", home.data)
 
     def test_unknown_campus_information_page_returns_404(self):
         response = self.client.get("/campus/not-a-page")
