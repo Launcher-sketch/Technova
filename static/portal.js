@@ -105,7 +105,7 @@ document.querySelectorAll("[data-entry-role]").forEach(button=>button.addEventLi
  $("idFeedback").textContent="";
  if(role==="student"){form.hidden=false;$("studentDemoId").focus();return;}
  form.hidden=true;
- activeStudentName=roles[role].name.replace(/^Welcome,?\\s*/,"");
+ activeStudentName=roles[role].name.replace(/^Welcome,?\s*/,"");
  render(role);
  $("entryOverlay").hidden=true;
 }));
