@@ -2663,3 +2663,39 @@ body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen){
     margin-top:28px!important;
   }
 }
+
+
+/* Keep mouse-wheel and trackpad scrolling inside Campus Genie, including long tables. */
+.chat.open{
+  display:flex!important;
+  flex-direction:column!important;
+  min-height:0!important;
+}
+.chat.open .chat-body{
+  flex:1 1 0!important;
+  min-height:0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:contain!important;
+  -webkit-overflow-scrolling:touch;
+}
+.chat.open .chat-table-wrap{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  max-height:min(52vh,440px)!important;
+  overflow:auto!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-x pan-y;
+  scrollbar-width:thin;
+}
+.chat.open .chat-table{
+  width:max-content!important;
+  min-width:100%!important;
+  max-width:none!important;
+}
+.chat.open .chat-table th,
+.chat.open .chat-table td{
+  white-space:normal;
+}
