@@ -86,3 +86,32 @@
   outline:3px solid #f0a928;
   outline-offset:3px;
 }
+
+.entry-overlay{position:fixed;inset:0;z-index:20;display:grid;place-items:center;padding:20px;background:rgba(9,28,52,.58);backdrop-filter:blur(7px)}
+.entry-overlay[hidden]{display:none}
+.entry-card{width:min(620px,100%);max-height:92vh;overflow:auto;padding:30px;border:1px solid #d8e7f8;border-radius:22px;background:#fff;box-shadow:0 28px 90px #071c3860}
+.entry-card h2{margin:0;font:700 clamp(24px,4vw,34px) 'Space Grotesk';color:#142b49}
+.entry-copy{font-size:12px;line-height:1.55;color:#71839a}
+.entry-roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:20px}
+.entry-roles button{display:grid;grid-template-columns:38px 1fr;align-items:center;text-align:left;gap:3px 10px;padding:15px;border:1px solid #dce8f7;border-radius:13px;background:#f8fbff;color:#142b49;font:20px 'DM Sans';cursor:pointer}
+.entry-roles button b{font-size:13px}.entry-roles button small{grid-column:2;font-size:10px;color:#8092a8}
+.entry-roles button:first-child{border-color:#8db9e9;background:#edf6ff}
+.student-id-form{margin-top:20px;padding-top:18px;border-top:1px solid #e4edf7}
+.student-id-form[hidden]{display:none}
+.student-id-form label{display:block;margin-bottom:8px;font-size:12px;font-weight:800;color:#294766}
+.student-id-form input{width:100%;height:44px;padding:0 12px;border:1px solid #cbdced;border-radius:9px;font:13px 'DM Sans'}
+.student-id-form button{margin-top:10px;min-height:42px;padding:0 16px;border:0;border-radius:9px;background:#1769d2;color:#fff;font-weight:700;cursor:pointer}
+.id-feedback{font-size:11px;color:#b44b38}
+.content-grid{grid-template-columns:minmax(0,1fr)}
+.genie-panel{margin-top:14px;min-height:390px;padding:24px}
+.chat-log{max-height:210px;min-height:90px}
+.genie-copy,.bubble{font-size:11px}
+.lower-grid{grid-template-columns:minmax(0,1fr)}
+.notice-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.notice-list article{padding:12px;border:1px solid #edf1f6;border-radius:10px}
+.schedule{display:flex;gap:12px;overflow-x:auto;padding:2px 1px 10px;scroll-snap-type:x mandatory}
+.lesson{flex:1 0 175px;min-width:175px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:14px;border:1px solid #e5edf7;border-radius:12px;background:#fbfdff;scroll-snap-align:start}
+.lesson i{width:34px;height:4px;min-height:4px}
+.lesson time{font-weight:800;color:#397ac4}
+.lesson em{margin-top:auto}
+@media(max-width:650px){.entry-card{padding:22px}.entry-roles{grid-template-columns:1fr 1fr}.notice-list{grid-template-columns:1fr}.lesson{flex-basis:155px;min-width:155px}.genie-panel{min-height:360px}}
