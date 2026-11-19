@@ -565,9 +565,14 @@ def chat():
     # Lightweight query normalisation; the official knowledge files remain read-only.
     typo_aliases = {"schdelue": "schedule", "scheduele": "schedule", "schedual": "schedule", "technovae": "technova", "celestae": "celesta", "kb": "when", "kab": "when", "kahan": "where", "kaha": "where", "kidhar": "where", "kya": "what", "batao": "tell", "btao": "tell", "dikhao": "show"}
     q = " ".join(typo_aliases.get(word, word) for word in q.split())
-    # Use the active event page as context only for short, ambiguous follow-ups.
+    # Do not silently assume the current page's event for questions shared by many events.
+    shared_event_question = any(term in q for term in (
+        "teacher", "teachers", "timing", "time", "schedule", "student", "students",
+        "participant", "participants", "who is participating", "which students"
+    ))
+    # Use the active event page only for short, genuinely contextual follow-ups.
     has_named_event = any(name in q for name in ("technova", "celesta", "nazakat", "cmsmun", "cms mun", "model united nations"))
-    if not has_named_event and page_context in ("/technova", "/celesta", "/cmsmun"):
+    if not shared_event_question and not has_named_event and page_context in ("/technova", "/celesta", "/cmsmun"):
         context_name = {"/technova": "technova", "/celesta": "celesta", "/cmsmun": "cmsmun"}[page_context]
         if re.search(r"\b(what is it|what is this|tell me about it|explain it)\b", q):
             q += " what is " + context_name
@@ -577,6 +582,48 @@ def chat():
     teachers = data.get("teachers", [])
     celesta = get_cultural_data()
     celesta_events = celesta.get("events", [])
+
+    # Resolve generic event questions through an explicit event-selection turn.
+    event_aliases = {
+        "TECHNOVA": ("technova", "tech nova"),
+        "CELESTA": ("celesta", "nazakat"),
+        "CMSMUN": ("cmsmun", "cms mun", "model united nations"),
+        "SPARDHA": ("spardha",),
+        "CONCORD": ("concord",),
+    }
+    selected_event = next((name for name, aliases in event_aliases.items()
+                           if any(alias in q for alias in aliases)), None)
+    if session.get("pending_event_question") and selected_event:
+        pending = session.pop("pending_event_question")
+        if pending == "teachers":
+            if selected_event == "TECHNOVA":
+                return answer("TECHNOVA 2026 teacher in-charge details:", ["Teacher", "Event responsibility"],
+                              [[t["name"], t["event"]] for t in teachers])
+            return answer(f"I don't have a verified teacher-in-charge list for {selected_event} in the available event information. I won't guess; please check with that event's organisers.")
+        if pending == "timings":
+            if selected_event == "TECHNOVA":
+                return answer("TECHNOVA 2026 is scheduled across 19–20 November. The available information gives event dates, but not individual reporting times or slots:",
+                              ["Item", "Information"], [["19 November", "AI & Robotics Quiz Challenge"], ["20 November", "Other listed competitions"], ["Exact reporting times", data.get("schedule_note", "Not published in the available schedule.")]])
+            if selected_event == "CELESTA":
+                return answer(f"CELESTA International 2026 dates: {celesta.get('dates', 'Not specified')}. The brochure lists individual competition durations, but not a complete day-wise timetable. {celesta.get('status_note', '')}")
+            event_notes = {
+                "CMSMUN": "CMSMUN 2026 took place on 24–25 April 2026 and is now a completed archive. Individual committee timings are not available here.",
+                "SPARDHA": "SPARDHA 2026 took place on 24–27 October 2026 at CMS RDSO Campus and is completed.",
+                "CONCORD": "CONCORD 2026 took place on 2–6 November 2026 at CMS Station Road Campus and is completed.",
+            }
+            return answer(event_notes[selected_event])
+        if pending == "students":
+            return answer(f"I don't have a verified participant/student roster for {selected_event} in the available information. Please check with the event organisers; I won't invent names.")
+    if not selected_event and not session.get("pending_event_question"):
+        shared_intents = (
+            ("teachers", ("teacher", "teachers", "who is in charge", "in-charge", "event incharge")),
+            ("timings", ("timing", "timings", "time", "schedule", "reporting time", "when does it start")),
+            ("students", ("student", "students", "participant", "participants", "who is participating", "student list")),
+        )
+        for intent, phrases in shared_intents:
+            if any(phrase in q for phrase in phrases):
+                session["pending_event_question"] = intent
+                return answer("Which event are you asking about — TECHNOVA, CELESTA, CMSMUN, SPARDHA or CONCORD?")
     # On the TECHNOVA page, a vague venue question should show the source-listed venues
     # rather than guessing which competition the visitor means.
     named_technova_competition = any(e.get("name", "").lower() in q for e in events)
