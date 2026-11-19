@@ -46,5 +46,25 @@ class CampusSiteSmokeTests(unittest.TestCase):
         self.assertEqual(payload["table"]["headers"], ["Competition", "Venue"])
 
 
+    @patch.object(app_module, "select_rows", return_value=[])
+    def test_technova_page_renders_without_cloud_database(self, _select_rows):
+        response = self.client.get("/technova")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"TECHNOVA", response.data)
+
+    def test_portal_marks_roles_and_notices_as_demo_content(self):
+        response = self.client.get("/portal")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"DEMO ENVIRONMENT", response.data)
+        self.assertIn(b"SAMPLE CAMPUS BULLETIN", response.data)
+        self.assertIn(b"aria-controls=\"workspacePanel\"", response.data)
+
+    def test_public_event_data_endpoint_returns_competitions(self):
+        response = self.client.get("/api/data")
+        self.assertEqual(response.status_code, 200)
+        payload = response.get_json()
+        self.assertTrue(payload.get("events"))
+
+
 if __name__ == "__main__":
     unittest.main()
