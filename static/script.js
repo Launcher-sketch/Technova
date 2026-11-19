@@ -159,16 +159,16 @@ const campusDestinations=[
   {terms:['home','homepage','main page','all events'],url:'/?skipIntro=1',label:'CMS Events Homepage'}
 ];
 function findCampusDestination(message){
-  const q=message.toLowerCase().replace(/[^a-z0-9\\s]/g,' ').replace(/\\s+/g,' ').trim();
+  const q=message.toLowerCase().replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
 
   // Mentioning a section is not the same as asking to navigate to it.
   // Informational questions must stay in chat and be answered by the chatbot API.
-  const informationIntent=/^(what is|what are|tell me about|explain|describe|give me (?:information|details) about|show me information about|who is|when is|where is|how does|how do i know about)\\b/.test(q);
+  const informationIntent=/^(what is|what are|tell me about|explain|describe|give me (?:information|details) about|show me information about|who is|when is|where is|how does|how do i know about)\b/.test(q);
   if(informationIntent)return null;
 
   // Navigate only when the visitor clearly asks to open, visit, go to, or take
   // them to a section/page. This applies consistently to every destination below.
-  const navigationIntent=/\\b(go to|take me to|open|visit|navigate to|show me the page for|bring me to|redirect me to)\\b/.test(q);
+  const navigationIntent=/\b(go to|take me to|open|visit|navigate to|show me the page for|bring me to|redirect me to)\b/.test(q);
   if(!navigationIntent)return null;
 
   return campusDestinations.find(destination=>
@@ -190,4 +190,27 @@ if(countdown){
     return true;
   };
   if(tick()){const timer=setInterval(()=>{if(!tick())clearInterval(timer);},1000);}
+}
+
+
+// Homepage-wide quick search: filter event cards and report the result count.
+const homeEventSearch=document.getElementById('homeEventSearch');
+const homeSearchStatus=document.getElementById('homeSearchStatus');
+if(homeEventSearch){
+  const searchableHomeCards=[...document.querySelectorAll('.home-event-card')];
+  const searchableCategories=[...document.querySelectorAll('.event-category')];
+  homeEventSearch.addEventListener('input',()=>{
+    const query=homeEventSearch.value.trim().toLowerCase();
+    let matches=0;
+    searchableHomeCards.forEach(card=>{
+      const match=!query||card.textContent.toLowerCase().includes(query);
+      card.classList.toggle('search-hidden',!match);
+      if(match)matches++;
+    });
+    searchableCategories.forEach(section=>{
+      const visible=[...section.querySelectorAll('.home-event-card')].some(card=>!card.classList.contains('search-hidden'));
+      section.classList.toggle('search-hidden',Boolean(query)&&!visible);
+    });
+    if(homeSearchStatus)homeSearchStatus.textContent=query?(matches?matches+' matching event page'+(matches===1?'':'s')+' found.':'No matches found. Try a broader search.'):'Search event pages and categories instantly.';
+  });
 }
