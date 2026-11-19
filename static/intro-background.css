@@ -17,3 +17,16 @@
 .cms-intro .earth-stage::before{display:none!important;content:none!important}
 .cms-intro .earth-halo{display:none!important;opacity:0!important}
 .cms-intro .intro-earth{opacity:1!important;visibility:visible!important}
+
+
+/* High-resolution official CMS portrait: clearer intro background */
+.cms-intro.cms-earth-signature{
+  background-image:
+    linear-gradient(rgba(8,82,155,.20),rgba(10,67,132,.28)),
+    url("https://cmseducation.org/wp-content/uploads/2024/10/dr-bharti-ganddhi.webp")!important;
+  background-position:center 38%!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  image-rendering:auto!important;
+  filter:none!important;
+}
