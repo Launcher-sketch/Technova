@@ -2635,3 +2635,31 @@ body.cms-homepage .home-chat-embedded{
     margin-top:26px!important;
   }
 }
+
+
+/* Homepage chat must stay in document flow below the Discover heading.
+   This selector intentionally outranks the global floating-chat positioning rule. */
+body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen){
+  display:flex!important;
+  position:relative!important;
+  inset:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  top:auto!important;
+  width:min(960px,calc(100% - 24px))!important;
+  height:600px!important;
+  max-height:72vh!important;
+  margin:38px auto 0!important;
+  transform:none!important;
+  align-self:center!important;
+  z-index:1!important;
+}
+@media(max-width:700px){
+  body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen){
+    width:100%!important;
+    height:min(620px,72vh)!important;
+    max-height:none!important;
+    margin-top:28px!important;
+  }
+}
