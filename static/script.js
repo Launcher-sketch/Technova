@@ -43,7 +43,13 @@ const welcomeMessage="Jai Jagat! I’m Campus Genie, your virtual guide to City 
 let pendingCommonQuestion="";
 const commonQuestionTerms=["schedule","timetable","date","dates","timing","timings","venue","venues","location","locations","registration","register","deadline","last date"];
 const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","icse","isc","jee","ap examination","quiz","robotics","football"];
+const isEventsHome=document.body.classList.contains('events-home');
 document.getElementById('chatLaunch')?.addEventListener('click',()=>{
+  if(isEventsHome){
+    chat?.classList.toggle('open');
+    if(chat?.classList.contains('open'))input?.focus();
+    return;
+  }
   chat?.classList.toggle('open');
   if(chat?.classList.contains('open'))document.body.classList.add('genie-mode');
   else document.body.classList.remove('genie-mode');
@@ -126,30 +132,22 @@ document.querySelectorAll('[data-prompt]').forEach(button=>button.addEventListen
   if(input){input.value=button.dataset.prompt||'';form?.requestSubmit();}
 }));
 
-// Campus Genie opens after the existing CMS intro has completely finished.
+// Finish the CMS welcome animation without automatically opening the chatbot.
 const intro=document.getElementById('cmsIntro');
 if(intro){
   const skipIntro=new URLSearchParams(window.location.search).has('skipIntro');
   if(skipIntro){
     intro.remove();
   }else{
-  let genieOpened=false;
-  const openCampusGenie=()=>{
-    if(genieOpened)return;
-    genieOpened=true;
-    chat?.classList.add('open','fullscreen');
-    document.body.classList.add('genie-mode');
-    input?.focus();
-  };
-  const finishIntro=()=>{
-    if(!intro.classList.contains('is-leaving')){
-      intro.classList.add('is-leaving');
-      setTimeout(()=>{intro.remove();openCampusGenie();},750);
-    }
-  };
-  document.getElementById('introSkip')?.addEventListener('click',finishIntro);
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(finishIntro,500);
-  else setTimeout(finishIntro,4600);
+    const finishIntro=()=>{
+      if(!intro.classList.contains('is-leaving')){
+        intro.classList.add('is-leaving');
+        setTimeout(()=>intro.remove(),750);
+      }
+    };
+    document.getElementById('introSkip')?.addEventListener('click',finishIntro);
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(finishIntro,500);
+    else setTimeout(finishIntro,4600);
   }
 }
 
@@ -199,9 +197,15 @@ if(countdown){
 }
 
 
-// Homepage event discovery now runs through Campus Genie instead of a separate search box.
-document.getElementById('homeGenieOpen')?.addEventListener('click',()=>{
-  chat?.classList.add('open','fullscreen');
-  document.body.classList.add('genie-mode');
+// The centred homepage Campus Genie icon opens the regular chat panel.
+document.getElementById('heroGenieOpen')?.addEventListener('click',()=>{
+  chat?.classList.add('open');
   input?.focus();
 });
+
+// On the homepage, move the launcher from the hero to the floating globe as visitors scroll.
+if(isEventsHome){
+  const syncHomeLauncher=()=>document.body.classList.toggle('has-scrolled',window.scrollY>140);
+  syncHomeLauncher();
+  window.addEventListener('scroll',syncHomeLauncher,{passive:true});
+}
