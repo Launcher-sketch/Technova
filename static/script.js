@@ -47,6 +47,10 @@ const leaveGenie=()=>{
   document.body.classList.remove('genie-mode');
 };
 document.getElementById('chatClose')?.addEventListener('click',leaveGenie);
+// Returning from a destination with the browser Back button should show the homepage, not the open chat.
+window.addEventListener('popstate',()=>{
+  if(window.location.pathname==='/'||window.location.pathname==='/index')leaveGenie();
+});
 
 // Campus Genie is a fixed, full-screen experience; its header is not draggable.
 function bubble(text,kind,tableData){
@@ -80,7 +84,7 @@ form?.addEventListener('submit',async event=>{
   const destination=findCampusDestination(message);
   if(destination){
     bubble('Taking you to '+destination.label+'…','bot');
-    setTimeout(()=>{window.location.href=destination.url;},650);
+    setTimeout(()=>{leaveGenie();window.location.href=destination.url;},650);
     return;
   }
   const typing=showTyping();
@@ -118,7 +122,7 @@ if(intro){
 
 // Campus Genie destination shortcuts: send visitors to real sections/pages in this site.
 const campusDestinations=[
-  {terms:['academic achievements','academic results','icse','isc','jee','ap results'],url:'/academic-results',label:'Academic Achievements'},
+  {terms:['academic achievements','academic achievement','achievements','achievement','academic results','results','result','board results','icse','isc','jee','ap results'],url:'/academic-results',label:'Academic Achievements'},
   {terms:['academic events','conference','conferences','mun','cmsmun'],url:'/cmsmun',label:'CMSMUN'},
   {terms:['sports','sport','spardha','concord','football'],url:'/sports',label:'Sports'},
   {terms:['cultural','culture','celesta','arts','music','dance'],url:'/celesta',label:'Cultural Events / CELESTA'},
