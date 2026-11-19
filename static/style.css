@@ -1781,3 +1781,11 @@ body::after{
   color:#0066CC!important;
   text-shadow:0 1px 2px rgba(255,255,255,.65)!important;
 }
+
+
+/* Keep the three blue intro text lines visible without an entrance animation */
+.cms-intro.cms-earth-signature .signature-wordmark{
+  opacity:1!important;
+  animation:none!important;
+  transform:none!important;
+}
