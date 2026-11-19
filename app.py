@@ -486,6 +486,11 @@ def chat():
     teachers = data.get("teachers", [])
     celesta = get_cultural_data()
     celesta_events = celesta.get("events", [])
+    # On the TECHNOVA page, a vague venue question should show the source-listed venues
+    # rather than guessing which competition the visitor means.
+    named_technova_competition = any(e.get("name", "").lower() in q for e in events)
+    if page_context == "/technova" and re.search(r"\\b(where|venue|location)\\b", q) and not named_technova_competition:
+        return answer("TECHNOVA competitions use different venues. Which competition are you looking for? Here are the venues listed in the official event data:", ["Competition", "Venue"], [[e["name"], e["venue"]] for e in events])
     # CMS Aliganj Campus I contact directory (details supplied for this site).
     aliganj_contact_terms = ("contact us", "cms contact", "cms contacts", "aliganj contact", "aliganj contacts", "aliganj campus contact", "campus phone", "cms phone", "school phone", "cms mobile", "cms email", "aliganj email", "calling hours", "calling time", "info@cmseducation.org", "aliganj1@cmseducation.org", "96484 29071", "2320897", "phone number", "contact details")
     if any(term in q for term in aliganj_contact_terms) or q in ("contact", "phone", "mobile", "email", "call", "calling hours"):
