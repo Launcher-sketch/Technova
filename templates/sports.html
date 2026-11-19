@@ -23,7 +23,6 @@
 <aside class="chat" id="chat"><div class="chat-head"><div><strong>CMS AI Assistant</strong><small>Your guide to CMS sports and events</small></div><div class="chat-head-actions"><button id="chatRestart" type="button" aria-label="Restart conversation" title="Restart conversation">↻</button><button id="chatClose" aria-label="Close chatbot">×</button></div></div><div class="chat-body" id="chatBody"><p class="bot">Jai Jagat! I’m the CMS AI Assistant. Ask me about Sports Events, SPARDHA, CONCORD, CMS sports, TECHNOVA or CELESTA.</p></div><form id="chatForm"><input id="chatInput" placeholder="Ask about SPARDHA, CONCORD or CMS sports…" autocomplete="off"><button>Send</button></form></aside>
 <script src="{{url_for('static',filename='script.js')}}"></script><script>
 document.querySelectorAll('.nav-dropdown').forEach(menu=>{
- menu.addEventListener('mouseleave',()=>menu.removeAttribute('open'));
  menu.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))menu.removeAttribute('open')});
 });
 </script>
