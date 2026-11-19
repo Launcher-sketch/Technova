@@ -92,7 +92,8 @@ form?.addEventListener('submit',async event=>{
     await askCampusGenie(contextualMessage);
     return;
   }
-  const asksCommonDetail=commonQuestionTerms.some(term=>lowerMessage.includes(term))&&!eventContextTerms.some(term=>lowerMessage.includes(term));
+  const hasActiveEventPage=["/technova","/celesta","/cmsmun"].includes(window.location.pathname);
+  const asksCommonDetail=commonQuestionTerms.some(term=>lowerMessage.includes(term))&&!eventContextTerms.some(term=>lowerMessage.includes(term))&&!hasActiveEventPage;
   if(asksCommonDetail){
     pendingCommonQuestion=message;
     bubble('Which event are you asking about? Choose TECHNOVA, CELESTA, CMSMUN, SPARDHA, CONCORD, or Academic Achievements.','bot');
