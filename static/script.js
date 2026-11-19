@@ -146,13 +146,19 @@ if(intro){
 
 // Campus Genie destination shortcuts: send visitors to real sections/pages in this site.
 const campusDestinations=[
-  {terms:['academic achievements','academic achievement','achievements','achievement','academic results','results','result','board results','icse','isc','jee','ap results'],url:'/academic-results',label:'Academic Achievements'},
+  {terms:['digital campus','school portal','campus portal','student portal','portal'],url:'/portal',label:'Digital Campus'},
+  {terms:['learning spaces','learning space','spaces built for curiosity','infrastructure','facilities','labs and library'],url:'/campus/infrastructure',label:'Learning Spaces & Infrastructure'},
+  {terms:['student development','child development','student growth','holistic development'],url:'/campus/child-development',label:'Student Development'},
+  {terms:['academic milestones','academic achievements','academic achievement','achievements','achievement','academic results','results','result','board results','icse','isc','jee','ap results'],url:'/academic-results',label:'Academic Achievements'},
+  {terms:['education impact','impact of education','peace education'],url:'/campus/education-impact',label:'Education Impact'},
+  {terms:['our founders','founders','founding vision'],url:'/campus/our-founders',label:'Our Founders'},
+  {terms:['cms management','management','school management'],url:'/campus/management',label:'CMS Management'},
   {terms:['academic events','conference','conferences','mun','cmsmun'],url:'/cmsmun',label:'CMSMUN'},
   {terms:['sports','sport','spardha','concord','football'],url:'/sports',label:'Sports'},
   {terms:['cultural','culture','celesta','arts','music','dance'],url:'/celesta',label:'Cultural Events / CELESTA'},
   {terms:['technova','technology','innovation','robotics','artificial intelligence'],url:'/technova',label:'TECHNOVA'},
   {terms:['contact','contact us','phone','email'],url:'/contact',label:'Contact Us'},
-  {terms:['about','about us','school information'],url:'/about',label:'About CMS'},
+  {terms:['about campus','about cms','about us','school information'],url:'/about',label:'About CMS'},
   {terms:['home','homepage','main page','all events'],url:'/?skipIntro=1',label:'CMS Events Homepage'}
 ];
 function findCampusDestination(message){
