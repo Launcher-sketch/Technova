@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMS Events | Discover. Experience.</title><link rel="stylesheet" href="{{url_for('static',filename='style.css')}}?v=apollo-chat-half-2"><link rel="stylesheet" href="{{url_for('static',filename='intro-background.css')}}"><link rel="stylesheet" href="{{url_for('static',filename='competition.css')}}?v=5"><meta name="description" content="Explore CMS Aliganj Campus I events, academic achievements, sports, cultural programmes and the Campus Genie digital campus demonstration."><meta name="theme-color" content="#173b65"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMS Events | Discover. Experience.</title><link rel="stylesheet" href="{{url_for('static',filename='style.css')}}?v=apollo-chat-half-2"><link rel="stylesheet" href="{{url_for('static',filename='intro-background.css')}}"><link rel="stylesheet" href="{{url_for('static',filename='competition.css')}}?v=6"><meta name="description" content="Explore CMS Aliganj Campus I events, academic achievements, sports, cultural programmes and the Campus Genie digital campus demonstration."><meta name="theme-color" content="#173b65"></head>
 <body class="events-home cms-homepage">
 <div class="cms-intro cms-earth-signature" id="cmsIntro" aria-label="City Montessori School welcome">
   <div class="earth-stage">
@@ -38,6 +38,7 @@
   <div class="chat-body" id="chatBody" aria-live="polite"><p class="bot">Jai Jagat! I’m Campus Genie. Ask me about campus, events, learning spaces and school life.</p></div>
   <form id="chatForm"><input id="chatInput" placeholder="Type your message..." autocomplete="off" aria-label="Message Campus Genie"><button type="submit">Send</button></form>
 </aside>
+<div class="home-genie-shortcuts" aria-label="Suggested Campus Genie questions"><span>ASK CAMPUS GENIE</span><button type="button" data-prompt="What events are coming up?">Upcoming events</button><button type="button" data-prompt="Tell me about the learning spaces at Aliganj Campus I.">Learning spaces</button><button type="button" data-prompt="Show me CMS academic achievements.">Achievements</button><button type="button" data-prompt="What can students explore at CMS?">Student opportunities</button></div>
 </section>
 <section class="campus-snapshot" aria-labelledby="campusSnapshotTitle">
 <div class="snapshot-intro"><p class="eyebrow">DISCOVER THE CAMPUS</p><h2 id="campusSnapshotTitle">Learn. Create. Lead.</h2><p>Explore the spaces, experiences and pathways that shape life at CMS Aliganj Campus I.</p></div>
@@ -65,7 +66,7 @@
 <section class="event-category" id="academic-events">
 <div class="category-heading"><h2>Academic Events & Conferences</h2><span>DEBATE · DIPLOMACY · DECIDE</span></div>
 <div class="home-event-grid">
-<a class="home-event-card mun-featured" href="/cmsmun">
+<a class="home-event-card mun-featured" data-preview="cmsmun" href="/cmsmun">
 <div class="home-card-top"><span>MODEL UNITED NATIONS · ALIGANJ CAMPUS I</span><span>2026 ARCHIVE</span></div>
 <div><p class="home-card-kicker">GLOBAL AFFAIRS · POLICY · DIPLOMACY</p><h3>CMSMUN · 5TH EDITION</h3><p>Step into the world of diplomacy. Explore the committees, agendas and conference experience from CMS Aliganj Campus I.</p><p>24–25 April 2026 · CMS Aliganj Campus I</p></div>
 <span class="home-card-link">Explore CMSMUN <b>↗</b></span>
@@ -88,12 +89,27 @@
 </a>
 </div>
 </section>
-<section class="event-category" id="cultural-events"><div class="category-heading"><h2>The Creative Spotlight</h2><span>IMAGINE · EXPRESS · INSPIRE</span></div><div class="home-event-grid"><a class="home-event-card cultural-featured" href="/celesta"><div class="home-card-top"><span>FEATURED CULTURAL FESTIVAL</span><span>2026</span></div><div><p class="home-card-kicker">NAZAKAT · ART · MUSIC · DANCE</p><h3>{{celesta.title}}</h3><p>{{celesta.subtitle}}</p><p>{{celesta.host}} · {{celesta.dates}}</p></div><span class="home-card-link">Explore the CELESTA experience <b>↗</b></span></a></div></section>
+<section class="event-category" id="cultural-events"><div class="category-heading"><h2>The Creative Spotlight</h2><span>IMAGINE · EXPRESS · INSPIRE</span></div><div class="home-event-grid"><a class="home-event-card cultural-featured" data-preview="celesta" href="/celesta"><div class="home-card-top"><span>FEATURED CULTURAL FESTIVAL</span><span>2026</span></div><div><p class="home-card-kicker">NAZAKAT · ART · MUSIC · DANCE</p><h3>{{celesta.title}}</h3><p>{{celesta.subtitle}}</p><p>{{celesta.host}} · {{celesta.dates}}</p></div><span class="home-card-link">Explore the CELESTA experience <b>↗</b></span></a></div></section>
 <section class="event-category" id="technology-events"><div class="category-heading"><h2>Technology &amp; Innovation</h2><span>BUILD · CODE · INNOVATE</span></div><div class="home-event-grid">
 <a class="home-event-card featured" href="/technova"><div class="home-card-top"><span>LIVE EVENT</span><span>19–20 NOV 2026</span></div><div><p class="home-card-kicker">ROBOTICS · ARTIFICIAL INTELLIGENCE</p><h3>TECHNOVA 2026</h3><p>Ideas take shape here. Explore TECHNOVA competitions, key dates, venues and participation information.</p></div><span class="home-card-link">Discover TECHNOVA <b>↗</b></span></a>
 </div></section>
 
 
+</section>
+<section class="homepage-achievements" aria-labelledby="homeAchievementsTitle">
+  <div><p class="eyebrow">ACADEMIC &amp; STUDENT EXCELLENCE</p><h2 id="homeAchievementsTitle">Achievement is a journey.</h2><p>Explore published CMS academic milestones and the students recognised across ICSE, ISC, JEE and AP examinations.</p><a class="home-card-link" href="/academic-results">Explore academic achievements ↗</a></div>
+  <div class="achievement-stats"><article><strong>99.8%</strong><span>ICSE 2026 top score</span></article><article><strong>99.75%</strong><span>ISC 2026 top score</span></article><article><strong>58</strong><span>JEE Advanced qualifiers</span></article><article><strong>184</strong><span>AP credits earned</span></article></div>
+</section>
+<section class="campus-explorer" aria-labelledby="campusExplorerTitle">
+  <div class="campus-explorer-heading"><p class="eyebrow">EXPLORE THE LEARNING ENVIRONMENT</p><h2 id="campusExplorerTitle">Find your space to grow.</h2><p>Choose a campus area to discover facilities listed by CMS Aliganj Campus I. This is an interactive directory, not a to-scale floor plan.</p></div>
+  <div class="campus-explorer-grid">
+    <button class="campus-space-tile is-active" type="button" data-space="stem"><span>01 · STEM &amp; INNOVATION</span><strong>Make and experiment</strong><small>Maker Space · D&amp;T Lab · Computer Lab · Studio Pod</small></button>
+    <button class="campus-space-tile" type="button" data-space="arts"><span>02 · ARTS &amp; READING</span><strong>Create and reflect</strong><small>Music Room · Art Room · Library</small></button>
+    <button class="campus-space-tile" type="button" data-space="sport"><span>03 · SPORT &amp; WELLBEING</span><strong>Move and recharge</strong><small>Basketball Court · Ground · Swimming Pool</small></button>
+    <button class="campus-space-tile" type="button" data-space="community"><span>04 · CAMPUS &amp; COMMUNITY</span><strong>Meet and connect</strong><small>Shux Courtyard · Reception · Waiting Lounge · Corridors</small></button>
+  </div>
+  <p class="campus-space-detail" id="campusSpaceDetail" aria-live="polite">Explore hands-on learning through the Maker Space, Design &amp; Technology Lab, Computer Lab and Studio Pod.</p>
+  <a href="/about">View campus facilities and details ↗</a>
 </section>
 <section class="home-updates" aria-labelledby="homeUpdatesTitle">
 <div class="updates-heading"><div><p class="eyebrow">WHAT'S HAPPENING</p><h2 id="homeUpdatesTitle">Latest from campus</h2><p>Updates published by the campus website team.</p></div><a href="/contact">Contact the campus ↗</a></div>
@@ -115,7 +131,7 @@
 </main>
 <footer>CMS EVENTS <span>LEARN · EXPLORE · MAKE YOUR MARK</span><a href="/admin/login">Admin</a></footer>
 
-<script src="{{url_for('static',filename='script.js',v='campus-genie-apollo-half-2')}}"></script><script>
+<script src="{{url_for('static',filename='script.js',v='campus-genie-home-experience-1')}}"></script><script>
 document.querySelectorAll('.nav-dropdown').forEach(menu=>{
  menu.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))menu.removeAttribute('open')});
 });
