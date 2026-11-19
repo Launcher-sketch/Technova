@@ -43,7 +43,11 @@ const welcomeMessage="Jai Jagat! I’m Campus Genie, your virtual guide to City 
 let pendingCommonQuestion="";
 const commonQuestionTerms=["schedule","timetable","date","dates","timing","timings","venue","venues","location","locations","registration","register","deadline","last date"];
 const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","icse","isc","jee","ap examination","quiz","robotics","football"];
-document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classList.toggle('open'));
+document.getElementById('chatLaunch')?.addEventListener('click',()=>{
+  chat?.classList.toggle('open');
+  if(chat?.classList.contains('open'))document.body.classList.add('genie-mode');
+  else document.body.classList.remove('genie-mode');
+});
 
 const leaveGenie=()=>{
   chat?.classList.remove('open','fullscreen');
@@ -134,6 +138,7 @@ if(intro){
     if(genieOpened)return;
     genieOpened=true;
     chat?.classList.add('open','fullscreen');
+    document.body.classList.add('genie-mode');
     input?.focus();
   };
   const finishIntro=()=>{
@@ -194,24 +199,9 @@ if(countdown){
 }
 
 
-// Homepage-wide quick search: filter event cards and report the result count.
-const homeEventSearch=document.getElementById('homeEventSearch');
-const homeSearchStatus=document.getElementById('homeSearchStatus');
-if(homeEventSearch){
-  const searchableHomeCards=[...document.querySelectorAll('.home-event-card')];
-  const searchableCategories=[...document.querySelectorAll('.event-category')];
-  homeEventSearch.addEventListener('input',()=>{
-    const query=homeEventSearch.value.trim().toLowerCase();
-    let matches=0;
-    searchableHomeCards.forEach(card=>{
-      const match=!query||card.textContent.toLowerCase().includes(query);
-      card.classList.toggle('search-hidden',!match);
-      if(match)matches++;
-    });
-    searchableCategories.forEach(section=>{
-      const visible=[...section.querySelectorAll('.home-event-card')].some(card=>!card.classList.contains('search-hidden'));
-      section.classList.toggle('search-hidden',Boolean(query)&&!visible);
-    });
-    if(homeSearchStatus)homeSearchStatus.textContent=query?(matches?matches+' matching event page'+(matches===1?'':'s')+' found.':'No matches found. Try a broader search.'):'Search featured event pages and categories instantly.';
-  });
-}
+// Homepage event discovery now runs through Campus Genie instead of a separate search box.
+document.getElementById('homeGenieOpen')?.addEventListener('click',()=>{
+  chat?.classList.add('open','fullscreen');
+  document.body.classList.add('genie-mode');
+  input?.focus();
+});

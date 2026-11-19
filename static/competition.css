@@ -411,3 +411,52 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
   .about-page .spaces-groups{grid-template-columns:1fr}
   .about-page .principal-profile{grid-template-columns:1fr;padding:18px}
 }
+
+
+/* Review pass: integrate homepage discovery with Campus Genie and improve campus readability */
+.events-home .home-genie-entry{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:28px;align-items:center;max-width:850px;margin-top:30px;padding:23px 25px;border:1px solid rgba(255,255,255,.3);border-radius:20px;background:rgba(255,255,255,.13);backdrop-filter:blur(12px)}
+.events-home .genie-entry-kicker{font-size:11px;font-weight:900;letter-spacing:1.5px;color:#c8e4ff}
+.events-home .home-genie-entry h2{margin:8px 0;color:#fff;font-size:clamp(21px,2.5vw,29px);line-height:1.2}
+.events-home .home-genie-entry p{margin:0;color:#e2f0ff;font-size:14px;line-height:1.65}
+.events-home .genie-entry-actions{display:grid;gap:12px}
+.events-home .genie-open-button{padding:14px 18px;border:0;border-radius:12px;background:#fff;color:#14558e;font-weight:900;font-size:14px;cursor:pointer}
+.events-home .genie-prompts{display:flex;flex-wrap:wrap;gap:8px}
+.events-home .genie-prompts button{padding:8px 11px;border:1px solid rgba(255,255,255,.45);border-radius:30px;background:rgba(255,255,255,.1);color:#fff;font-size:11px;font-weight:800;cursor:pointer}
+.events-home .genie-prompts button:hover,.events-home .genie-open-button:hover{filter:brightness(.96)}
+@media(max-width:760px){.events-home .home-genie-entry{grid-template-columns:1fr;padding:19px}.events-home .home-genie-entry p{font-size:13px}}
+
+.about-page .profile-heading>p:not(.eyebrow){font-size:16px;line-height:1.8}
+.about-page .profile-facilities article{padding:24px}
+.about-page .profile-facilities h3{font-size:18px}
+.about-page .profile-facilities p{font-size:14px;line-height:1.75}
+.about-page .spaces-heading h2{font-size:clamp(30px,3.6vw,42px)}
+.about-page .spaces-heading p:not(.eyebrow){font-size:15px;line-height:1.7}
+.about-page .spaces-groups{gap:16px}
+.about-page .spaces-group{padding:23px;min-height:220px}
+.about-page .spaces-group>span{font-size:12px;letter-spacing:1.1px;line-height:1.5}
+.about-page .spaces-group ul{font-size:14px;line-height:2.05;margin-top:16px}
+.about-page .spaces-footnote{font-size:12px;line-height:1.6}
+.about-page .principal-profile{padding:32px;gap:30px}
+.about-page .principal-profile p:not(.eyebrow){font-size:15px;line-height:1.8;margin:0 0 12px}
+.about-page .principal-message h2{font-size:clamp(30px,3.5vw,42px)}
+.about-page .principal-attribution{font-size:12px!important;color:#6a829a!important;font-style:italic}
+.about-page .principal-name{padding:23px}
+.about-page .principal-name span{font-size:11px}
+.about-page .principal-name strong{font-size:24px}
+.about-page .principal-name p{font-size:14px!important;line-height:1.7!important}
+.about-page .about-grid{gap:18px}
+.about-page .about-tile{padding:28px;min-height:205px}
+.about-page .about-tile>span{font-size:11px}
+.about-page .about-tile h2{font-size:26px}
+.about-page .about-tile p{font-size:15px;line-height:1.75}
+.about-page .about-tile b{font-size:13px}
+.about-page .about-tile.about-contact{grid-column:span 2;min-height:190px;background:linear-gradient(115deg,#eaf4ff,#fff);border-color:#c8def2}
+.about-page .campus-detail-sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:24px}
+.about-page .campus-detail{scroll-margin-top:30px;padding:25px;border:1px solid var(--cms-line);border-radius:18px;background:#fff;box-shadow:0 10px 25px rgba(29,69,111,.045)}
+.about-page .campus-detail .eyebrow{font-size:11px;letter-spacing:1.2px;color:#4388c7;font-weight:900}
+.about-page .campus-detail h2{font-size:25px;color:var(--cms-navy);margin:8px 0 12px}
+.about-page .campus-detail p:not(.eyebrow){font-size:14px;line-height:1.8;color:#536e89}
+.about-page .campus-detail>a{font-size:13px;color:var(--cms-blue);font-weight:800;text-decoration:none}
+.about-page .campus-sources{grid-column:1/-1;font-size:12px;line-height:1.7;color:var(--cms-muted)}
+.about-page .campus-sources a{color:var(--cms-blue);font-weight:700}
+@media(max-width:760px){.about-page .campus-detail-sections{grid-template-columns:1fr}.about-page .about-tile.about-contact{grid-column:auto}.about-page .spaces-group{min-height:0}}
