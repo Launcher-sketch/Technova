@@ -1,12 +1,13 @@
 /* Campus Portal demo: role-aware, interactive and intentionally sample-only. */
 const roles={
- student:{label:"STUDENT WORKSPACE",name:"Good morning, Aarav",desc:"Your learning day, organised in one place.",avatar:"A",stats:[["Attendance","96%","Sample metric"],["Assignments","04","2 due soon"],["Average score","88%","Sample metric"],["Achievements","06","Portfolio items"]],title:"Today's timetable",items:[["08:00","Mathematics","Room 204 · Ms. Sharma"],["09:00","Physics","Lab 2 · Mr. Khan"],["10:15","English Literature","Room 108 · Ms. Das"],["11:15","Computer Science","Lab 1 · Mr. Mehta"]],quick:[["🗓️","My timetable"],["✓","Assignments"],["🏅","My achievements"],["🪪","Digital ID"]],suggest:["Show my assignments","Show upcoming events","Open my digital ID"],modules:[["Assignment Manager","✓","Track sample tasks, due dates and submission status."],["Digital Student ID","🪪","View a clearly marked sample student identity card."],["Achievement Portfolio","🏅","Explore sample certificates, projects and competition highlights."],["School Calendar","🗓️","Browse sample academic dates and campus events."]]},
+ student:{label:"STUDENT WORKSPACE",name:"Welcome, student",desc:"Your learning day, organised in one place.",avatar:"A",stats:[["Attendance","96%","Sample metric"],["Assignments","04","2 due soon"],["Average score","88%","Sample metric"],["Achievements","06","Portfolio items"]],title:"Today's timetable",items:[["08:00","Mathematics","Room 204 · Ms. Sharma"],["09:00","Physics","Lab 2 · Mr. Khan"],["10:15","English Literature","Room 108 · Ms. Das"],["11:15","Computer Science","Lab 1 · Mr. Mehta"]],quick:[["🗓️","My timetable"],["✓","Assignments"],["🏅","My achievements"],["🪪","Digital ID"]],suggest:["Show my assignments","Show upcoming events","Open my digital ID"],modules:[["Assignment Manager","✓","Track sample tasks, due dates and submission status."],["Digital Student ID","🪪","View a clearly marked sample student identity card."],["Achievement Portfolio","🏅","Explore sample certificates, projects and competition highlights."],["School Calendar","🗓️","Browse sample academic dates and campus events."]]},
  teacher:{label:"TEACHER WORKSPACE",name:"Welcome, Ms. Sharma",desc:"Your classes, tasks and teaching day at a glance.",avatar:"S",stats:[["Classes today","5","Sample schedule"],["Students","142","Demo figure"],["Assignments","12","Sample queue"],["Attendance","94%","Sample metric"]],title:"Today's teaching plan",items:[["08:00","Class 9A · Mathematics","Algebra · Room 204"],["09:00","Class 10B · Mathematics","Geometry · Room 210"],["10:30","Class 8C · Mathematics","Fractions · Room 105"],["12:00","Faculty planning","Staff room"]],quick:[["✓","Mark attendance"],["✎","Create assignment"],["📝","Class overview"],["📣","Class notice"]],suggest:["Show my classes today","Show assignments to review","Draft a class notice"],modules:[["Class Overview","👥","Review sample classes, sections and daily teaching schedule."],["Assignment Manager","✓","Create and review demonstration assignments."],["Lesson Planner","📚","Organise sample lesson topics and classroom resources."],["Notice Publisher","📣","Preview a notice before a real school-authorised publishing workflow."]]},
  parent:{label:"PARENT WORKSPACE",name:"Welcome, Mrs. Mehta",desc:"A clear view of your child's school journey.",avatar:"M",stats:[["Attendance","96%","Sample metric"],["Assignments","3 / 4","One pending"],["Recent score","88%","Sample metric"],["Next meeting","24 Nov","Sample date"]],title:"Aarav's weekly snapshot",items:[["MON","Mathematics","Homework submitted"],["TUE","Science","Class participation: Good"],["WED","English","Reading task completed"],["FRI","Mathematics","Quiz score: 18/20"]],quick:[["📊","Progress report"],["🗓️","School calendar"],["✉️","Teacher messages"],["📄","Circulars"]],suggest:["Summarise my child's week","Any pending assignments?","Show upcoming school dates"],modules:[["Student Updates","📊","Review fictional attendance, learning and activity summaries."],["School Calendar","🗓️","See sample holidays, meetings and event dates."],["Teacher Communication","✉️","Preview a secure school communication area."],["Reports & Circulars","📄","Browse sample report and circular entries."]]},
  admin:{label:"SCHOOL ADMIN WORKSPACE",name:"Welcome, Campus Admin",desc:"A sample operational overview for school teams.",avatar:"A",stats:[["Enrolled learners","2,480","Demo figure"],["Faculty","186","Demo figure"],["Attendance today","94.2%","Sample metric"],["Open notices","08","Sample figure"]],title:"Campus operations",items:[["08:00","Attendance snapshot","94.2% · Sample data"],["09:00","Notice approvals","3 awaiting review"],["10:30","Event coordination","TECHNOVA showcase"],["12:00","Academic operations","Weekly review"]],quick:[["👥","Manage users"],["📢","Publish notice"],["📅","School calendar"],["📊","Reports"]],suggest:["Show campus overview","What notices need approval?","How do roles work?"],modules:[["Event Management","🎪","Preview event listings, schedules and publishing status."],["Announcement Manager","📢","Draft a sample campus announcement."],["Gallery Management","🖼️","Preview sample gallery organisation and moderation."],["Campus Analytics","📊","Explore fictional overview metrics; no live records are connected."]]}
 };
 const $=id=>document.getElementById(id);
 let activeRole="student";
+let activeStudentName="Student";
 const moduleInfo={
  "Assignment Manager":["Assignments","Your sample assignment workspace includes task title, subject, due date and status.","Mathematics practice · Due 21 Nov · In progress","Physics worksheet · Due 22 Nov · Not started","Computer Science project · Due 25 Nov · Submitted"],
  "Digital Student ID":["Sample Digital ID","DEMO ONLY — This is not an official CMS identity card and cannot be used for access or verification.","Name: Aarav Mehta","Class: IX · Section A","Campus: Sample campus record","QR: Demonstration placeholder"],
@@ -28,7 +29,8 @@ const moduleInfo={
 };
 function addText(parent,tag,text,className){const el=document.createElement(tag);el.textContent=text;if(className)el.className=className;parent.appendChild(el);return el}
 function render(role){
- activeRole=role;const d=roles[role];
+ activeRole=role;const d={...roles[role]};
+ if(role==="student"){d.name="Welcome, "+activeStudentName;d.avatar=activeStudentName.split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase()}
  document.querySelectorAll(".role").forEach(b=>{const selected=b.dataset.role===role;b.classList.toggle("active",selected);b.setAttribute("aria-selected",String(selected));b.tabIndex=selected?0:-1});
  $("workspacePanel").setAttribute("aria-labelledby","role-"+role);
  $("roleEyebrow").textContent=d.label;$("greeting").textContent=d.name;$("roleDesc").textContent=d.desc;$("avatar").textContent=d.avatar;$("mainTitle").textContent=d.title;
@@ -105,3 +107,17 @@ $("suggestions").addEventListener("click",e=>{if(e.target.tagName==="BUTTON")rep
 $("quickLinks").addEventListener("click",e=>{const b=e.target.closest("button");if(b)reply("Open "+b.dataset.quick)});
 $("roleModules").addEventListener("click",e=>{const b=e.target.closest("button[data-module]");if(b)showModule(b.dataset.module)});
 render("student");
+const demoStudents={"CMS-DEMO-001":"Shashwat Pandey","CMS-DEMO-002":"Virat Pandey"};
+document.querySelectorAll("[data-entry-role]").forEach(button=>button.addEventListener("click",()=>{
+ const role=button.dataset.entryRole;
+ const form=$("studentIdForm");
+ if(role!=="student"){$("idFeedback").textContent="This role is planned for a later build. Student access is available now.";form.hidden=true;return;}
+ form.hidden=false;$("studentDemoId").focus();
+}));
+$("studentIdForm").addEventListener("submit",event=>{
+ event.preventDefault();
+ const id=$("studentDemoId").value.trim().toUpperCase();
+ const name=demoStudents[id];
+ if(!name){$("idFeedback").textContent="ID not recognised. Use CMS-DEMO-001 or CMS-DEMO-002.";return;}
+ activeStudentName=name;render("student");$("entryOverlay").hidden=true;
+});
