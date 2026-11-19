@@ -2603,3 +2603,35 @@ body:has(#chat.open) main,body:has(#chat.open) footer{opacity:1!important;filter
 body:has(#chat.open)::before,body:has(#chat.open)::after{visibility:visible!important;opacity:1!important}
 @media(max-width:900px){.chat.open:not(.fullscreen){right:16px!important;bottom:82px!important;width:min(72vw,680px)!important;height:min(76vh,700px)!important}}
 @media(max-width:560px){.chat.open:not(.fullscreen){right:10px!important;bottom:78px!important;width:calc(100vw - 20px)!important;height:76dvh!important;max-height:calc(100dvh - 96px)!important;border-radius:16px!important}}
+
+
+/* Centre the embedded Campus Genie panel on the homepage */
+body.cms-homepage .home-hero{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+}
+body.cms-homepage .home-hero>.eyebrow,
+body.cms-homepage .home-hero>h1,
+body.cms-homepage .home-hero>p:not(.eyebrow){
+  width:100%!important;
+  text-align:center!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+body.cms-homepage .home-chat-embedded{
+  align-self:center!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+  box-sizing:border-box!important;
+  width:min(960px,calc(100% - 24px))!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+@media(max-width:600px){
+  body.cms-homepage .home-chat-embedded{
+    width:100%!important;
+    margin-top:26px!important;
+  }
+}
