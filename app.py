@@ -226,6 +226,11 @@ def cmsmun_page():
     return render_template("cmsmun.html")
 
 
+@app.get("/about")
+def about_page():
+    return render_template("about.html")
+
+
 @app.get("/contact")
 def contact_page():
     return render_template("contact.html")
