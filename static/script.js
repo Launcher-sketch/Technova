@@ -42,7 +42,11 @@ const sendButton=form?.querySelector('button[type="submit"],button:not([type])')
 const welcomeMessage="Jai Jagat! I’m the CMS AI Assistant. Ask me about CMS, TECHNOVA 2026, or CELESTA cultural events.";
 document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classList.toggle('open'));
 
-document.getElementById('chatClose')?.addEventListener('click',()=>chat?.classList.remove('open'));
+const leaveGenie=()=>{
+  chat?.classList.remove('open','fullscreen');
+  document.body.classList.remove('genie-mode');
+};
+document.getElementById('chatClose')?.addEventListener('click',leaveGenie);
 
 // Drag the chatbot by its header on mouse, pen, or touch.
 const chatHead=chat?.querySelector('.chat-head');
@@ -133,7 +137,8 @@ if(intro){
   const openCampusGenie=()=>{
     if(genieOpened)return;
     genieOpened=true;
-    chat?.classList.add('open');
+    chat?.classList.add('open','fullscreen');
+    document.body.classList.add('genie-mode');
     input?.focus();
   };
   const finishIntro=()=>{
