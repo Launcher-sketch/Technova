@@ -111,7 +111,7 @@ form?.addEventListener('submit',async event=>{
 async function askCampusGenie(message){
   const typing=showTyping();
   try{
-    const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message})});
+    const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message,page_context:window.location.pathname})});
     if(!response.ok)throw new Error('Request failed');
     const data=await response.json();typing.remove();bubble(data.reply||'I could not prepare a response.', 'bot',data.table);
   }catch{typing.remove();bubble('The assistant is temporarily unavailable. Please try again.','bot');}

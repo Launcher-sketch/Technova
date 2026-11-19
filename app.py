@@ -467,15 +467,33 @@ def api_data():
 
 @app.post("/api/chat")
 def chat():
-    message = (request.get_json(silent=True) or {}).get("message", "").strip()
+    payload = request.get_json(silent=True) or {}
+    message = str(payload.get("message", "")).strip()
+    page_context = str(payload.get("page_context", "")).lower().strip()
     if not message:
         return answer("Please enter a question.")
     data = get_data()
     q = " ".join(message.lower().replace("?", " ").replace("!", " ").split())
+    # Lightweight query normalisation; the official knowledge files remain read-only.
+    typo_aliases = {"schdelue": "schedule", "scheduele": "schedule", "schedual": "schedule", "technovae": "technova", "celestae": "celesta", "kb": "when", "kab": "when", "kahan": "where", "kaha": "where", "kidhar": "where", "kya": "what", "batao": "tell", "btao": "tell", "dikhao": "show"}
+    q = " ".join(typo_aliases.get(word, word) for word in q.split())
+    # Use the active event page as context only for short, ambiguous follow-ups.
+    has_named_event = any(name in q for name in ("technova", "celesta", "nazakat", "cmsmun", "cms mun", "model united nations"))
+    if not has_named_event and page_context in ("/technova", "/celesta", "/cmsmun"):
+        context_name = {"/technova": "technova", "/celesta": "celesta", "/cmsmun": "cmsmun"}[page_context]
+        if re.search(r"\b(what is it|what is this|tell me about it|explain it)\b", q):
+            q += " what is " + context_name
+        elif any(term in q for term in ("schedule", "date", "when", "venue", "where", "this event", "the event", "timing")) or re.search(r"\b(it|this|that|there)\b", q):
+            q += " " + context_name
     events = data.get("events", [])
     teachers = data.get("teachers", [])
     celesta = get_cultural_data()
     celesta_events = celesta.get("events", [])
+    # On the TECHNOVA page, a vague venue question should show the source-listed venues
+    # rather than guessing which competition the visitor means.
+    named_technova_competition = any(e.get("name", "").lower() in q for e in events)
+    if page_context == "/technova" and re.search(r"\b(where|venue|location)\b", q) and not named_technova_competition:
+        return answer("TECHNOVA competitions use different venues. Which competition are you looking for? Here are the venues listed in the official event data:", ["Competition", "Venue"], [[e["name"], e["venue"]] for e in events])
     # CMS Aliganj Campus I contact directory (details supplied for this site).
     aliganj_contact_terms = ("contact us", "cms contact", "cms contacts", "aliganj contact", "aliganj contacts", "aliganj campus contact", "campus phone", "cms phone", "school phone", "cms mobile", "cms email", "aliganj email", "calling hours", "calling time", "info@cmseducation.org", "aliganj1@cmseducation.org", "96484 29071", "2320897", "phone number", "contact details")
     if any(term in q for term in aliganj_contact_terms) or q in ("contact", "phone", "mobile", "email", "call", "calling hours"):
