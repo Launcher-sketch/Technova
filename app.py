@@ -782,11 +782,11 @@ def chat():
         ("AP 2026", "Abhijeet Mukherji", "Not specified", "4/5 high-score achiever"),
     ]
     # Natural-language rank and topper questions use only the published 2026 achiever list.
-    rank_question = bool(re.search(r"\\b(air\\s*(?:no\\.?\\s*)?(?:1|one)|rank\\s*(?:no\\.?\\s*)?(?:1|one)|topper|topped|highest\\s*(?:scorer|rank|marks)|who\\s+is\\s+air)\\b", q))
+    rank_question = bool(re.search(r"\b(air\s*(?:no\.?\s*)?(?:1|one)|rank\s*(?:no\.?\s*)?(?:1|one)|topper|topped|highest\s*(?:scorer|rank|marks)|who\s+is\s+air)\b", q))
     if rank_question:
         if any(term in q for term in ("jee", "joint entrance", "advanced")):
             jee_rows = [row for row in achievers if row[0] == "JEE Advanced 2026" and "Open Category Rank" in row[3]]
-            top_jee = min(jee_rows, key=lambda row: int(re.search(r"Open Category Rank (\\d+)", row[3]).group(1))) if jee_rows else None
+            top_jee = min(jee_rows, key=lambda row: int(re.search(r"Open Category Rank (\d+)", row[3]).group(1))) if jee_rows else None
             if top_jee:
                 return answer("The uploaded CMS 2026 data does not list a JEE Advanced AIR 1. Its best published Open Category rank in this achiever list is:", ["Detail", "Published information"], [["Student", top_jee[1]], ["Examination", top_jee[0]], ["Campus", top_jee[2]], ["Rank", top_jee[3]], ["Note", "This is the best rank in the uploaded CMS list, not AIR 1 overall."]])
             return answer("The uploaded CMS data does not contain a JEE Advanced AIR 1 entry.")
