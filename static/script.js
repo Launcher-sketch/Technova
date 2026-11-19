@@ -160,7 +160,20 @@ const campusDestinations=[
 ];
 function findCampusDestination(message){
   const q=message.toLowerCase().replace(/[^a-z0-9\\s]/g,' ').replace(/\\s+/g,' ').trim();
-  return campusDestinations.find(destination=>destination.terms.some(term=>q===term||q.includes(term)))||null;
+
+  // Mentioning a section is not the same as asking to navigate to it.
+  // Informational questions must stay in chat and be answered by the chatbot API.
+  const informationIntent=/^(what is|what are|tell me about|explain|describe|give me (?:information|details) about|show me information about|who is|when is|where is|how does|how do i know about)\\b/.test(q);
+  if(informationIntent)return null;
+
+  // Navigate only when the visitor clearly asks to open, visit, go to, or take
+  // them to a section/page. This applies consistently to every destination below.
+  const navigationIntent=/\\b(go to|take me to|open|visit|navigate to|show me the page for|bring me to|redirect me to)\\b/.test(q);
+  if(!navigationIntent)return null;
+
+  return campusDestinations.find(destination=>
+    destination.terms.some(term=>q===term||q.includes(term))
+  )||null;
 }
 
 // Live TECHNOVA countdown based on the published local start date
