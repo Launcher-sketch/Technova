@@ -74,3 +74,17 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
 .about-page .about-tile b{color:var(--cms-blue);font-size:11px}
 @media(max-width:850px){.about-page .about-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.about-page .about-main{padding:28px 16px 48px}.about-page .about-grid{grid-template-columns:1fr}}
+
+.about-page .campus-profile{padding:42px 0 12px}
+.about-page .profile-heading{max-width:680px;margin-bottom:20px}
+.about-page .profile-heading h2{font-size:clamp(26px,3vw,38px);letter-spacing:-1px;color:var(--cms-navy);margin:0 0 10px}
+.about-page .profile-heading>p:not(.eyebrow){color:var(--cms-muted);font-size:13px;line-height:1.7}
+.about-page .profile-facilities{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.about-page .profile-facilities article{padding:20px;border:1px solid var(--cms-line);border-radius:15px;background:linear-gradient(145deg,#fff,#f7fbff)}
+.about-page .profile-facilities article>span{color:#4388c7;font-size:9px;font-weight:900;letter-spacing:1.4px}
+.about-page .profile-facilities h3{font-size:14px;color:var(--cms-navy);margin:12px 0 8px}
+.about-page .profile-facilities p{font-size:11px;line-height:1.65;color:var(--cms-muted);margin:0}
+.about-page .profile-note{font-size:11px;color:var(--cms-muted);margin:16px 0 0}
+.about-page .profile-note a{color:var(--cms-blue);font-weight:800}
+@media(max-width:850px){.about-page .profile-facilities{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.about-page .profile-facilities{grid-template-columns:1fr}}
