@@ -467,11 +467,21 @@ def api_data():
 
 @app.post("/api/chat")
 def chat():
-    message = (request.get_json(silent=True) or {}).get("message", "").strip()
+    payload = request.get_json(silent=True) or {}
+    message = str(payload.get("message", "")).strip()
+    page_context = str(payload.get("page_context", "")).lower().strip()
     if not message:
         return answer("Please enter a question.")
     data = get_data()
     q = " ".join(message.lower().replace("?", " ").replace("!", " ").split())
+    # Lightweight query normalisation; the official knowledge files remain read-only.
+    typo_aliases = {"schdelue": "schedule", "scheduele": "schedule", "schedual": "schedule", "technovae": "technova", "celestae": "celesta"}
+    q = " ".join(typo_aliases.get(word, word) for word in q.split())
+    # Use the active event page as context only for short, ambiguous follow-ups.
+    has_named_event = any(name in q for name in ("technova", "celesta", "nazakat", "cmsmun", "cms mun", "model united nations"))
+    if not has_named_event and page_context in ("/technova", "/celesta", "/cmsmun"):
+        if any(term in q for term in ("schedule", "date", "when", "venue", "where", "it", "this event", "the event", "timing")):
+            q += " " + {" /technova": "technova", "/technova": "technova", "/celesta": "celesta", "/cmsmun": "cmsmun"}[page_context]
     events = data.get("events", [])
     teachers = data.get("teachers", [])
     celesta = get_cultural_data()
