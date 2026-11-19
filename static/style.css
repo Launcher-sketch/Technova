@@ -2176,3 +2176,130 @@ body:has(#chat.fullscreen) #chatLaunch{display:none!important}
   .chat.fullscreen .bot,.chat.fullscreen .user{font-size:14px!important;max-width:94%!important}
   .chat.fullscreen #chatForm{padding:10px 10px max(10px,env(safe-area-inset-bottom))!important}
 }
+
+
+/* CAMPUS GENIE — unified CMS blue identity across every site page */
+:root{
+  --bg:#07172d;
+  --panel:#102744;
+  --text:#f2f7ff;
+  --muted:#b0c2d9;
+  --cyan:#55a4ff;
+  --line:#29496d;
+}
+html{background:#07172d}
+body{
+  background:
+    radial-gradient(ellipse at 12% 0%,rgba(25,105,190,.17),transparent 38%),
+    radial-gradient(ellipse at 90% 32%,rgba(31,116,205,.10),transparent 34%),
+    linear-gradient(145deg,#07172d 0%,#0a1d36 52%,#08182e 100%)!important;
+  color:#f2f7ff;
+}
+.top{
+  background:rgba(7,23,45,.94)!important;
+  border-bottom-color:#2b5683!important;
+  box-shadow:0 8px 30px rgba(0,0,0,.18);
+  backdrop-filter:blur(14px);
+}
+.top nav a,.nav-dropdown summary{color:#d7e8ff!important}
+.top nav a:hover,.dropdown-menu a:hover{color:#69b3ff!important}
+.pill,.bright,.filter.active,.chat-launch{
+  background:linear-gradient(135deg,#3b96f2,#1768bd)!important;
+  color:#fff!important;
+  border-color:#58aaff!important;
+  box-shadow:0 8px 24px rgba(31,119,207,.22);
+}
+.button.outline,.outline{border-color:#4a83bd!important;color:#d9ebff!important}
+.hero,.home-event-card.featured,.announcement-card,.results-placeholder,.gallery-placeholder{
+  background:
+    radial-gradient(ellipse at 85% 18%,rgba(37,132,220,.24),transparent 48%),
+    linear-gradient(135deg,#102d50,#0a1d35 72%)!important;
+}
+.event-card,.teacher-grid article,.day-grid article,.home-event-card,.mun-card,
+.event-modal-panel,.about-tile,.contact-card,.results-card,.academic-card{
+  background:linear-gradient(145deg,#122e4f,#0b1e36)!important;
+  border-color:#2b527c!important;
+}
+.event-card:hover,.home-event-card:hover,.about-tile:hover{
+  border-color:#559fe9!important;
+  box-shadow:0 16px 38px rgba(0,65,130,.24)!important;
+}
+.eyebrow,.tag,.card-top,.teacher-grid span,.day-grid span,.motto,
+.home-card-top,.category-heading span,.home-card-link,.announcement-tag,
+.results-placeholder>span,.gallery-placeholder>span{
+  color:#70b8ff!important;
+}
+.home-hero h1 span,.hero h1 span,.intro h2 span{color:#70b8ff!important}
+.event-category,.about,.countdown-section,.updates-section,.results-section,.gallery-section{
+  border-color:#29496d!important;
+}
+.countdown>div{background:linear-gradient(145deg,#12365c,#0b2039)!important;border-color:#315f8e!important}
+.countdown strong{color:#72baff!important}
+.event-details,.filter,.outline{border-color:#3974ae!important}
+.event-details{color:#78bdff!important}
+.event-details:hover,.filter:hover{background:#12365c!important}
+.dropdown-menu{background:#0d2542!important;border:1px solid #315a85!important;box-shadow:0 18px 42px #020b18aa!important}
+.dropdown-menu a{color:#dcecff!important}
+footer{border-color:#29496d!important;color:#79baff!important}
+a{transition:color .18s ease,border-color .18s ease}
+::selection{background:#247dcc;color:white}
+
+/* Bring legacy purple CMSMUN styling into the same blue family */
+.mun-hero{
+  background:
+    radial-gradient(ellipse at 82% 15%,rgba(48,139,225,.25),transparent 42%),
+    linear-gradient(135deg,#12345a,#0c203a 65%,#102b49)!important;
+  border-color:#315b86!important;
+}
+.mun-hero .eyebrow,.mun-card span,.mun-contact a{color:#79baff!important}
+.mun-meta span{border-color:#4b78a5!important;color:#e1efff!important}
+.mun-note{border-left-color:#4d9be8!important;background:#102b4a!important;color:#d4e5f8!important}
+
+/* One shared Campus Genie visual system on every page */
+.chat{
+  background:linear-gradient(155deg,#102b4b,#081a30)!important;
+  border:1px solid #3973aa!important;
+  box-shadow:0 24px 80px rgba(0,18,42,.72),0 0 0 1px rgba(79,157,235,.10)!important;
+}
+.chat-head{
+  background:linear-gradient(110deg,#174b7d,#10365f)!important;
+  border-bottom:1px solid #3973aa!important;
+}
+.chat-head strong{color:#fff!important;letter-spacing:.01em}
+.chat-head small{color:#c4ddf8!important}
+.chat-head-actions button{
+  background:#123c66!important;border-color:#5595d0!important;color:#eaf5ff!important;
+}
+.chat-head-actions button:hover{background:#1b5b91!important}
+.chat-body{background:linear-gradient(180deg,rgba(15,43,73,.96),rgba(8,26,47,.98))!important}
+.bot{
+  background:linear-gradient(135deg,#1a416b,#153454)!important;
+  border:1px solid #315f8d!important;color:#edf6ff!important;
+}
+.user{
+  background:linear-gradient(135deg,#247ed0,#155da6)!important;
+  border:1px solid #4a9be7!important;color:#fff!important;
+}
+.chat form{background:#0b2039!important;border-top:1px solid #31577e!important}
+#chatInput{
+  background:#102b49!important;border:1px solid #3c6e9f!important;color:#f4f8ff!important;
+}
+#chatInput::placeholder{color:#9bb9d8!important}
+#chatForm button{
+  background:linear-gradient(135deg,#3b96f2,#1768bd)!important;color:#fff!important;
+}
+.chat-typing span{background:#76baff!important}
+.chat-table-wrap{border-color:#315f8d!important;background:#0b2039!important}
+.chat-table th{background:#174777!important;color:#a6d4ff!important}
+.chat-table td{color:#e1edfb!important;border-color:#29496d!important}
+.chat-launch{border:1px solid #75baff!important}
+.chat-launch:hover{filter:brightness(1.12)}
+.chat-globe{border:2px solid #75baff!important}
+.chat.fullscreen{
+  background:linear-gradient(155deg,#102b4b,#081a30)!important;
+  border-color:#4a91d1!important;
+}
+@media(max-width:700px){
+  .top{background:rgba(7,23,45,.97)!important}
+  .chat{border-color:#4a91d1!important}
+}
