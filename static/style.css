@@ -1268,3 +1268,19 @@ body::after{
 .contact-card a:hover{color:#1769aa!important}
 .contact-card p{color:#526a82!important}
 .contact-page{color:#263f59}
+
+
+/* Global CMS Events navigation dropdowns */
+.top .site-nav{display:flex;align-items:center;gap:clamp(12px,2vw,28px);margin-left:auto;margin-right:clamp(14px,2.5vw,34px)}
+.site-nav>a,.nav-dropdown>summary{color:#c5cede;text-decoration:none;font-size:13px;white-space:nowrap;cursor:pointer;list-style:none}
+.nav-dropdown{position:relative}
+.nav-dropdown>summary::-webkit-details-marker{display:none}
+.nav-dropdown>summary span{color:var(--cyan);margin-left:4px;font-size:15px}
+.dropdown-menu{position:absolute;top:calc(100% + 17px);left:0;min-width:235px;padding:9px;background:#101b2b;border:1px solid #34465c;border-radius:13px;box-shadow:0 18px 45px #0008;display:none;z-index:30}
+.nav-dropdown[open] .dropdown-menu{display:grid;animation:navDropIn .16s ease-out}
+.dropdown-menu a{display:block;padding:11px 12px;border-radius:8px;color:#dce7f5;text-decoration:none;font-size:12px;line-height:1.35}
+.dropdown-menu a:hover,.dropdown-menu a:focus-visible{background:#1b3043;color:var(--cyan);outline:none}
+.events-menu{min-width:255px}
+@keyframes navDropIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:800px){.top .site-nav{display:flex;gap:12px;margin:0 10px}.top .site-nav>a,.nav-dropdown>summary{font-size:12px}.top .pill{display:none}}
+@media(max-width:560px){.top{gap:8px;padding:0 4%}.top .site-nav{gap:10px;margin:0}.top .site-nav>a,.nav-dropdown>summary{font-size:11px}.dropdown-menu{left:auto;right:-20px;min-width:210px;top:calc(100% + 13px)}.events-menu{min-width:230px}.logo{font-size:11px;letter-spacing:.04em}.logo span{margin-left:4px}}
