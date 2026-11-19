@@ -39,7 +39,7 @@ const body=document.getElementById('chatBody');
 const input=document.getElementById('chatInput');
 const form=document.getElementById('chatForm');
 const sendButton=form?.querySelector('button[type="submit"],button:not([type])');
-const welcomeMessage="Jai Jagat! I’m the CMS AI Assistant. Ask me about CMS, TECHNOVA 2026, or CELESTA cultural events.";
+const welcomeMessage="Jai Jagat! I’m Campus Genie, your virtual guide to City Montessori School. Where would you like to go today? Try Academic Achievements, Sports, Cultural Events, CMSMUN, CELESTA, TECHNOVA or Contact Us.";
 document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classList.toggle('open'));
 
 const leaveGenie=()=>{
@@ -48,42 +48,7 @@ const leaveGenie=()=>{
 };
 document.getElementById('chatClose')?.addEventListener('click',leaveGenie);
 
-// Drag the chatbot by its header on mouse, pen, or touch.
-const chatHead=chat?.querySelector('.chat-head');
-if(chat&&chatHead){
-  let dragState=null;
-  chatHead.addEventListener('pointerdown',event=>{
-    if(event.target.closest('button')||event.isPrimary===false)return;
-    const rect=chat.getBoundingClientRect();
-    dragState={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,left:rect.left,top:rect.top};
-    chat.style.left=rect.left+'px';
-    chat.style.top=rect.top+'px';
-    chat.style.right='auto';
-    chat.style.bottom='auto';
-    chat.classList.add('is-dragging');
-    event.preventDefault();
-  });
-  document.addEventListener('pointermove',event=>{
-    if(!dragState||event.pointerId!==dragState.pointerId)return;
-    const left=dragState.left+event.clientX-dragState.startX;
-    const top=dragState.top+event.clientY-dragState.startY;
-    chat.style.left=Math.max(0,Math.min(window.innerWidth-chat.offsetWidth,left))+'px';
-    chat.style.top=Math.max(0,Math.min(window.innerHeight-chat.offsetHeight,top))+'px';
-  });
-  const finishChatDrag=event=>{
-    if(!dragState||event.pointerId!==dragState.pointerId)return;
-    dragState=null;
-    chat.classList.remove('is-dragging');
-  };
-  document.addEventListener('pointerup',finishChatDrag);
-  document.addEventListener('pointercancel',finishChatDrag);
-  window.addEventListener('resize',()=>{
-    if(!chat.style.left||!chat.style.top)return;
-    const rect=chat.getBoundingClientRect();
-    chat.style.left=Math.max(0,Math.min(window.innerWidth-chat.offsetWidth,rect.left))+'px';
-    chat.style.top=Math.max(0,Math.min(window.innerHeight-chat.offsetHeight,rect.top))+'px';
-  });
-}
+// Campus Genie is a fixed, full-screen experience; its header is not draggable.
 function bubble(text,kind,tableData){
   const p=document.createElement('p');p.className=kind;p.textContent=text;body?.appendChild(p);
   if(tableData&&Array.isArray(tableData.headers)&&Array.isArray(tableData.rows)){
