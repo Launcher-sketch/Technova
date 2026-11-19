@@ -116,3 +116,20 @@
     animation:none!important;opacity:1!important;transform:none!important;filter:none!important;
   }
 }
+
+
+/* CMS logo: a clear, dimensional pop-out over the blue-tinted campus photograph */
+.cms-intro.cms-earth-signature .earth-stage{width:clamp(190px,29vw,270px);isolation:isolate}
+.cms-intro.cms-earth-signature .intro-earth{
+  width:100%!important;height:100%!important;object-fit:contain!important;border-radius:0!important;
+  padding:12px!important;background:rgba(255,255,255,.92)!important;
+  box-shadow:0 24px 70px rgba(0,19,53,.42),0 0 0 1px rgba(255,255,255,.78)!important;
+  transform-origin:center!important;animation:cmsLogoPop 1.35s cubic-bezier(.16,1.2,.28,1) .3s both!important;
+}
+@keyframes cmsLogoPop{
+  0%{opacity:0;transform:translateY(54px) scale(.38) rotate(-12deg);filter:blur(8px) drop-shadow(0 0 0 rgba(0,0,0,0))}
+  62%{opacity:1;transform:translateY(-9px) scale(1.12) rotate(2deg);filter:blur(0) drop-shadow(0 22px 24px rgba(0,0,0,.32))}
+  82%{transform:translateY(3px) scale(.97) rotate(-.5deg)}
+  100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:drop-shadow(0 18px 24px rgba(0,0,0,.28))}
+}
+@media(prefers-reduced-motion:reduce){.cms-intro.cms-earth-signature .intro-earth{animation:none!important;opacity:1!important;transform:none!important}}
