@@ -42,7 +42,7 @@ const sendButton=form?.querySelector('button[type="submit"],button:not([type])')
 const welcomeMessage="Jai Jagat! I’m Campus Genie, your virtual guide to City Montessori School. Where would you like to go today? Try Academic Achievements, Sports, Cultural Events, CMSMUN, CELESTA, TECHNOVA or Contact Us.";
 let pendingCommonQuestion="";
 const commonQuestionTerms=["schedule","timetable","date","dates","timing","timings","venue","venues","location","locations","registration","register","deadline","last date"];
-const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","sports","academic","icse","isc","jee","ap examination","cultural","quiz","robotics","football","international sports"];
+const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","icse","isc","jee","ap examination","quiz","robotics","football"];
 document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classList.toggle('open'));
 
 const leaveGenie=()=>{
@@ -92,7 +92,8 @@ form?.addEventListener('submit',async event=>{
     await askCampusGenie(contextualMessage);
     return;
   }
-  const asksCommonDetail=commonQuestionTerms.some(term=>lowerMessage.includes(term))&&!eventContextTerms.some(term=>lowerMessage.includes(term));
+  const hasActiveEventPage=["/technova","/celesta","/cmsmun"].includes(window.location.pathname);
+  const asksCommonDetail=commonQuestionTerms.some(term=>lowerMessage.includes(term))&&!eventContextTerms.some(term=>lowerMessage.includes(term))&&!hasActiveEventPage;
   if(asksCommonDetail){
     pendingCommonQuestion=message;
     bubble('Which event are you asking about? Choose TECHNOVA, CELESTA, CMSMUN, SPARDHA, CONCORD, or Academic Achievements.','bot');
@@ -211,6 +212,6 @@ if(homeEventSearch){
       const visible=[...section.querySelectorAll('.home-event-card')].some(card=>!card.classList.contains('search-hidden'));
       section.classList.toggle('search-hidden',Boolean(query)&&!visible);
     });
-    if(homeSearchStatus)homeSearchStatus.textContent=query?(matches?matches+' matching event page'+(matches===1?'':'s')+' found.':'No matches found. Try a broader search.'):'Search event pages and categories instantly.';
+    if(homeSearchStatus)homeSearchStatus.textContent=query?(matches?matches+' matching event page'+(matches===1?'':'s')+' found.':'No matches found. Try a broader search.'):'Search featured event pages and categories instantly.';
   });
 }

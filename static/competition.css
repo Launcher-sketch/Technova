@@ -88,3 +88,127 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
 .about-page .profile-note a{color:var(--cms-blue);font-weight:800}
 @media(max-width:850px){.about-page .profile-facilities{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.about-page .profile-facilities{grid-template-columns:1fr}}
+
+
+/* Shared CMS campus identity and responsive navigation */
+.events-home .cms-site-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:0 0 auto;
+  letter-spacing:0;
+  text-decoration:none;
+}
+.events-home .cms-site-brand img{
+  display:block;
+  width:42px;
+  height:42px;
+  object-fit:contain;
+}
+.events-home .cms-site-brand .brand-copy{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  margin:0;
+  color:var(--cms-navy);
+  line-height:1.1;
+}
+.events-home .cms-site-brand .brand-copy strong{
+  color:var(--cms-navy);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.15px;
+}
+.events-home .cms-site-brand .brand-copy small{
+  color:#6a829a;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:1px;
+}
+.events-home .top{
+  gap:14px;
+}
+@media(max-width:1120px){
+  .events-home .top{
+    height:auto;
+    min-height:72px;
+    padding:10px 3%;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .events-home .site-nav{
+    order:3;
+    flex:1 0 100%;
+    justify-content:center;
+    gap:18px;
+  }
+  .events-home .top>.pill{
+    padding:9px 12px;
+    font-size:10px;
+  }
+}
+@media(max-width:560px){
+  .events-home .cms-site-brand img{width:35px;height:35px}
+  .events-home .cms-site-brand .brand-copy strong{font-size:10px}
+  .events-home .cms-site-brand .brand-copy small{font-size:7px}
+  .events-home .site-nav{gap:12px;flex-wrap:wrap}
+  .events-home .top>.pill{padding:8px 10px;font-size:9px}
+}
+
+
+.about-page .campus-facts{
+  display:grid;
+  grid-template-columns:minmax(210px,.8fr) minmax(0,1.6fr);
+  gap:28px;
+  align-items:center;
+  margin:26px 0 8px;
+  padding:28px;
+  border:1px solid var(--cms-line);
+  border-radius:20px;
+  background:linear-gradient(120deg,#fff,#f2f8ff);
+}
+.about-page .facts-intro h2{
+  margin:0 0 8px;
+  color:var(--cms-navy);
+  font-size:clamp(22px,2.5vw,31px);
+  letter-spacing:-.8px;
+}
+.about-page .facts-intro>p:not(.eyebrow){
+  margin:0;
+  color:var(--cms-muted);
+  font-size:11px;
+  line-height:1.65;
+}
+.about-page .facts-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+}
+.about-page .facts-grid article{
+  min-height:108px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:8px;
+  padding:13px;
+  border:1px solid #e0ebf6;
+  border-radius:12px;
+  background:#fff;
+}
+.about-page .facts-grid strong{
+  color:var(--cms-blue);
+  font-size:17px;
+  line-height:1.15;
+}
+.about-page .facts-grid span{
+  color:var(--cms-muted);
+  font-size:9px;
+  line-height:1.5;
+}
+@media(max-width:900px){
+  .about-page .campus-facts{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .about-page .campus-facts{padding:19px}
+  .about-page .facts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}

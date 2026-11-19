@@ -3,38 +3,38 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Campus Portal | CMS Digital Campus Demo</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='portal.css') }}?v=2">
+<link rel="stylesheet" href="{{ url_for('static', filename='portal.css') }}?v=5">
 <meta name="description" content="Explore a fictional CMS digital campus demonstration for students, teachers, parents and school administrators."><meta name="theme-color" content="#173b65"></head>
 <body>
 <header class="topbar"><a class="brand" href="/">CMS<span> CAMPUS</span><small>DIGITAL CAMPUS DEMO</small></a><div class="top-actions"><span class="demo-pill">DEMO ENVIRONMENT</span><a href="/">Back to Campus Website ↗</a></div></header>
 <main class="shell">
-<section class="welcome"><div><p class="eyebrow">CITY MONTESSORI SCHOOL · DIGITAL CAMPUS</p><h1>One campus.<br><em>Every possibility.</em></h1><p class="lead">A connected space for students, teachers and parents — powered by Campus Genie.</p></div><div class="welcome-art"><div class="orbit o1"></div><div class="orbit o2"></div><div class="orb-label">CG<span>AI</span></div></div></section>
+<section class="welcome"><div><p class="eyebrow">CITY MONTESSORI SCHOOL · DIGITAL CAMPUS</p><h1>One campus.<br><em>Every possibility.</em></h1><p class="lead">A concept for a connected space for students, teachers and parents, with a Campus Genie assistant preview.</p></div><div class="welcome-art"><div class="orbit o1"></div><div class="orbit o2"></div><div class="orb-label">CG<span>AI</span></div></div></section>
 <section class="portal-layout">
 <aside class="side">
 <p class="side-label">CHOOSE YOUR SPACE</p>
 <div class="role-list" role="tablist" aria-label="Choose a demo portal role">
-<button class="role active" role="tab" aria-selected="true" data-role="student"><span>🎓</span><b>Student</b><small>Learn & grow</small></button>
-<button class="role" role="tab" aria-selected="false" data-role="teacher"><span>📚</span><b>Teacher</b><small>Teach & manage</small></button>
-<button class="role" role="tab" aria-selected="false" data-role="parent"><span>🏡</span><b>Parent</b><small>Stay connected</small></button>
-<button class="role" role="tab" aria-selected="false" data-role="admin"><span>⚙️</span><b>School Admin</b><small>Coordinate campus</small></button>
+<button id="role-student" class="role active" role="tab" aria-selected="true" aria-controls="workspacePanel" tabindex="0" data-role="student"><span>🎓</span><b>Student</b><small>Learn & grow</small></button>
+<button id="role-teacher" class="role" role="tab" aria-selected="false" aria-controls="workspacePanel" tabindex="-1" data-role="teacher"><span>📚</span><b>Teacher</b><small>Teach & manage</small></button>
+<button id="role-parent" class="role" role="tab" aria-selected="false" aria-controls="workspacePanel" tabindex="-1" data-role="parent"><span>🏡</span><b>Parent</b><small>Stay connected</small></button>
+<button id="role-admin" class="role" role="tab" aria-selected="false" aria-controls="workspacePanel" tabindex="-1" data-role="admin"><span>⚙️</span><b>School Admin</b><small>Coordinate campus</small></button>
 </div>
 <div class="demo-note"><b>Demo access</b><p>Choose a role to explore sample screens. No real student records or school accounts are connected.</p></div>
 </aside>
-<section class="workspace">
+<section class="workspace" id="workspacePanel" role="tabpanel" aria-labelledby="role-student" tabindex="0">
 <div class="workspace-head"><div><p class="eyebrow" id="roleEyebrow">STUDENT WORKSPACE</p><h2 id="greeting">Good morning, Aarav</h2><p id="roleDesc">Your learning day, organised in one place.</p></div><div class="avatar" id="avatar">A</div></div>
 <div class="stats" id="stats"></div>
 <div class="content-grid">
 <section class="panel main-panel"><div class="panel-head"><div><p class="eyebrow">YOUR OVERVIEW</p><h3 id="mainTitle">Today's timetable</h3></div><span class="live-dot">SAMPLE DATA</span></div><div id="mainContent"></div></section>
-<section class="panel genie-panel"><div class="genie-head"><div class="genie-icon">✦</div><div><p class="eyebrow">YOUR AI ASSISTANT</p><h3>Campus Genie</h3></div><span class="online">DEMO</span></div><p class="genie-copy">Ask about your day, school events or how to use this portal.</p><div class="suggestions" id="suggestions"><button>What's on my timetable?</button><button>Show upcoming events</button><button>Open my assignments</button></div><div class="chat-log" id="chatLog" aria-live="polite"><div class="bubble bot">Hi! I'm Campus Genie. This demo uses sample information. What would you like to explore?</div></div><form id="genieForm" class="genie-form"><input id="genieInput" placeholder="Ask Campus Genie..." autocomplete="off"><button aria-label="Send message">↑</button></form></section>
+<section class="panel genie-panel"><div class="genie-head"><div class="genie-icon">✦</div><div><p class="eyebrow">YOUR AI ASSISTANT</p><h3>Campus Genie</h3></div><span class="online">DEMO</span></div><p class="genie-copy">Ask about your day, school events or how to use this portal.</p><div class="suggestions" id="suggestions"><button>What's on my timetable?</button><button>Show upcoming events</button><button>Open my assignments</button></div><div class="chat-log" id="chatLog" aria-live="polite"><div class="bubble bot">Hi! I'm Campus Genie. This demo uses sample information. What would you like to explore?</div></div><form id="genieForm" class="genie-form" aria-label="Ask the Campus Genie demo"><input id="genieInput" placeholder="Ask Campus Genie..." autocomplete="off"><button aria-label="Send message">↑</button></form></section>
 </div>
 <div class="lower-grid">
-<section class="panel"><div class="panel-head"><div><p class="eyebrow">CAMPUS BULLETIN</p><h3>Notices & updates</h3></div><span class="count">03 NEW</span></div><div class="notice-list"><article><span class="notice-tag blue">ACADEMICS</span><b>Inter-house quiz registrations open</b><small>Today · Activities Office</small></article><article><span class="notice-tag violet">CAMPUS</span><b>Campus activity schedule updated</b><small>Yesterday · School Office</small></article><article><span class="notice-tag green">EVENT</span><b>TECHNOVA showcase schedule published</b><small>18 Nov · Event Team</small></article></div></section>
+<section class="panel"><div class="panel-head"><div><p class="eyebrow">SAMPLE CAMPUS BULLETIN</p><h3>Notices & updates</h3></div><span class="count">FICTIONAL</span></div><div class="notice-list"><article><span class="notice-tag blue">SAMPLE · ACADEMICS</span><b>Inter-house quiz registrations open</b><small>Today · Activities Office</small></article><article><span class="notice-tag violet">SAMPLE · CAMPUS</span><b>Campus activity schedule updated</b><small>Yesterday · School Office</small></article><article><span class="notice-tag green">SAMPLE · EVENT</span><b>TECHNOVA showcase schedule published</b><small>18 Nov · Event Team</small></article></div></section>
 <section class="panel quick-panel"><p class="eyebrow">QUICK ACCESS</p><h3>Everything within reach</h3><div class="quick-links" id="quickLinks"></div></section>
 </div>
-<section class="panel modules-panel"><div class="panel-head"><div><p class="eyebrow">ROLE-BASED TOOLS</p><h3>Explore your workspace</h3></div><span class="live-dot">INTERACTIVE DEMO</span></div><div id="roleModules" class="role-modules" aria-live="polite"></div><div id="moduleDetail" class="module-detail" hidden></div></section>
+<section class="panel modules-panel"><div class="panel-head"><div><p class="eyebrow">ROLE-BASED TOOLS</p><h3>Explore your workspace</h3></div><span class="live-dot">INTERACTIVE DEMO</span></div><div id="roleModules" class="role-modules" aria-live="polite"></div><div id="moduleDetail" class="module-detail" aria-live="polite" hidden></div></section>
 <footer>CMS CAMPUS · Campus Genie <span>Concept demonstration · Fictional sample data · Not an official school record system</span></footer>
 </section>
 </section>
 </main>
-<script src="{{ url_for('static', filename='portal.js') }}?v=2" defer></script>
+<script src="{{ url_for('static', filename='portal.js') }}?v=6" defer></script>
 </body></html>

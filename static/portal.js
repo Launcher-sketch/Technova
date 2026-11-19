@@ -21,12 +21,16 @@ const moduleInfo={
  "Event Management":["Event Management","Preview event publishing tools. Official event data remains maintained in its existing source files.","TECHNOVA · Event page available","CELESTA · Event page available","CMSMUN · Event page available"],
  "Announcement Manager":["Announcement Manager","Create a local preview; this demo does not publish notices to the school.","Draft: Campus announcement","Visibility: Demo preview only"],
  "Gallery Management":["Gallery Management","Sample gallery workflow; uploaded files are not published by this demo.","Campus life · Sample collection","Innovation showcase · Sample collection"],
- "Campus Analytics":["Campus Analytics","All figures are fictional demonstration metrics, not live CMS statistics.","Events listed · 3 sample entries","Notices awaiting review · 4 sample entries"]
+ "Campus Analytics":["Campus Analytics","All figures are fictional demonstration metrics, not live CMS statistics.","Events listed · 3 sample entries","Notices awaiting review · 4 sample entries"],
+ "Mark attendance":["Attendance Demo","This is a non-persistent preview. It does not record, change or transmit attendance.","Class 9A · Sample class list","Attendance status · Preview only","No student records are connected"],
+ "Reports":["Demo Reports","Illustrative campus-level summaries only; no live school data is connected.","Attendance overview · Sample","Event participation · Sample"],
+ "Manage users":["User Management Preview","This is a visual workflow preview only. It cannot create accounts or change permissions.","Student accounts · Not connected","Teacher accounts · Not connected","Parent accounts · Not connected"]
 };
 function addText(parent,tag,text,className){const el=document.createElement(tag);el.textContent=text;if(className)el.className=className;parent.appendChild(el);return el}
 function render(role){
  activeRole=role;const d=roles[role];
- document.querySelectorAll(".role").forEach(b=>{const selected=b.dataset.role===role;b.classList.toggle("active",selected);b.setAttribute("aria-selected",String(selected))});
+ document.querySelectorAll(".role").forEach(b=>{const selected=b.dataset.role===role;b.classList.toggle("active",selected);b.setAttribute("aria-selected",String(selected));b.tabIndex=selected?0:-1});
+ $("workspacePanel").setAttribute("aria-labelledby","role-"+role);
  $("roleEyebrow").textContent=d.label;$("greeting").textContent=d.name;$("roleDesc").textContent=d.desc;$("avatar").textContent=d.avatar;$("mainTitle").textContent=d.title;
  const stats=$("stats");stats.replaceChildren();d.stats.forEach(s=>{const card=addText(stats,"article","","stat");addText(card,"span",s[0]);addText(card,"b",s[1]);addText(card,"small",s[2])});
  const schedule=$("mainContent");schedule.replaceChildren();const list=addText(schedule,"div","","schedule");
@@ -37,20 +41,65 @@ function render(role){
  const modules=$("roleModules");modules.replaceChildren();d.modules.forEach(m=>{const b=addText(modules,"button","","module-card");b.type="button";b.dataset.module=m[0];addText(b,"span",m[1],"module-icon");addText(b,"b",m[0]);addText(b,"small",m[2])});
  $("moduleDetail").hidden=true;
 }
-function showModule(name){const info=moduleInfo[name];if(!info)return;const box=$("moduleDetail");box.replaceChildren();addText(box,"p","DEMO MODULE","eyebrow");addText(box,"h4",info[0]);addText(box,"p",info[1],"module-description");const ul=addText(box,"ul","");info.slice(2).forEach(item=>addText(ul,"li",item));box.hidden=false;box.scrollIntoView({behavior:"smooth",block:"nearest"})}
+function showModule(name){
+ const info=moduleInfo[name];if(!info)return;
+ const box=$("moduleDetail");box.replaceChildren();
+ addText(box,"p","DEMO MODULE","eyebrow");
+ addText(box,"h4",info[0]);
+ addText(box,"p",info[1],"module-description");
+ const ul=addText(box,"ul","");
+ info.slice(2).forEach(item=>addText(ul,"li",item));
+ const actions={
+  "Assignment Manager":["Add a sample task","Task title","Add task","Added to this temporary preview. Nothing was submitted."],
+  "Lesson Planner":["Add a lesson topic","Lesson topic","Add topic","Topic added to this temporary lesson-plan preview."],
+  "Notice Publisher":["Prepare a notice draft","Notice title","Preview draft","Draft added locally. It has not been published or sent."],
+  "Announcement Manager":["Prepare an announcement draft","Announcement title","Preview draft","Draft added locally. It has not been published or sent."],
+  "Teacher Communication":["Prepare a message preview","Message subject","Preview message","Message preview created locally. Nothing was sent."],
+  "Gallery Management":["Add a sample gallery caption","Image caption","Add caption","Caption added to this temporary gallery preview."],
+  "Achievement Portfolio":["Add a project idea","Project or achievement","Add item","Item added to this temporary portfolio preview."]
+ };
+ const config=actions[name];
+ if(config){
+  const form=addText(box,"form","","module-demo-form");
+  const field=addText(form,"input","");
+  field.type="text";field.maxLength=120;field.required=true;field.placeholder=config[1];
+  field.setAttribute("aria-label",config[1]);field.autocomplete="off";
+  const submit=addText(form,"button",config[2]);submit.type="submit";
+  const status=addText(box,"p","This is a temporary demo preview. Changes are not saved to a school system.","module-feedback");
+  status.setAttribute("role","status");
+  form.addEventListener("submit",event=>{
+   event.preventDefault();const value=field.value.trim();if(!value)return;
+   addText(ul,"li",value+" · DEMO PREVIEW");field.value="";status.textContent=config[3];
+  });
+ }
+ box.hidden=false;box.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
 function reply(q){
- const text=q.toLowerCase();let answer;
- if(/digital id|student id|identity card/.test(text)){showModule("Digital Student ID");answer="I opened the sample Digital Student ID module. It is a demonstration card, not an official school ID."}
- else if(/assignment|homework/.test(text)){showModule("Assignment Manager");answer="I opened the sample Assignment Manager. Its tasks and deadlines are fictional."}
- else if(/achievement|portfolio|certificate/.test(text)){showModule("Achievement Portfolio");answer="I opened the sample Achievement Portfolio. It can showcase projects and certificates."}
- else if(/calendar|upcoming date|event|technova|celesta|cmsmun/.test(text)){showModule("School Calendar");answer="The calendar preview contains sample dates. For official event details, use the event pages and confirm dates with the organisers."}
- else if(/timetable|class|schedule/.test(text)){answer="Here is the sample timetable shown in your "+activeRole+" workspace. Select a role to explore a different schedule."}
- else if(/attendance/.test(text)){answer="Attendance figures on this screen are fictional demo metrics, not live school records."}
- else if(/notice|message|teacher/.test(text)){showModule(activeRole==="admin"?"Announcement Manager":activeRole==="parent"?"Teacher Communication":"Notice Publisher");answer="I opened the relevant sample communication module. This demo does not send messages or publish notices."}
- else answer="I can help you explore the "+activeRole+" demo, assignments, achievements, school calendar and portal features. This prototype does not access real CMS records.";
+ const text=q.toLowerCase();let answer;let target="";
+ if(/digital id|student id|identity card/.test(text)){target="Digital Student ID";answer="I opened the sample Digital Student ID module. It is a demonstration card, not an official school ID."}
+ else if(/assignment|homework/.test(text)){target="Assignment Manager";answer="I opened the sample Assignment Manager. Its tasks and deadlines are fictional."}
+ else if(/achievement|portfolio|certificate/.test(text)){target="Achievement Portfolio";answer="I opened the sample Achievement Portfolio. It contains fictional project and certificate entries."}
+ else if(/calendar|upcoming date|event|technova|celesta|cmsmun/.test(text)){target="School Calendar";answer="The calendar preview contains sample dates. For official event details, use the event pages and confirm dates with the organisers."}
+ else if(/class overview|my classes|overview/.test(text)){target=activeRole==="admin"?"Campus Analytics":"Class Overview";answer="I opened the sample overview. All figures and records are fictional."}
+ else if(/timetable|class|schedule/.test(text)){answer="Your sample timetable is displayed in the overview panel. The entries are illustrative and are not a live school timetable."}
+ else if(/attendance/.test(text)){target=activeRole==="teacher"?"Mark attendance":"";answer="Attendance figures and any attendance workflow here are demonstration-only. No real attendance is recorded."}
+ else if(/notice|message|teacher|circular/.test(text)){target=activeRole==="admin"?"Announcement Manager":activeRole==="parent"?( /report|circular/.test(text)?"Reports & Circulars":"Teacher Communication"):"Notice Publisher";answer="I opened the relevant sample communication area. This demo does not send messages or publish notices."}
+ else if(/lesson|plan/.test(text)){target="Lesson Planner";answer="I opened the sample Lesson Planner. Its topics are illustrative."}
+ else if(/manage users|user accounts/.test(text)){target="Manage users";answer="I opened the user-management preview. This demo cannot create accounts or change permissions."}
+ else if(/report|analytics/.test(text)){target=activeRole==="admin"?"Campus Analytics":activeRole==="parent"?"Reports & Circulars":"Reports";answer="I opened the sample reports view. No live school data is connected."}
+ else answer="I can help you explore the "+activeRole+" demo, its timetable and role-based modules. This prototype does not access real CMS records.";
+ if(target&&moduleInfo[target])showModule(target);
  const log=$("chatLog");addText(log,"div",q,"bubble user");addText(log,"div",answer,"bubble bot");log.scrollTop=log.scrollHeight
 }
 document.querySelectorAll(".role").forEach(b=>b.addEventListener("click",()=>render(b.dataset.role)));
+document.querySelector(".role-list")?.addEventListener("keydown",event=>{
+ if(!["ArrowRight","ArrowDown","ArrowLeft","ArrowUp","Home","End"].includes(event.key))return;
+ event.preventDefault();
+ const tabs=[...document.querySelectorAll(".role")];
+ const current=tabs.indexOf(document.activeElement);
+ const next=event.key==="Home"?0:event.key==="End"?tabs.length-1:(current+(["ArrowRight","ArrowDown"].includes(event.key)?1:-1)+tabs.length)%tabs.length;
+ tabs[next].focus();render(tabs[next].dataset.role);
+});
 $("genieForm").addEventListener("submit",e=>{e.preventDefault();const input=$("genieInput");const q=input.value.trim();if(!q)return;reply(q);input.value=""});
 $("suggestions").addEventListener("click",e=>{if(e.target.tagName==="BUTTON")reply(e.target.textContent)});
 $("quickLinks").addEventListener("click",e=>{const b=e.target.closest("button");if(b)reply("Open "+b.dataset.quick)});
