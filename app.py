@@ -781,6 +781,27 @@ def chat():
         ("AP 2026", "Sushant Shukla", "Not specified", "4/5 high-score achiever"),
         ("AP 2026", "Abhijeet Mukherji", "Not specified", "4/5 high-score achiever"),
     ]
+    # Natural-language rank and topper questions use only the published 2026 achiever list.
+    rank_question = bool(re.search(r"\b(air\s*(?:no\.?\s*)?(?:1|one)|rank\s*(?:no\.?\s*)?(?:1|one)|topper|topped|highest\s*(?:scorer|rank|marks)|who\s+is\s+air)\b", q))
+    if rank_question:
+        if any(term in q for term in ("jee", "joint entrance", "advanced")):
+            jee_rows = [row for row in achievers if row[0] == "JEE Advanced 2026" and "Open Category Rank" in row[3]]
+            top_jee = min(jee_rows, key=lambda row: int(re.search(r"Open Category Rank (\d+)", row[3]).group(1))) if jee_rows else None
+            if top_jee:
+                return answer("The uploaded CMS 2026 data does not list a JEE Advanced AIR 1. Its best published Open Category rank in this achiever list is:", ["Detail", "Published information"], [["Student", top_jee[1]], ["Examination", top_jee[0]], ["Campus", top_jee[2]], ["Rank", top_jee[3]], ["Note", "This is the best rank in the uploaded CMS list, not AIR 1 overall."]])
+            return answer("The uploaded CMS data does not contain a JEE Advanced AIR 1 entry.")
+        if any(term in q for term in ("isc", "class 12", "class xii", "12th")):
+            top_isc = [row for row in achievers if row[0] == "ISC 2026" and "AIR 2" in row[3]]
+            return answer("The uploaded ISC 2026 results list four students sharing the highest published position, AIR 2. No ISC AIR 1 is listed in this data:", ["Student", "Campus", "Achievement"], [[row[1], row[2], row[3]] for row in top_isc])
+        if any(term in q for term in ("cbse", "neet", "upsc")):
+            exam = "CBSE" if "cbse" in q else ("NEET" if "neet" in q else "UPSC")
+            return answer(f"I couldn't find a {exam} AIR 1 or topper in the uploaded CMS data, so I won't guess. Please specify a year or share the relevant result source.")
+        icse_top = next((row for row in achievers if row[0] == "ICSE 2026" and "AIR 1" in row[3]), None)
+        if icse_top:
+            note = " I assumed you meant ICSE Class 10 because no exam was specified." if not any(term in q for term in ("icse", "class 10", "class x", "10th")) else ""
+            return answer(f"The uploaded ICSE 2026 results list {icse_top[1]} as AIR 1 with {icse_top[3].split(' · ')[0]}.{note}", ["Detail", "Published information"], [["Student", icse_top[1]], ["Examination", icse_top[0]], ["Campus", icse_top[2]], ["Achievement", icse_top[3]]])
+        return answer("I couldn't find a matching topper in the uploaded CMS results. Tell me the exam and year so I can check the correct list.")
+
     def normalise_person_name(value):
         return " ".join(re.sub(r"[^a-z0-9 ]", " ", value.lower()).split())
     matched_achiever = next((row for row in achievers if normalise_person_name(row[1]) in normalise_person_name(q)), None)

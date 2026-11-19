@@ -68,6 +68,25 @@ class CampusSiteSmokeTests(unittest.TestCase):
         self.assertIn("TECHNOVA 2026", payload["reply"])
         self.assertTrue(payload.get("table", {}).get("rows"))
 
+    def test_chat_understands_air_one_and_topper_questions(self):
+        cases = [
+            ("who is air 1", "Vaivaswat Narayan Dubey"),
+            ("who topped ICSE", "Vaivaswat Narayan Dubey"),
+            ("who is AIR one in ISC", "Zainab Fatima"),
+            ("who is AIR 1 in JEE Advanced", "Arjun Agarwal"),
+        ]
+        for message, expected in cases:
+            with self.subTest(message=message):
+                response = self.client.post("/api/chat", json={"message": message})
+                self.assertEqual(response.status_code, 200)
+                self.assertIn(expected, response.get_json()["reply"] + str(response.get_json().get("table", {})))
+
+    def test_chat_does_not_invent_unuploaded_exam_toppers(self):
+        response = self.client.post("/api/chat", json={"message": "who is NEET AIR 1"})
+        payload = response.get_json()
+        self.assertIn("couldn't find", payload["reply"])
+        self.assertNotIn("Vaivaswat", payload["reply"])
+
     def test_technova_generic_venue_query_does_not_guess(self):
         response = self.client.post(
             "/api/chat",
