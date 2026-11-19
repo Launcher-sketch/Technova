@@ -1364,3 +1364,64 @@ body::after{
 .cms-earth-signature .intro-earth{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;aspect-ratio:1/1!important;object-fit:contain!important;object-position:center!important;border-radius:0!important;opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;box-shadow:none!important;animation:none!important}
 .cms-earth-signature .earth-halo,.cms-earth-signature .earth-sweep{display:none!important}
 @media(max-width:600px){.cms-earth-signature .earth-stage{width:clamp(175px,54vw,220px)!important}}
+
+
+/* Final intro-logo layout fix: reserve a real square box and prevent image collapse */
+.cms-intro.cms-earth-signature .earth-stage{
+  position:relative!important;
+  display:grid!important;
+  place-items:center!important;
+  width:clamp(210px,30vw,280px)!important;
+  height:clamp(210px,30vw,280px)!important;
+  min-width:210px!important;
+  min-height:210px!important;
+  max-width:280px!important;
+  max-height:280px!important;
+  aspect-ratio:1/1!important;
+  margin:0 auto!important;
+  padding:0!important;
+  overflow:visible!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+.cms-intro.cms-earth-signature .intro-earth{
+  position:relative!important;
+  display:block!important;
+  inset:auto!important;
+  flex:none!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:100%!important;
+  min-height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  margin:0!important;
+  padding:0!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  aspect-ratio:1/1!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  animation:none!important;
+  filter:none!important;
+}
+.cms-intro.cms-earth-signature .earth-halo,
+.cms-intro.cms-earth-signature .earth-sweep,
+.cms-intro.cms-earth-signature .earth-stage::before{
+  display:none!important;
+  content:none!important;
+}
+@media(max-width:600px){
+  .cms-intro.cms-earth-signature .earth-stage{
+    width:210px!important;height:210px!important;
+    min-width:210px!important;min-height:210px!important;
+  }
+}
