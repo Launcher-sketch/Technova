@@ -51,9 +51,6 @@
   padding:0 12px!important;
   box-sizing:border-box!important;
   text-align:center!important;
-  opacity:1!important;
-  transform:none!important;
-  animation:none!important;
 }
 .cms-intro.cms-earth-signature .signature-wordmark .signature-jai,
 .cms-intro.cms-earth-signature .signature-wordmark .signature-cms,
@@ -133,3 +130,57 @@
   100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:drop-shadow(0 18px 24px rgba(0,0,0,.28))}
 }
 @media(prefers-reduced-motion:reduce){.cms-intro.cms-earth-signature .intro-earth{animation:none!important;opacity:1!important;transform:none!important}}
+
+
+/* Reference-matched intro: welcome panel -> CMS logo reveal -> welcome panel */
+.cms-intro.cms-earth-signature .intro-welcome-card{
+  position:absolute;z-index:5;left:50%;top:50%;width:min(560px,calc(100vw - 34px));
+  transform:translate(-50%,-50%);box-sizing:border-box;padding:clamp(22px,4vw,38px);
+  border:1px solid rgba(255,255,255,.9);border-radius:17px;background:rgba(255,255,255,.97);
+  color:#173b5d;box-shadow:0 24px 75px rgba(0,20,52,.28);
+  opacity:0;pointer-events:none;animation:cmsWelcomeCard 5.2s ease-in-out both;
+}
+.intro-welcome-brand{display:flex;align-items:center;gap:11px;padding-bottom:17px;border-bottom:1px solid #e3edf6}
+.intro-welcome-brand img{display:block;object-fit:contain}
+.intro-welcome-brand span{display:flex;flex-direction:column;gap:3px}
+.intro-welcome-brand strong{font:800 10px Arial,sans-serif;letter-spacing:.13em;color:#345675}
+.intro-welcome-brand small{font:700 9px Arial,sans-serif;letter-spacing:.16em;color:#6e879e}
+.intro-welcome-eyebrow{margin:23px 0 7px;font:800 9px Arial,sans-serif;letter-spacing:.18em;color:#1684c8}
+.intro-welcome-card h1{margin:0;color:#173b5d;font:700 clamp(25px,4.3vw,36px)/1.15 Georgia,serif;letter-spacing:-.035em}
+.intro-welcome-copy{margin:9px 0 17px;color:#71869a;font:12px/1.6 Arial,sans-serif}
+.intro-welcome-options{display:grid;gap:8px}
+.intro-welcome-options>div{display:grid;grid-template-columns:30px 1fr 14px;align-items:center;gap:10px;padding:10px 11px;border:1px solid #e5edf4;border-radius:9px;background:#fbfdff}
+.intro-welcome-options>div>span:first-child{font-size:17px;text-align:center}
+.intro-welcome-options>div>span:nth-child(2){display:flex;flex-direction:column;gap:3px}
+.intro-welcome-options strong{font:700 11px Arial,sans-serif;color:#345675}
+.intro-welcome-options small{font:10px Arial,sans-serif;color:#8497a9}
+.intro-welcome-options b{font:22px Arial,sans-serif;font-weight:400;color:#8ba7bf}
+.cms-intro.cms-earth-signature .earth-stage,
+.cms-intro.cms-earth-signature .signature-wordmark{opacity:0;animation:cmsLogoWindow 5.2s linear both}
+.cms-intro.cms-earth-signature .earth-stage{animation-delay:0s}
+.cms-intro.cms-earth-signature .signature-wordmark{animation-delay:0s}
+@keyframes cmsWelcomeCard{
+  0%,20%{opacity:1}
+  26%,76%{opacity:0}
+  82%,100%{opacity:1}
+}
+@keyframes cmsLogoWindow{
+  0%,25%{opacity:0}
+  31%,75%{opacity:1}
+  82%,100%{opacity:0}
+}
+@media(max-width:600px){
+  .cms-intro.cms-earth-signature .intro-welcome-card{padding:21px 17px;border-radius:14px}
+  .intro-welcome-options{gap:6px}
+  .intro-welcome-options>div{padding:9px 8px}
+  .intro-welcome-options strong{font-size:10px}
+  .intro-welcome-options small{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .cms-intro.cms-earth-signature .intro-welcome-card,
+  .cms-intro.cms-earth-signature .earth-stage,
+  .cms-intro.cms-earth-signature .signature-wordmark{animation:none!important}
+  .cms-intro.cms-earth-signature .intro-welcome-card{opacity:1}
+  .cms-intro.cms-earth-signature .earth-stage,
+  .cms-intro.cms-earth-signature .signature-wordmark{opacity:0}
+}
