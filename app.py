@@ -475,7 +475,7 @@ def chat():
     data = get_data()
     q = " ".join(message.lower().replace("?", " ").replace("!", " ").split())
     # Lightweight query normalisation; the official knowledge files remain read-only.
-    typo_aliases = {"schdelue": "schedule", "scheduele": "schedule", "schedual": "schedule", "technovae": "technova", "celestae": "celesta"}
+    typo_aliases = {"schdelue": "schedule", "scheduele": "schedule", "schedual": "schedule", "technovae": "technova", "celestae": "celesta", "kb": "when", "kab": "when", "kahan": "where", "kaha": "where", "kidhar": "where", "kya": "what", "batao": "tell", "btao": "tell", "dikhao": "show"}
     q = " ".join(typo_aliases.get(word, word) for word in q.split())
     # Use the active event page as context only for short, ambiguous follow-ups.
     has_named_event = any(name in q for name in ("technova", "celesta", "nazakat", "cmsmun", "cms mun", "model united nations"))
