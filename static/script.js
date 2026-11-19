@@ -102,8 +102,7 @@ if(intro){
   const openCampusGenie=()=>{
     if(genieOpened)return;
     genieOpened=true;
-    chat?.classList.add('open','fullscreen');
-    document.body.classList.add('genie-mode');
+    chat?.classList.add('open');
     input?.focus();
   };
   const finishIntro=()=>{
