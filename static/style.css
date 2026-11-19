@@ -1357,3 +1357,10 @@ body::after{
 .cms-earth-signature .intro-earth{display:block!important;width:82%!important;height:auto!important;max-height:82%!important;object-fit:contain!important;border-radius:0!important;opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;box-shadow:none!important;animation:none!important}
 .cms-earth-signature .earth-halo,.cms-earth-signature .earth-stage::before{display:none!important;opacity:0!important}
 @media(max-width:600px){.cms-earth-signature .earth-stage{width:clamp(175px,54vw,220px)!important}}
+
+
+/* Exact square CMS logo: preserve its square proportions and show the full image */
+.cms-earth-signature .earth-stage{width:clamp(190px,29vw,270px)!important;height:auto!important;aspect-ratio:1/1!important;display:grid!important;place-items:center!important;overflow:hidden!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+.cms-earth-signature .intro-earth{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;aspect-ratio:1/1!important;object-fit:contain!important;object-position:center!important;border-radius:0!important;opacity:1!important;visibility:visible!important;transform:none!important;filter:none!important;box-shadow:none!important;animation:none!important}
+.cms-earth-signature .earth-halo,.cms-earth-signature .earth-sweep{display:none!important}
+@media(max-width:600px){.cms-earth-signature .earth-stage{width:clamp(175px,54vw,220px)!important}}
