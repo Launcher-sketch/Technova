@@ -154,3 +154,61 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
   .events-home .site-nav{gap:12px;flex-wrap:wrap}
   .events-home .top>.pill{padding:8px 10px;font-size:9px}
 }
+
+
+.about-page .campus-facts{
+  display:grid;
+  grid-template-columns:minmax(210px,.8fr) minmax(0,1.6fr);
+  gap:28px;
+  align-items:center;
+  margin:26px 0 8px;
+  padding:28px;
+  border:1px solid var(--cms-line);
+  border-radius:20px;
+  background:linear-gradient(120deg,#fff,#f2f8ff);
+}
+.about-page .facts-intro h2{
+  margin:0 0 8px;
+  color:var(--cms-navy);
+  font-size:clamp(22px,2.5vw,31px);
+  letter-spacing:-.8px;
+}
+.about-page .facts-intro>p:not(.eyebrow){
+  margin:0;
+  color:var(--cms-muted);
+  font-size:11px;
+  line-height:1.65;
+}
+.about-page .facts-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+}
+.about-page .facts-grid article{
+  min-height:108px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:8px;
+  padding:13px;
+  border:1px solid #e0ebf6;
+  border-radius:12px;
+  background:#fff;
+}
+.about-page .facts-grid strong{
+  color:var(--cms-blue);
+  font-size:17px;
+  line-height:1.15;
+}
+.about-page .facts-grid span{
+  color:var(--cms-muted);
+  font-size:9px;
+  line-height:1.5;
+}
+@media(max-width:900px){
+  .about-page .campus-facts{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .about-page .campus-facts{padding:19px}
+  .about-page .facts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
