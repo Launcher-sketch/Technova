@@ -2444,3 +2444,13 @@ footer{border-color:#d7e6f5!important;color:#3978b5!important}
   .top{background:rgba(255,255,255,.97)!important}
   .chat{border-color:#b9d8f2!important}
 }
+
+
+/* Fast homepage search */
+.home-quick-search{width:min(680px,100%);margin:28px auto 0;padding:18px 20px;background:#fff;border:1px solid #d5e6f6;border-radius:18px;box-shadow:0 10px 28px rgba(24,83,137,.08);text-align:left}
+.home-quick-search label{display:block;margin-bottom:9px;color:#244967;font-size:14px;font-weight:800}
+.home-quick-search input{width:100%;min-height:50px;padding:12px 15px;border:1px solid #b9d5ee;border-radius:11px;background:#f7fbff;color:#18324d;font:inherit;outline:none}
+.home-quick-search input:focus{border-color:#2589df;box-shadow:0 0 0 3px rgba(37,137,223,.14)}
+.home-quick-search p{margin:9px 0 0;color:#668097;font-size:12px}
+.home-event-card.search-hidden{display:none!important}
+@media(max-width:600px){.home-quick-search{padding:14px;margin-top:20px}.home-quick-search input{font-size:16px}}
