@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Campus Portal | CMS Digital Campus Demo</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='portal.css') }}?v=4">
+<link rel="stylesheet" href="{{ url_for('static', filename='portal.css') }}?v=5">
 <meta name="description" content="Explore a fictional CMS digital campus demonstration for students, teachers, parents and school administrators."><meta name="theme-color" content="#173b65"></head>
 <body>
 <header class="topbar"><a class="brand" href="/">CMS<span> CAMPUS</span><small>DIGITAL CAMPUS DEMO</small></a><div class="top-actions"><span class="demo-pill">DEMO ENVIRONMENT</span><a href="/">Back to Campus Website ↗</a></div></header>
@@ -31,10 +31,10 @@
 <section class="panel"><div class="panel-head"><div><p class="eyebrow">SAMPLE CAMPUS BULLETIN</p><h3>Notices & updates</h3></div><span class="count">FICTIONAL</span></div><div class="notice-list"><article><span class="notice-tag blue">SAMPLE · ACADEMICS</span><b>Inter-house quiz registrations open</b><small>Today · Activities Office</small></article><article><span class="notice-tag violet">SAMPLE · CAMPUS</span><b>Campus activity schedule updated</b><small>Yesterday · School Office</small></article><article><span class="notice-tag green">SAMPLE · EVENT</span><b>TECHNOVA showcase schedule published</b><small>18 Nov · Event Team</small></article></div></section>
 <section class="panel quick-panel"><p class="eyebrow">QUICK ACCESS</p><h3>Everything within reach</h3><div class="quick-links" id="quickLinks"></div></section>
 </div>
-<section class="panel modules-panel"><div class="panel-head"><div><p class="eyebrow">ROLE-BASED TOOLS</p><h3>Explore your workspace</h3></div><span class="live-dot">INTERACTIVE DEMO</span></div><div id="roleModules" class="role-modules" aria-live="polite"></div><div id="moduleDetail" class="module-detail" hidden></div></section>
+<section class="panel modules-panel"><div class="panel-head"><div><p class="eyebrow">ROLE-BASED TOOLS</p><h3>Explore your workspace</h3></div><span class="live-dot">INTERACTIVE DEMO</span></div><div id="roleModules" class="role-modules" aria-live="polite"></div><div id="moduleDetail" class="module-detail" aria-live="polite" hidden></div></section>
 <footer>CMS CAMPUS · Campus Genie <span>Concept demonstration · Fictional sample data · Not an official school record system</span></footer>
 </section>
 </section>
 </main>
-<script src="{{ url_for('static', filename='portal.js') }}?v=4" defer></script>
+<script src="{{ url_for('static', filename='portal.js') }}?v=5" defer></script>
 </body></html>
