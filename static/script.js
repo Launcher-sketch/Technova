@@ -102,7 +102,7 @@ if(intro){
   const openCampusGenie=()=>{
     if(genieOpened)return;
     genieOpened=true;
-    chat?.classList.add('open');
+    chat?.classList.add('open','fullscreen');
     input?.focus();
   };
   const finishIntro=()=>{
