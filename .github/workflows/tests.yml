@@ -2,7 +2,7 @@ name: Application smoke tests
 
 on:
   push:
-    branches: [main, campus-complete-pass]
+    branches: [main, campus-complete-pass, campus-experience-pass]
   pull_request:
     branches: [main]
 
