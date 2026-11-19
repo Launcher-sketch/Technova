@@ -698,6 +698,14 @@ def chat():
         return answer("Jai Jagat!")
     if q in ("hello", "hi", "hey", "good morning", "good afternoon", "good evening") or q.startswith(("hello ", "hi ", "hey ")):
         return answer("Hi! I’m the CMS Events Chatbot. Feel free to ask me anything about CMS events, competitions, schedules, teachers, and registrations.")
+    # TECHNOVA is the current featured event (19–20 November 2026).
+    technova_about_terms = ("what is technova", "what's technova", "tell me about technova", "about technova", "explain technova", "technova overview", "ongoing event", "current event", "which event is ongoing", "which event is happening", "event happening now", "is technova happening", "technova status", "technova update")
+    if any(term in q for term in technova_about_terms) or q in ("technova", "technova 2026", "current event at cms"):
+        return answer(
+            "TECHNOVA 2026 is the ongoing Robotics & Artificial Intelligence Championship hosted by City Montessori School, Aliganj-I, on 19–20 November 2026. The event brings together robotics, AI, computing and innovation competitions. The AI & Robotics Quiz Challenge is scheduled for 19 November; the remaining listed competitions are scheduled for 20 November. Registration closed on 16 November. Exact reporting times and individual slots are not listed in the available schedule, so participants should confirm them with the event team.",
+            ["Detail", "Current information"],
+            [["Event", "TECHNOVA 2026 — Robotics & Artificial Intelligence Championship"], ["Host", "City Montessori School, Aliganj-I"], ["Dates", "19–20 November 2026"], ["Status", "Ongoing · 19 November 2026"], ["Today · 19 November", "AI & Robotics Quiz Challenge — Computer / AI Lab — Ms. Manju Rawat"], ["Tomorrow · 20 November", "Robo Soccer, Line Follower, Obstacle Race, Robo War (Balloon Bust), Boat Race (Senior), AI Model Development, Computer Vision, NLP, Game Development and AI Innovation Showdown"], ["Registration", "Closed · deadline was 16 November 2026"], ["Schedule note", "Individual reporting times and slots are not listed; confirm with the event team"], ["Event page", "https://chatbot-19fg.onrender.com/technova"]]
+        )
     if any(term in q for term in ("all events", "list of events", "event list", "competitions", "competition list", "show events", "what events", "which events")):
         rows = [[e["name"], e["category"], e["date"], e["teacher"], e["venue"]] for e in events]
         return answer(f"Here are all {len(events)} TECHNOVA 2026 competitions listed in the available data:", ["Event", "Category", "Date", "Teacher in-charge", "Venue"], rows)
