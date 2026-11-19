@@ -22,7 +22,8 @@ Check event details against the official brochure before publishing, especially 
 ## Main site areas
 
 - `/` — CMS events and campus discovery homepage
-- `/about` — Aliganj Campus I profile and facilities overview
+- `/about` — Aliganj Campus I profile, leadership reference and named facilities directory
+- Homepage — live campus announcements when the cloud database is configured, with a clear empty state when none are available
 - `/technova`, `/celesta`, `/cmsmun` — event information pages
 - `/academic-results`, `/sports`, `/contact` — campus information sections
 - `/portal` — interactive role-based concept demonstration for Student, Teacher, Parent and School Admin
