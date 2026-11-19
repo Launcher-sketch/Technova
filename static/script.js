@@ -197,3 +197,59 @@ if(countdown){
 
 
 // Homepage Campus Genie is embedded directly in the hero; other pages retain the floating globe launcher.
+
+
+// Homepage-only event image previews. Images are reused from existing official event galleries.
+(function initEventHoverPreviews(){
+  const sources={
+    celesta:{title:'CELESTA · EVENT PREVIEW',note:'Official CELESTA 2026 gallery',images:[
+      'https://cmseducation.org/celesta/wp-content/uploads/sites/28/2026/04/ODYSSEY-02.webp',
+      'https://cmseducation.org/celesta/wp-content/uploads/sites/28/elementor/thumbs/11-1-rlic3cn6dhuswbuspw00n1p3g1i7vet8jkyy17ngc0.webp',
+      'https://cmseducation.org/celesta/wp-content/uploads/sites/28/elementor/thumbs/2-rlibteio1m8k0wazt375r22h48jdeqbi6cey6seg6o.webp',
+      'https://cmseducation.org/celesta/wp-content/uploads/sites/28/elementor/thumbs/3-rlibtfgi8g9uci9mnllsbjtxpmeqmff8ih2fo2d20.webp'
+    ]},
+    cmsmun:{title:'CMSMUN · EVENT PREVIEW',note:'CMSMUN 2025 · previous edition',images:[
+      'https://cmseducation.org/aliganj-campus-1/wp-content/uploads/sites/2/2025/08/SON08441.png',
+      'https://cmseducation.org/aliganj-campus-1/wp-content/uploads/sites/2/2025/08/SON08505.png',
+      'https://cmseducation.org/aliganj-campus-1/wp-content/uploads/sites/2/2025/08/DSC3624-1.png',
+      'https://cmseducation.org/aliganj-campus-1/wp-content/uploads/sites/2/2025/08/DSC3688.png'
+    ]}
+  };
+  if(!document.body.classList.contains('cms-homepage')||!window.matchMedia('(hover: hover) and (pointer: fine)').matches)return;
+  let timer=null,index=0,activeCard=null,popup=null;
+  const hide=()=>{if(timer)clearInterval(timer);timer=null;activeCard=null;if(popup){popup.classList.remove('is-visible');const old=popup;setTimeout(()=>old.remove(),190);popup=null;}};
+  const show=card=>{
+    const data=sources[card.dataset.preview];if(!data)return;
+    if(activeCard===card)return;hide();activeCard=card;index=0;
+    popup=document.createElement('div');popup.className='event-hover-preview';popup.setAttribute('role','status');
+    const img=document.createElement('img');img.src=data.images[0];img.alt=data.title;img.loading='eager';
+    const title=document.createElement('strong');title.textContent=data.title;
+    const note=document.createElement('span');note.textContent=data.note+' · preview';
+    popup.append(img,title,note);document.body.appendChild(popup);
+    const rect=card.getBoundingClientRect(),width=Math.min(310,window.innerWidth-28);
+    let left=Math.max(14,Math.min(window.innerWidth-width-14,rect.left+(rect.width-width)/2));
+    let top=rect.top-190;if(top<12)top=Math.min(window.innerHeight-210,rect.bottom+12);
+    popup.style.left=left+'px';popup.style.top=top+'px';requestAnimationFrame(()=>popup?.classList.add('is-visible'));
+    timer=setInterval(()=>{if(!popup)return;index=(index+1)%data.images.length;img.src=data.images[index];},2400);
+  };
+  document.querySelectorAll('.home-event-card[data-preview]').forEach(card=>{
+    card.addEventListener('mouseenter',()=>show(card));card.addEventListener('mouseleave',hide);
+    card.addEventListener('focusin',()=>show(card));card.addEventListener('focusout',event=>{if(!card.contains(event.relatedTarget))hide();});
+  });
+  window.addEventListener('scroll',hide,{passive:true});window.addEventListener('resize',hide);
+})();
+
+// Interactive campus directory: switch the detail panel without pretending it is a geographic floor plan.
+(function initCampusExplorer(){
+  const descriptions={
+    stem:'Explore hands-on learning through the Maker Space, Design & Technology Lab, Computer Lab and Studio Pod.',
+    arts:'Discover creative and quiet spaces including the Music Room, Art Room and Library.',
+    sport:'Explore the campus sports and wellbeing facilities: Basketball Court, Ground and Swimming Pool.',
+    community:'Find shared campus spaces including Shux Courtyard, Reception Area, Waiting Lounge and inner corridors.'
+  };
+  const detail=document.getElementById('campusSpaceDetail');if(!detail)return;
+  document.querySelectorAll('[data-space]').forEach(button=>button.addEventListener('click',()=>{
+    document.querySelectorAll('[data-space]').forEach(item=>item.classList.toggle('is-active',item===button));
+    detail.textContent=descriptions[button.dataset.space]||'';
+  }));
+})();
