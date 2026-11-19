@@ -21,12 +21,16 @@ const moduleInfo={
  "Event Management":["Event Management","Preview event publishing tools. Official event data remains maintained in its existing source files.","TECHNOVA · Event page available","CELESTA · Event page available","CMSMUN · Event page available"],
  "Announcement Manager":["Announcement Manager","Create a local preview; this demo does not publish notices to the school.","Draft: Campus announcement","Visibility: Demo preview only"],
  "Gallery Management":["Gallery Management","Sample gallery workflow; uploaded files are not published by this demo.","Campus life · Sample collection","Innovation showcase · Sample collection"],
- "Campus Analytics":["Campus Analytics","All figures are fictional demonstration metrics, not live CMS statistics.","Events listed · 3 sample entries","Notices awaiting review · 4 sample entries"]
+ "Campus Analytics":["Campus Analytics","All figures are fictional demonstration metrics, not live CMS statistics.","Events listed · 3 sample entries","Notices awaiting review · 4 sample entries"],
+ "Mark attendance":["Attendance Demo","This is a non-persistent preview. It does not record, change or transmit attendance.","Class 9A · Sample class list","Attendance status · Preview only","No student records are connected"],
+ "Reports":["Demo Reports","Illustrative campus-level summaries only; no live school data is connected.","Attendance overview · Sample","Event participation · Sample"],
+ "Manage users":["User Management Preview","This is a visual workflow preview only. It cannot create accounts or change permissions.","Student accounts · Not connected","Teacher accounts · Not connected","Parent accounts · Not connected"]
 };
 function addText(parent,tag,text,className){const el=document.createElement(tag);el.textContent=text;if(className)el.className=className;parent.appendChild(el);return el}
 function render(role){
  activeRole=role;const d=roles[role];
- document.querySelectorAll(".role").forEach(b=>{const selected=b.dataset.role===role;b.classList.toggle("active",selected);b.setAttribute("aria-selected",String(selected))});
+ document.querySelectorAll(".role").forEach(b=>{const selected=b.dataset.role===role;b.classList.toggle("active",selected);b.setAttribute("aria-selected",String(selected));b.tabIndex=selected?0:-1});
+ $("workspacePanel").setAttribute("aria-labelledby","role-"+role);
  $("roleEyebrow").textContent=d.label;$("greeting").textContent=d.name;$("roleDesc").textContent=d.desc;$("avatar").textContent=d.avatar;$("mainTitle").textContent=d.title;
  const stats=$("stats");stats.replaceChildren();d.stats.forEach(s=>{const card=addText(stats,"article","","stat");addText(card,"span",s[0]);addText(card,"b",s[1]);addText(card,"small",s[2])});
  const schedule=$("mainContent");schedule.replaceChildren();const list=addText(schedule,"div","","schedule");
@@ -48,12 +52,22 @@ function reply(q){
  else if(/attendance/.test(text)){target=activeRole==="teacher"?"Mark attendance":"";answer="Attendance figures and any attendance workflow here are demonstration-only. No real attendance is recorded."}
  else if(/notice|message|teacher|circular|report/.test(text)){target=activeRole==="admin"?"Announcement Manager":activeRole==="parent"?( /report/.test(text)?"Reports & Circulars":"Teacher Communication"):"Notice Publisher";answer="I opened the relevant sample communication area. This demo does not send messages or publish notices."}
  else if(/lesson|plan/.test(text)){target="Lesson Planner";answer="I opened the sample Lesson Planner. Its topics are illustrative."}
- else if(/overview|my classes/.test(text)){target="Class Overview";answer="I opened the sample Class Overview. Class information is fictional."}
+ else if(/overview|my classes/.test(text)){target=activeRole==="admin"?"Campus Analytics":"Class Overview";answer="I opened the sample overview. All figures and records are fictional."}
+ else if(/manage users|user accounts/.test(text)){target="Manage users";answer="I opened the user-management preview. This demo cannot create accounts or change permissions."}
+ else if(/report|analytics/.test(text)){target=activeRole==="admin"?"Campus Analytics":"Reports";answer="I opened the sample reports view. No live school data is connected."}
  else answer="I can help you explore the "+activeRole+" demo, its timetable and role-based modules. This prototype does not access real CMS records.";
  if(target&&moduleInfo[target])showModule(target);
  const log=$("chatLog");addText(log,"div",q,"bubble user");addText(log,"div",answer,"bubble bot");log.scrollTop=log.scrollHeight
 }
 document.querySelectorAll(".role").forEach(b=>b.addEventListener("click",()=>render(b.dataset.role)));
+document.querySelector(".role-list")?.addEventListener("keydown",event=>{
+ if(!["ArrowRight","ArrowDown","ArrowLeft","ArrowUp","Home","End"].includes(event.key))return;
+ event.preventDefault();
+ const tabs=[...document.querySelectorAll(".role")];
+ const current=tabs.indexOf(document.activeElement);
+ const next=event.key==="Home"?0:event.key==="End"?tabs.length-1:(current+(["ArrowRight","ArrowDown"].includes(event.key)?1:-1)+tabs.length)%tabs.length;
+ tabs[next].focus();render(tabs[next].dataset.role);
+});
 $("genieForm").addEventListener("submit",e=>{e.preventDefault();const input=$("genieInput");const q=input.value.trim();if(!q)return;reply(q);input.value=""});
 $("suggestions").addEventListener("click",e=>{if(e.target.tagName==="BUTTON")reply(e.target.textContent)});
 $("quickLinks").addEventListener("click",e=>{const b=e.target.closest("button");if(b)reply("Open "+b.dataset.quick)});
