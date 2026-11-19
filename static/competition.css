@@ -667,3 +667,48 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
 @media(max-width:850px){.campus-explorer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.homepage-achievements{grid-template-columns:1fr}}
 @media(max-width:560px){.campus-explorer-grid{grid-template-columns:1fr}.event-hover-preview{display:none}}
 @media(prefers-reduced-motion:reduce){.event-hover-preview,.campus-space-tile,.home-event-card{transition:none!important;transform:none!important}}
+
+
+/* Fix Campus Genie homepage layout: keep its three regions stacked vertically. */
+body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen){
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+}
+body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen)>.chat-head{
+  display:flex!important;
+  flex:0 0 auto!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen)>.chat-body{
+  display:block!important;
+  flex:1 1 0!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:0!important;
+  box-sizing:border-box!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+}
+body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen)>#chatForm{
+  display:flex!important;
+  flex:0 0 auto!important;
+  flex-direction:row!important;
+  align-items:stretch!important;
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen)>#chatForm #chatInput{
+  flex:1 1 0!important;
+  width:0!important;
+  min-width:0!important;
+  box-sizing:border-box!important;
+}
+body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen)>#chatForm button{
+  flex:0 0 auto!important;
+}
