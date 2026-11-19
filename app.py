@@ -290,6 +290,14 @@ CAMPUS_INFORMATION_PAGES = {
 }
 
 
+@app.get("/campus/<slug>")
+def campus_information_page(slug):
+    page = CAMPUS_INFORMATION_PAGES.get(slug)
+    if page is None:
+        abort(404)
+    return render_template("campus_detail.html", page=page)
+
+
 @app.get("/about")
 def about_page():
     return render_template("about.html")
