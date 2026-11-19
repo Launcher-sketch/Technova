@@ -42,7 +42,7 @@ const sendButton=form?.querySelector('button[type="submit"],button:not([type])')
 const welcomeMessage="Jai Jagat! I’m Campus Genie, your virtual guide to City Montessori School. Where would you like to go today? Try Academic Achievements, Sports, Cultural Events, CMSMUN, CELESTA, TECHNOVA or Contact Us.";
 let pendingCommonQuestion="";
 const commonQuestionTerms=["schedule","timetable","date","dates","timing","timings","venue","venues","location","locations","registration","register","deadline","last date"];
-const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","sports","academic","icse","isc","jee","ap examination","cultural","quiz","robotics","football","international sports"];
+const eventContextTerms=["technova","celesta","cmsmun","mun","spardha","concord","icse","isc","jee","ap examination","quiz","robotics","football"];
 document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classList.toggle('open'));
 
 const leaveGenie=()=>{
