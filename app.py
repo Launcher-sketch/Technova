@@ -480,7 +480,7 @@ def chat():
     # Use the active event page as context only for short, ambiguous follow-ups.
     has_named_event = any(name in q for name in ("technova", "celesta", "nazakat", "cmsmun", "cms mun", "model united nations"))
     if not has_named_event and page_context in ("/technova", "/celesta", "/cmsmun"):
-        if any(term in q for term in ("schedule", "date", "when", "venue", "where", "it", "this event", "the event", "timing")):
+        if any(term in q for term in ("schedule", "date", "when", "venue", "where", "this event", "the event", "timing")) or re.search(r"\\b(it|this|that|there)\\b", q):
             q += " " + {"/technova": "technova", "/celesta": "celesta", "/cmsmun": "cmsmun"}[page_context]
     events = data.get("events", [])
     teachers = data.get("teachers", [])
