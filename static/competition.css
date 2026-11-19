@@ -513,3 +513,9 @@ body.events-home{background:var(--cms-paper);color:var(--cms-ink)}
 .campus-detail-page footer{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:25px 5.5%;background:#102f53;color:#e7f2ff;font-size:11px;font-weight:800}
 .campus-detail-page footer a{color:#fff;text-decoration:none}
 @media(max-width:700px){.campus-detail-page .detail-main{padding:26px 16px 48px}.campus-detail-page .detail-sections{grid-template-columns:1fr}.campus-detail-page .detail-card{padding:21px}}
+
+
+/* Keep top navigation dropdown labels clean, without disclosure arrows */
+.events-home .site-nav .nav-dropdown>summary{list-style:none}
+.events-home .site-nav .nav-dropdown>summary::-webkit-details-marker{display:none}
+.events-home .site-nav .nav-dropdown>summary::marker{content:""}
