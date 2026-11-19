@@ -1762,3 +1762,13 @@ body::after{
     font-size:clamp(1.5rem,6.8vw,1.8rem)!important;
   }
 }
+
+
+/* Remove only the blue square panel; keep the CMS lettering visible */
+.cms-intro.cms-earth-signature .earth-stage{
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.cms-intro.cms-earth-signature .intro-earth{
+  background:transparent!important;
+}
