@@ -48,11 +48,11 @@ function reply(q){
  else if(/assignment|homework/.test(text)){target="Assignment Manager";answer="I opened the sample Assignment Manager. Its tasks and deadlines are fictional."}
  else if(/achievement|portfolio|certificate/.test(text)){target="Achievement Portfolio";answer="I opened the sample Achievement Portfolio. It contains fictional project and certificate entries."}
  else if(/calendar|upcoming date|event|technova|celesta|cmsmun/.test(text)){target="School Calendar";answer="The calendar preview contains sample dates. For official event details, use the event pages and confirm dates with the organisers."}
+ else if(/class overview|my classes|overview/.test(text)){target=activeRole==="admin"?"Campus Analytics":"Class Overview";answer="I opened the sample overview. All figures and records are fictional."}
  else if(/timetable|class|schedule/.test(text)){answer="Your sample timetable is displayed in the overview panel. The entries are illustrative and are not a live school timetable."}
  else if(/attendance/.test(text)){target=activeRole==="teacher"?"Mark attendance":"";answer="Attendance figures and any attendance workflow here are demonstration-only. No real attendance is recorded."}
- else if(/notice|message|teacher|circular|report/.test(text)){target=activeRole==="admin"?"Announcement Manager":activeRole==="parent"?( /report/.test(text)?"Reports & Circulars":"Teacher Communication"):"Notice Publisher";answer="I opened the relevant sample communication area. This demo does not send messages or publish notices."}
+ else if(/notice|message|teacher|circular/.test(text)){target=activeRole==="admin"?"Announcement Manager":activeRole==="parent"?( /report/.test(text)?"Reports & Circulars":"Teacher Communication"):"Notice Publisher";answer="I opened the relevant sample communication area. This demo does not send messages or publish notices."}
  else if(/lesson|plan/.test(text)){target="Lesson Planner";answer="I opened the sample Lesson Planner. Its topics are illustrative."}
- else if(/overview|my classes/.test(text)){target=activeRole==="admin"?"Campus Analytics":"Class Overview";answer="I opened the sample overview. All figures and records are fictional."}
  else if(/manage users|user accounts/.test(text)){target="Manage users";answer="I opened the user-management preview. This demo cannot create accounts or change permissions."}
  else if(/report|analytics/.test(text)){target=activeRole==="admin"?"Campus Analytics":"Reports";answer="I opened the sample reports view. No live school data is connected."}
  else answer="I can help you explore the "+activeRole+" demo, its timetable and role-based modules. This prototype does not access real CMS records.";
