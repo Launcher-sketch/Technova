@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 447 447" role="img" aria-labelledby="title">
 <title id="title">City Montessori School logo</title>
 
-<text x="68" y="199" fill="#07569d" font-family="Arial,Helvetica,sans-serif" font-size="145" font-weight="700" letter-spacing="-5">CMS</text>
-<g fill="none" stroke="#07569d" stroke-width="3.2" stroke-linecap="round">
+<text x="68" y="199" fill="#0066CC" font-family="Arial,Helvetica,sans-serif" font-size="145" font-weight="800" letter-spacing="-5">CMS</text>
+<g fill="none" stroke="#0066CC" stroke-width="3.2" stroke-linecap="round">
   <circle cx="137" cy="154" r="20"/>
   <ellipse cx="137" cy="154" rx="9" ry="20"/>
   <path d="M118 154h38M121 144c10 6 22 6 32 0M121 164c10-6 22-6 32 0"/>
