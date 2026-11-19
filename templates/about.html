@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About CMS | CMS Events</title>
+<link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+</head>
+<body class="events-home about-page">
+<header class="top"><a class="logo" href="/">CMS<span>EVENTS</span></a>
+<nav class="site-nav" aria-label="Main navigation">
+<details class="nav-dropdown"><summary>About Us <span>⌄</span></summary><div class="dropdown-menu about-menu">
+<a href="#achievements">Achievements</a><a href="#infrastructure">Infrastructure</a><a href="#child-development">Child Development</a><a href="#education-impact">Education Impact</a><a href="#founders">Our Founders</a><a href="#management">CMS Management</a><a href="/contact">Contact Us</a>
+</div></details>
+<details class="nav-dropdown"><summary>All Events <span>⌄</span></summary><div class="dropdown-menu events-menu">
+<a href="/#academic-results">Academic Achievements</a><a href="/#academic-events">Academic Events &amp; Conferences</a><a href="/#sports-events">Sports Events</a><a href="/#cultural-events">Cultural Events</a><a href="/#technology-events">Technology &amp; Innovation</a>
+</div></details>
+</nav><a class="pill" href="https://cmseducation.org/" target="_blank" rel="noopener noreferrer">CITY MONTESSORI SCHOOL ↗</a></header>
+<main class="about-main">
+<section class="about-hero"><p class="eyebrow">CITY MONTESSORI SCHOOL</p><h1>About CMS</h1><p>Explore the people, places, achievements and educational initiatives behind City Montessori School. Choose a section to learn more from the official CMS website.</p></section>
+<section class="about-grid">
+<a class="about-tile" id="achievements" href="https://cmseducation.org/about-us/#achievements" target="_blank" rel="noopener noreferrer"><span>01 / ACHIEVEMENTS</span><h2>Achievements</h2><p>Discover milestones and recognitions highlighted by CMS.</p><b>Explore official CMS ↗</b></a>
+<a class="about-tile" id="infrastructure" href="https://cmseducation.org/infrastructure/" target="_blank" rel="noopener noreferrer"><span>02 / CAMPUS &amp; FACILITIES</span><h2>Infrastructure</h2><p>Explore CMS campus facilities and learning spaces.</p><b>Explore official CMS ↗</b></a>
+<a class="about-tile" id="child-development" href="https://cmseducation.org/category/child-developement/" target="_blank" rel="noopener noreferrer"><span>03 / STUDENT DEVELOPMENT</span><h2>Child Development</h2><p>Read about CMS initiatives focused on students’ development.</p><b>Explore official CMS ↗</b></a>
+<a class="about-tile" id="education-impact" href="https://cmseducation.org/education-impact/" target="_blank" rel="noopener noreferrer"><span>04 / BEYOND THE CLASSROOM</span><h2>Education Impact</h2><p>Learn about the wider educational impact described by CMS.</p><b>Explore official CMS ↗</b></a>
+<a class="about-tile" id="founders" href="https://cmseducation.org/cms-management/" target="_blank" rel="noopener noreferrer"><span>05 / THE FOUNDING VISION</span><h2>Our Founders</h2><p>Visit CMS’s official information about its founders and founding vision.</p><b>Explore official CMS ↗</b></a>
+<a class="about-tile" id="management" href="https://cmseducation.org/cms-management/" target="_blank" rel="noopener noreferrer"><span>06 / LEADERSHIP</span><h2>CMS Management</h2><p>Find official information about CMS leadership and management.</p><b>Explore official CMS ↗</b></a>
+<a class="about-tile about-contact" id="contact" href="/contact"><span>07 / GET IN TOUCH</span><h2>Contact Us</h2><p>Find CMS Aliganj Campus I contact details and calling hours.</p><b>Open Contact Us ↗</b></a>
+</section></main>
+<footer>CMS EVENTS <span>LEARN · EXPLORE · MAKE YOUR MARK</span><a href="/">Back to Home</a></footer>
+<script>
+document.querySelectorAll('.nav-dropdown').forEach(menu=>{
+ menu.addEventListener('mouseleave',()=>menu.removeAttribute('open'));
+ menu.addEventListener('focusout',event=>{if(!menu.contains(event.relatedTarget))menu.removeAttribute('open')});
+});
+</script>
+</body></html>
