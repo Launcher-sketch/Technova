@@ -1470,3 +1470,26 @@ body::after{
   line-height:1.4!important;
   letter-spacing:.12em!important;
 }
+
+
+/* Keep the intro wordmark aligned to the square CMS logo */
+.cms-intro.cms-earth-signature .signature-wordmark{
+  width:min(280px,72vw)!important;
+  max-width:min(280px,72vw)!important;
+  margin:0 auto!important;
+  text-align:center!important;
+}
+.cms-intro.cms-earth-signature .signature-cms{
+  display:block!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:9px 0 0!important;
+  padding:0!important;
+  text-align:left!important;
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important;
+  line-height:1.35!important;
+  letter-spacing:.10em!important;
+}
