@@ -111,6 +111,27 @@ class CampusSiteSmokeTests(unittest.TestCase):
         self.assertIn("TECHNOVA 2026", response.get_json()["reply"])
         self.assertIn("Ongoing", str(response.get_json().get("table", {})))
 
+    def test_event_question_aliases_cover_all_featured_events(self):
+        cases = [
+            ("tell me about the sports olympiad", "SPARDHA 2026"),
+            ("tell me about the football tournament", "CONCORD 2026"),
+            ("what is the MUN?", "CMS Model United Nations 2026"),
+            ("tell me about the cultural fest", "CELESTA International 2026"),
+            ("what is the robotics championship?", "TECHNOVA 2026"),
+        ]
+        for message, expected in cases:
+            with self.subTest(message=message):
+                response = self.client.post("/api/chat", json={"message": message})
+                payload = response.get_json()
+                self.assertEqual(response.status_code, 200)
+                self.assertIn(expected, payload["reply"] + str(payload.get("table", {})))
+
+    def test_mun_delegate_and_position_paper_questions_reach_mun_knowledge(self):
+        for message in ("What should delegates know?", "What is a position paper?"):
+            with self.subTest(message=message):
+                response = self.client.post("/api/chat", json={"message": message})
+                self.assertIn("CMS Model United Nations 2026", response.get_json()["reply"])
+
     def test_technova_generic_venue_query_does_not_guess(self):
         response = self.client.post(
             "/api/chat",
