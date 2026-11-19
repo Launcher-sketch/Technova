@@ -212,6 +212,6 @@ if(homeEventSearch){
       const visible=[...section.querySelectorAll('.home-event-card')].some(card=>!card.classList.contains('search-hidden'));
       section.classList.toggle('search-hidden',Boolean(query)&&!visible);
     });
-    if(homeSearchStatus)homeSearchStatus.textContent=query?(matches?matches+' matching event page'+(matches===1?'':'s')+' found.':'No matches found. Try a broader search.'):'Search event pages and categories instantly.';
+    if(homeSearchStatus)homeSearchStatus.textContent=query?(matches?matches+' matching event page'+(matches===1?'':'s')+' found.':'No matches found. Try a broader search.'):'Search featured event pages and categories instantly.';
   });
 }
