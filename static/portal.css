@@ -17,3 +17,32 @@
 @media(max-width:900px){.role-modules{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.role-modules{grid-template-columns:1fr}.module-card{display:grid;grid-template-columns:38px 1fr;align-items:center}.module-card .module-icon{grid-row:span 2}.module-card small{grid-column:2}}
 @media(prefers-reduced-motion:reduce){.module-card{transition:none}}
+
+
+/* Final interaction and small-screen refinements */
+.role:focus-visible,
+.quick-links button:focus-visible,
+.suggestions button:focus-visible,
+.genie-form input:focus-visible,
+.genie-form button:focus-visible,
+.module-card:focus-visible {
+  outline:3px solid #f0a928;
+  outline-offset:3px;
+}
+.genie-form input:focus{border-color:#78aee8;box-shadow:0 0 0 3px #1769d218}
+.module-detail{scroll-margin:24px}
+.module-detail[hidden]{display:none}
+.role[aria-selected="true"]{border-color:#b9d7f5}
+@media(max-width:520px){
+  .topbar{gap:10px}
+  .brand{font-size:17px}
+  .top-actions{gap:8px}
+  .top-actions a{max-width:104px;line-height:1.35;text-align:right}
+  .demo-pill{white-space:nowrap}
+  .lesson{grid-template-columns:48px 4px minmax(0,1fr);gap:9px}
+  .lesson em{display:none}
+  .workspace-head{gap:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
