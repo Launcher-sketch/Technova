@@ -1234,3 +1234,9 @@ body::after{
     padding-right:2px!important;
   }
 }
+
+
+/* Draggable CMS chatbot title bar */
+.chat-head{cursor:grab;touch-action:none;user-select:none}
+.chat.is-dragging .chat-head{cursor:grabbing}
+.chat-head button{cursor:pointer}
