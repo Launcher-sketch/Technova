@@ -41,7 +41,49 @@ const form=document.getElementById('chatForm');
 const sendButton=form?.querySelector('button[type="submit"],button:not([type])');
 const welcomeMessage="Jai Jagat! I’m the CMS AI Assistant. Ask me about CMS, TECHNOVA 2026, or CELESTA cultural events.";
 document.getElementById('chatLaunch')?.addEventListener('click',()=>chat?.classList.toggle('open'));
+
 document.getElementById('chatClose')?.addEventListener('click',()=>chat?.classList.remove('open'));
+
+// Drag the chatbot anywhere by its title bar; keep the whole panel in view.
+const chatHead=chat?.querySelector('.chat-head');
+if(chat&&chatHead){
+  let drag=null;
+  chatHead.addEventListener('pointerdown',event=>{
+    if(event.target.closest('button')||event.button!==0)return;
+    const rect=chat.getBoundingClientRect();
+    drag={x:event.clientX,y:event.clientY,left:rect.left,top:rect.top};
+    chat.style.left=rect.left+'px';
+    chat.style.top=rect.top+'px';
+    chat.style.right='auto';
+    chat.style.bottom='auto';
+    chatHead.setPointerCapture(event.pointerId);
+    chat.classList.add('is-dragging');
+    event.preventDefault();
+  });
+  chatHead.addEventListener('pointermove',event=>{
+    if(!drag)return;
+    const maxLeft=Math.max(0,window.innerWidth-chat.offsetWidth);
+    const maxTop=Math.max(0,window.innerHeight-chat.offsetHeight);
+    const left=Math.min(maxLeft,Math.max(0,drag.left+event.clientX-drag.x));
+    const top=Math.min(maxTop,Math.max(0,drag.top+event.clientY-drag.y));
+    chat.style.left=left+'px';
+    chat.style.top=top+'px';
+  });
+  const stopDragging=event=>{
+    if(!drag)return;
+    drag=null;
+    chat.classList.remove('is-dragging');
+    if(chatHead.hasPointerCapture(event.pointerId))chatHead.releasePointerCapture(event.pointerId);
+  };
+  chatHead.addEventListener('pointerup',stopDragging);
+  chatHead.addEventListener('pointercancel',stopDragging);
+  window.addEventListener('resize',()=>{
+    if(!chat.style.left||!chat.style.top)return;
+    const rect=chat.getBoundingClientRect();
+    chat.style.left=Math.min(Math.max(0,window.innerWidth-chat.offsetWidth),rect.left)+'px';
+    chat.style.top=Math.min(Math.max(0,window.innerHeight-chat.offsetHeight),rect.top)+'px';
+  });
+}
 function bubble(text,kind,tableData){
   const p=document.createElement('p');p.className=kind;p.textContent=text;body?.appendChild(p);
   if(tableData&&Array.isArray(tableData.headers)&&Array.isArray(tableData.rows)){
