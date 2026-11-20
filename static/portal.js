@@ -85,65 +85,43 @@ function normalizePortalQuery(value){
  Object.keys(fixes).forEach(function(key){q=q.replace(new RegExp("\\b"+key+"\\b","g"),fixes[key]);});
  return q;
 }
-function reply(q){
- const text=normalizePortalQuery(q);
- const roleData=roles[activeRole];
- let answer="";
- let target="";
- const asksToOpen=/\b(open|go to|take me to|navigate to|launch|access|view|bring up|kholo|dikhao)\b/.test(text);
- const hasAny=function(list){return list.some(function(term){return text.includes(term);});};
- const roleModules=roleData.modules.map(function(item){return item[0];});
- const choose=function(map){for(let i=0;i<map.length;i++){if(hasAny(map[i].terms)){return map[i];}}return null;};
- const moduleMatch=choose([
-  {terms:["digital id","student id","identity card","id card"],name:"Digital Student ID",roles:["student"]},
-  {terms:["assignment","homework","task","submission","due date"],name:"Assignment Manager",roles:["student","teacher"]},
-  {terms:["achievement","portfolio","certificate","project showcase"],name:"Achievement Portfolio",roles:["student"]},
-  {terms:["calendar","school dates","upcoming dates","event dates"],name:"School Calendar",roles:["student","parent"]},
-  {terms:["class overview","my classes","class list","sections"],name:"Class Overview",roles:["teacher"]},
-  {terms:["lesson planner","lesson plan","plan a lesson","teaching plan"],name:"Lesson Planner",roles:["teacher"]},
-  {terms:["notice publisher","publish notice","class notice"],name:"Notice Publisher",roles:["teacher"]},
-  {terms:["student updates","child progress","my child","childs progress"],name:"Student Updates",roles:["parent"]},
-  {terms:["teacher communication","message teacher","contact teacher"],name:"Teacher Communication",roles:["parent"]},
-  {terms:["reports","report card","circular","school circular"],name:activeRole==="parent"?"Reports & Circulars":"Reports",roles:["parent","student","teacher"]},
-  {terms:["event management"],name:"Event Management",roles:["admin"]},
-  {terms:["announcement manager","publish announcement","campus announcement"],name:"Announcement Manager",roles:["admin"]},
-  {terms:["gallery management","campus gallery"],name:"Gallery Management",roles:["admin"]},
-  {terms:["analytics","campus overview","manage users","user accounts"],name:hasAny(["manage users","user accounts"])?"Manage users":"Campus Analytics",roles:["admin"]},
-  {terms:["mark attendance","take attendance"],name:"Mark attendance",roles:["teacher"]}
- ]);
- if(hasAny(["help","what can you do","what can i do","how can you help","how do i use","guide me","help me","what is available","portal features","portal modules","what modules","show my tools","my options"])){
-  answer="I can guide you around this "+activeRole+" demo, explain the sample dashboard, summarise the timetable and describe the available tools. Your available modules are: "+roleModules.join(", ")+". Everything shown here is illustrative demo content, not a live school record.";
- } else if(hasAny(["timetable","schedule","periods","classes today","my day","teaching plan"])){
-  answer="Here is the sample "+(activeRole==="teacher"?"teaching plan":activeRole==="admin"?"campus operations schedule":"timetable")+": "+roleData.items.map(function(item){return item[0]+" — "+item[1]+" ("+item[2]+")";}).join("; ")+". These entries are fictional examples, not your actual school schedule.";
- } else if(hasAny(["attendance","present","absent","attendance percentage"])){
-  const metric=roleData.stats.find(function(item){return item[0].toLowerCase().includes("attendance");});
-  answer=metric?"The dashboard displays "+metric[1]+" for "+metric[0].toLowerCase()+" ("+metric[2]+"). This is sample data only; the demo does not check or change real attendance.":"This role view does not provide an attendance record. No real attendance system is connected."; if(asksToOpen&&activeRole==="teacher")target="Mark attendance";
- } else if(hasAny(["stats","statistics","overview","dashboard","numbers","figures","progress","performance"])){
-  answer="Your "+activeRole+" dashboard currently shows these sample figures: "+roleData.stats.map(function(item){return item[0]+": "+item[1]+" ("+item[2]+")";}).join("; ")+". All figures are fictional demo metrics, not live CMS data.";
- } else if(hasAny(["assignment","homework","task","submission","due date"])){
-  if(activeRole==="parent"){answer="The Parent workspace has a Student Updates panel for a fictional progress snapshot and a Reports & Circulars module. Its sample summary shows 3 of 4 assignments complete; this is not linked to a real student record.";}
-  else if(activeRole==="teacher"){answer="The Teacher workspace includes an Assignment Manager for creating and reviewing demonstration assignments. Its queue shows 12 sample assignments; no real student submissions are connected.";}
-  else{answer="The Student workspace includes an Assignment Manager. The sample panel lists Mathematics practice (due 21 Nov), a Physics worksheet (due 22 Nov) and a Computer Science project (due 25 Nov). These are fictional tasks, not actual homework.";} if(asksToOpen)target=activeRole==="parent"?"Student Updates":"Assignment Manager";
- } else if(hasAny(["event","technova","celesta","cmsmun","school calendar","upcoming"])){
-  answer="The portal includes a School Calendar module with illustrative dates and an Event Management preview for admins. For verified event details, use the main CMS Events website; the portal calendar is sample-only."; if(asksToOpen)target=activeRole==="admin"?"Event Management":activeRole==="teacher"?"":"School Calendar";
- } else if(hasAny(["notice","announcement","message","circular","communicate"])){
-  answer=activeRole==="parent"?"The Parent workspace has Teacher Communication and Reports & Circulars previews. They do not send messages or access real circulars.":activeRole==="teacher"?"The Teacher workspace has a Notice Publisher for local draft previews. It does not publish notices to school users.":"The portal shows role-specific communication previews. They are demonstrations only; no real message is sent or notice published."; if(asksToOpen)target=activeRole==="parent"?"Teacher Communication":activeRole==="admin"?"Announcement Manager":activeRole==="teacher"?"Notice Publisher":"";
- } else if(moduleMatch && moduleMatch.roles.includes(activeRole)){
-  target=moduleMatch.name;
-  answer="The "+moduleMatch.name+" is available in your "+activeRole+" workspace. "+(moduleInfo[moduleMatch.name]?moduleInfo[moduleMatch.name][1]:"It is a demonstration module.")+" "+(asksToOpen?"I have opened its sample preview below.":"Ask me to open it if you want to explore the module.") ;
-  if(asksToOpen)showModule(target);
- } else if(hasAny(["real data","live data","actual records","official records","real account","login","password","secure"])){
-  answer="This is a concept demonstration that uses fictional sample content. It is not connected to official CMS accounts, attendance, marks, messages or student records. Do not enter real passwords, IDs or private information here.";
- } else {
-  answer="I can help with the "+activeRole+" workspace. Try asking about your timetable, assignments, attendance, achievements, school calendar, notices, reports or available modules. You can also say “open assignments” or “open my timetable”. This portal uses fictional demo data only.";
+async function reply(q){
+ const log=$("chatLog");
+ addText(log,"div",q,"bubble user");
+ const typing=addText(log,"div","Campus Genie is thinking…","bubble bot");
+ log.scrollTop=log.scrollHeight;
+ const send=$("genieForm").querySelector('button[type="submit"],button:not([type])');
+ if(send)send.disabled=true;
+ try{
+  const response=await fetch("/api/portal-chat",{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({message:q,role:activeRole})
+  });
+  const data=await response.json();
+  typing.remove();
+  addText(log,"div",data.reply||"I couldn't prepare a response. Please try again.","bubble bot");
+ }catch(error){
+  typing.remove();
+  addText(log,"div","Campus Genie is temporarily unavailable. Please try again.","bubble bot");
+ }finally{
+  if(send)send.disabled=false;
+  log.scrollTop=log.scrollHeight;
  }
- if(target && asksToOpen && moduleInfo[target] && !answer.includes("opened its sample preview"))showModule(target);
- const log=$("chatLog");addText(log,"div",q,"bubble user");addText(log,"div",answer,"bubble bot");log.scrollTop=log.scrollHeight;
 }
 
-$("genieForm").addEventListener("submit",e=>{e.preventDefault();const input=$("genieInput");const q=input.value.trim();if(!q)return;reply(q);input.value=""});
-$("suggestions").addEventListener("click",e=>{if(e.target.tagName==="BUTTON")reply(e.target.textContent)});
-$("quickLinks").addEventListener("click",e=>{const b=e.target.closest("button");if(b)reply("Open "+b.dataset.quick)});
+$("genieForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const input=$("genieInput");
+ const q=input.value.trim();
+ if(!q)return;
+ input.value="";
+ reply(q);
+});
+$("suggestions").addEventListener("click",e=>{
+ if(e.target.tagName==="BUTTON")reply(e.target.textContent);
+});
+
 $("roleModules").addEventListener("click",e=>{const b=e.target.closest("button[data-module]");if(b)showModule(b.dataset.module)});
 render("student");
 const demoStudents={"CMS-DEMO-001":"Shashwat Pandey","CMS-DEMO-002":"Virat Pandey"};
