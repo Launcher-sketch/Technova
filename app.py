@@ -208,12 +208,12 @@ def developer_info_reply(message):
 
 def principal_info_reply(message):
     """Answer branch-aware CMS Aliganj Campus I principal questions from official CMS sources."""
-    q = re.sub(r"[^a-z0-9\\s]", " ", str(message).lower())
+    q = re.sub(r"[^a-z0-9\s]", " ", str(message).lower())
     q = " ".join(q.split())
-    principal_terms = bool(re.search(r"\\b(principal|headmistress|head of school)\\b", q))
-    shivani_mentioned = bool(re.search(r"\\bshivani(?:\\s+singh)?\\b", q))
-    aliganj_branch = bool(re.search(r"\\b(aliganj|campus\\s*(?:i|1|one)|here)\\b", q))
-    asks_about_person = bool(re.search(r"\\b(who|about|tell me|profile|biography)\\b", q))
+    principal_terms = bool(re.search(r"\b(principal|headmistress|head of school)\b", q))
+    shivani_mentioned = bool(re.search(r"\bshivani(?:\s+singh)?\b", q))
+    aliganj_branch = bool(re.search(r"\b(aliganj|campus\s*(?:i|1|one)|here)\b", q))
+    asks_about_person = bool(re.search(r"\b(who|about|tell me|profile|biography)\b", q))
 
     if shivani_mentioned and (asks_about_person or principal_terms or len(q.split()) <= 4):
         return answer(
