@@ -169,10 +169,10 @@ const campusDestinations=[
   {terms:['education impact','impact of education','peace education'],url:'/campus/education-impact',label:'Education Impact'},
   {terms:['our founders','founders','founding vision'],url:'/campus/our-founders',label:'Our Founders'},
   {terms:['cms management','management','school management'],url:'/campus/management',label:'CMS Management'},
-  {terms:['academic events','conference','conferences','mun','cmsmun'],url:'/cmsmun',label:'CMSMUN'},
-  {terms:['sports','sport','spardha','concord','football'],url:'/sports',label:'Sports'},
-  {terms:['cultural','culture','celesta','arts','music','dance'],url:'/celesta',label:'Cultural Events / CELESTA'},
-  {terms:['technova','technology','innovation','robotics','artificial intelligence'],url:'/technova',label:'TECHNOVA'},
+  {terms:['academic events','conference','conferences','mun','cmsmun','model united nations'],url:'/cmsmun',label:'CMSMUN'},
+  {terms:['sports','sport','sports events','sporting events','spardha','concord','football','sports olympiad'],url:'/sports',label:'Sports'},
+  {terms:['cultural','culture','cultural events','celesta','nazakat','arts','music','dance'],url:'/celesta',label:'Cultural Events / CELESTA'},
+  {terms:['technova','tech nova','technology','innovation','robotics','artificial intelligence','ai event'],url:'/technova',label:'TECHNOVA'},
   {terms:['contact','contact us','phone','email'],url:'/contact',label:'Contact Us'},
   {terms:['about campus','about cms','about us','school information'],url:'/about',label:'About CMS'},
   {terms:['home','homepage','main page','all events'],url:'/?skipIntro=1',label:'CMS Events Homepage'}
@@ -185,9 +185,8 @@ function findCampusDestination(message){
   const informationIntent=/^(what is|what are|tell me about|explain|describe|give me (?:information|details) about|show me information about|who is|when is|where is|how does|how do i know about)\b/.test(q);
   if(informationIntent)return null;
 
-  // Navigate only when the visitor clearly asks to open, visit, go to, or take
-  // them to a section/page. This applies consistently to every destination below.
-  const navigationIntent=/\b(go to|take me to|open|visit|navigate to|show me the page for|bring me to|redirect me to)\b/.test(q);
+  // Recognise common natural-language requests to open a destination.
+  const navigationIntent=/\\b(go to|go|take me to|open|visit|navigate to|show me|where can i (?:see|find|open)|i want to (?:see|visit|open)|bring me to|redirect me to|let me see)\\b/.test(q);
   if(!navigationIntent)return null;
 
   return campusDestinations.find(destination=>
