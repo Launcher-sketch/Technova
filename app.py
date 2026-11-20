@@ -1069,7 +1069,7 @@ def chat():
         if latest:
             return answer("Latest published TECHNOVA announcements:", ["Title", "Update"], [[x["title"],x["body"]] for x in latest])
         return answer("There are no official announcements published yet.")
-    return answer("Sorry, I could not currently find that information in the CMS Events. Please contact the respective coordinators for the same.")
+    return answer("I cannot find that information in CMS Events. Please contact the management.")
 
 
 @app.errorhandler(413)
