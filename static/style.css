@@ -2880,3 +2880,25 @@ body.cms-homepage .home-genie-shortcuts button:focus-visible{
   transform:none!important;
 }
 .home-live-card{transition:border-color .22s ease,box-shadow .22s ease!important}
+
+
+/* Anchor the admin live card to the browser viewport, outside transformed page containers. */
+body.events-home > .home-live-card,
+body.events-home > .home-live-card:hover,
+body.events-home > .home-live-card:focus,
+body.events-home > .home-live-card:focus-visible,
+body.events-home > .home-live-card:active{
+  position:fixed!important;
+  inset:180px 28px auto auto!important;
+  top:180px!important;
+  right:max(28px,calc((100vw - 1180px)/2))!important;
+  bottom:auto!important;
+  left:auto!important;
+  margin:0!important;
+  transform:none!important;
+  translate:none!important;
+  animation:none!important;
+  z-index:1001!important;
+}
+@media(max-width:800px){body.events-home > .home-live-card{top:155px!important;right:15px!important;width:205px!important}}
+@media(max-width:560px){body.events-home > .home-live-card{top:125px!important;right:10px!important;width:174px!important}}
