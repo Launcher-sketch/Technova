@@ -598,6 +598,42 @@ def api_data():
     return jsonify(get_data())
 
 
+def _lookup_homepage_cms(message):
+    """Reuse the homepage chatbot's existing, read-only CMS knowledge logic."""
+    pending_question = session.get("_portal_cms_pending_event_question")
+    with app.test_client() as cms_client:
+        with cms_client.session_transaction() as cms_session:
+            if pending_question:
+                cms_session["pending_event_question"] = pending_question
+        response = cms_client.post("/api/chat", json={"message": message})
+        cms_result = response.get_json(silent=True) or {}
+        with cms_client.session_transaction() as cms_session:
+            next_pending_question = cms_session.get("pending_event_question")
+
+    if next_pending_question:
+        session["_portal_cms_pending_event_question"] = next_pending_question
+    else:
+        session.pop("_portal_cms_pending_event_question", None)
+    return cms_result
+
+
+def _is_cms_question(message):
+    """Identify school/event questions that must not fall through to general AI."""
+    text = re.sub(r"[^a-z0-9\\s]", " ", message.lower())
+    text = " ".join(text.split())
+    cms_terms = (
+        r"\\b(cms|technova|celesta|spardha|concord|cmsmun|model united nations)\\b",
+        r"\\b(upcoming events?|all events?|event list|event details|event schedule|"
+        r"school events?|campus events?|competitions?|registration|register|venue|"
+        r"reporting time|teacher in charge|academic results?|board results?|"
+        r"sports events?|school announcements?|school notices?|school contact|"
+        r"campus contact|principal|school management|campus facilities)\\b",
+        r"\\b(when|where|what|which|list|show|tell me about)\\b.{0,35}"
+        r"\\b(events?|competitions?)\\b",
+    )
+    return any(re.search(pattern, text) for pattern in cms_terms)
+
+
 @app.post("/api/portal-chat")
 def portal_chat():
     # This endpoint is deliberately separate from the CMS-only public chatbot.
@@ -619,6 +655,21 @@ def portal_chat():
         return answer("Please keep your question under 4,000 characters.")
     if role not in {"student", "teacher", "parent", "admin"}:
         role = "student"
+
+    # Check the exact same CMS knowledge used by the homepage chatbot first.
+    # A verified CMS answer is returned directly; unknown CMS questions never
+    # get guessed by Gemini. General questions continue to Gemini as before.
+    try:
+        cms_result = _lookup_homepage_cms(message)
+    except Exception:
+        app.logger.exception("Campus Genie could not query the homepage CMS chatbot")
+        cms_result = {}
+    cms_reply = str(cms_result.get("reply", "")).strip()
+    cms_fallback = "I cannot find that information in CMS Events. Please contact the management."
+    if cms_reply and cms_reply != cms_fallback:
+        return jsonify(cms_result)
+    if _is_cms_question(message):
+        return jsonify(cms_result or {"reply": cms_fallback})
 
     api_key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not api_key:
