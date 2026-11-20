@@ -183,70 +183,81 @@ def answer(reply, headers=None, rows=None):
 
 
 def developer_info_reply(message):
-    """Return the site's fixed developer attribution when asked or named."""
-    q = re.sub(r"[^a-z0-9\s]", " ", str(message).lower())
+    """Return a fuller, factual introduction to the people who built the site."""
+    q = re.sub(r"[^a-z0-9\\s]", " ", str(message).lower())
     q = " ".join(q.split())
     developer_names = ("shashwat pandey", "virat pandey", "divyansh mishra",
                        "shashwat", "virat", "divyansh")
     mentions_developer = any(
-        re.search(r"\b" + re.escape(name) + r"\b", q)
+        re.search(r"\\b" + re.escape(name) + r"\\b", q)
         for name in developer_names
     )
     asks_about_developers = bool(re.search(
-        r"\b(developer|developers|creator|creators|who built|who created|"
+        r"\\b(developer|developers|creator|creators|who built|who created|"
         r"who developed|who made|built by|created by|developed by|"
-        r"made by|website team|event manager developers?)\b",
+        r"made by|website team|event manager developers?)\\b",
         q,
     ))
     if mentions_developer or asks_about_developers:
         return answer(
             "This CMS website and its event-management platform were developed "
-            "by Shashwat Pandey, Virat Pandey, and Divyansh Mishra."
+            "collaboratively by Shashwat Pandey, Virat Pandey, and Divyansh Mishra. "
+            "They worked together to build the website and its features, including "
+            "the event-management experience and the digital interface used by visitors. "
+            "If you are asking about a particular developer, you can ask for Shashwat "
+            "Pandey, Virat Pandey, or Divyansh Mishra by name."
         )
     return None
 
 
 def principal_info_reply(message):
     """Answer branch-aware CMS Aliganj Campus I principal questions from official CMS sources."""
-    q = re.sub(r"[^a-z0-9\s]", " ", str(message).lower())
+    q = re.sub(r"[^a-z0-9\\s]", " ", str(message).lower())
     q = " ".join(q.split())
-    principal_terms = bool(re.search(r"\b(principal|headmistress|head of school)\b", q))
-    shivani_mentioned = bool(re.search(r"\bshivani(?:\s+singh)?\b", q))
-    aliganj_branch = bool(re.search(r"\b(aliganj|campus\s*(?:i|1|one)|here)\b", q))
-    asks_about_person = bool(re.search(r"\b(who|about|tell me|profile|biography)\b", q))
+    principal_terms = bool(re.search(r"\\b(principal|headmistress|head of school)\\b", q))
+    shivani_mentioned = bool(re.search(r"\\bshivani(?:\\s+singh)?\\b", q))
+    aliganj_branch = bool(re.search(r"\\b(aliganj|campus\\s*(?:i|1|one)|here)\\b", q))
+    asks_about_person = bool(re.search(r"\\b(who|about|tell me|profile|biography)\\b", q))
 
     if shivani_mentioned and (asks_about_person or principal_terms or len(q.split()) <= 4):
         return answer(
             "Mrs Shivani Singh is the Principal of CMS Aliganj Campus I and the "
-            "Cambridge Campus. According to CMS's official Cambridge Team profile, "
-            "she joined CMS in 2006 as a Kindergarten teacher. She holds master's "
-            "degrees in Education and Sociology, as well as a B.Ed. She later served "
-            "as Kindergarten Coordinator and Pre-Primary In-Charge, became Principal "
-            "of Aliganj Campus II in 2015, and took charge of Aliganj Campus I in 2018. "
-            "The CMS Cambridge Prospectus describes her as having over 20 years of "
-            "educational experience and records that she was included among the "
-            "100 Best Principals and received the Women Leadership Achievement Award "
-            "in 2023. She is also the Convenor of Celesta International 2026. "
-            "Her Principal's message emphasises holistic, child-centred education, "
-            "the 6 Cs—Critical Thinking, Creativity, Collaboration, Communication, "
-            "Character and Citizenship—and developing responsible global citizens. "
-            "Official profile: https://cmseducation.org/cambridge/cms-cambridge-team/ "
+            "Cambridge Campus. She joined CMS in 2006 as a Kindergarten teacher and "
+            "holds master's degrees in Education and Sociology, along with a B.Ed. "
+            "During her career at CMS, she served as Kindergarten Coordinator and "
+            "Pre-Primary In-Charge before becoming Principal of Aliganj Campus II "
+            "in 2015 and Principal of Aliganj Campus I in 2018. The CMS Cambridge "
+            "Prospectus describes her as having over 20 years of educational experience. "
+            "Her recognised achievements include being named among the 100 Best "
+            "Principals and receiving the Women Leadership Achievement Award in 2023. "
+            "She is also the Convenor of Celesta International 2026. Her educational "
+            "vision focuses on holistic, child-centred learning and the 6 Cs: Critical "
+            "Thinking, Creativity, Collaboration, Communication, Character and Citizenship, "
+            "with the aim of nurturing responsible global citizens. "
+            "You can read more in the official CMS profile: "
+            "https://cmseducation.org/cambridge/cms-cambridge-team/ and the "
             "Principal's Desk: https://cmseducation.org/aliganj-campus-1/principals-desk/"
         )
 
     if principal_terms and aliganj_branch:
         return answer(
-            "The Principal of CMS Aliganj Campus I is Mrs Shivani Singh. "
-            "She also serves as Principal of the Cambridge Campus."
+            "The Principal of CMS Aliganj Campus I is Mrs Shivani Singh, who also "
+            "serves as Principal of the Cambridge Campus. She joined CMS in 2006 as "
+            "a Kindergarten teacher and has since held academic leadership roles, "
+            "including Kindergarten Coordinator and Pre-Primary In-Charge. She became "
+            "Principal of Aliganj Campus II in 2015 and took charge of Aliganj Campus I "
+            "in 2018. Her approach emphasises holistic, child-centred education and "
+            "helping students develop the 6 Cs: Critical Thinking, Creativity, "
+            "Collaboration, Communication, Character and Citizenship. For her full "
+            "official profile, visit https://cmseducation.org/aliganj-campus-1/principals-desk/"
         )
 
     if principal_terms:
         return answer(
-            "CMS has multiple branches. Which CMS campus are you asking about? "
-            "For example, Aliganj Campus I."
+            "CMS has multiple branches, and each campus may have a different principal. "
+            "Which CMS campus are you asking about? For example, CMS Aliganj Campus I."
         )
     return None
-
 
 @app.get("/")
 def home():
