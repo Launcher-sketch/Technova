@@ -712,3 +712,46 @@ body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen)>#chatForm #chat
 body.cms-homepage .chat.open.home-chat-embedded:not(.fullscreen)>#chatForm button{
   flex:0 0 auto!important;
 }
+
+
+/* Global CMS light-blue visual system across public pages */
+body.events-home{
+  background-color:#edf4fc!important;
+  background-image:linear-gradient(135deg,rgba(239,246,255,.92),rgba(226,239,255,.88)),url("/static/images.jpg")!important;
+  background-position:center top!important;background-size:cover!important;background-attachment:fixed!important;
+  color:#183653!important;
+}
+.events-home main,.events-home .home-main,.events-home .detail-main{background:transparent!important}
+.events-home :is(.home-hero,.about-hero,.sports-page-heading,.detail-hero,.technova-hero,.celesta-hero,.mun-hero,.sports-hero,.academic-results-heading){
+  background:linear-gradient(125deg,rgba(220,237,255,.97),rgba(242,248,255,.96) 58%,rgba(207,229,252,.96))!important;
+  border:1px solid #c9def4!important;color:#173b65!important;
+  box-shadow:0 16px 42px rgba(23,59,101,.08)!important;
+}
+.events-home :is(.home-hero,.about-hero,.sports-page-heading,.detail-hero,.technova-hero,.celesta-hero,.mun-hero,.sports-hero,.academic-results-heading) :is(h1,h2,h3,p,.eyebrow){
+  color:#173b65!important;
+}
+.events-home :is(.home-hero,.about-hero,.sports-page-heading,.detail-hero,.technova-hero,.celesta-hero,.mun-hero,.sports-hero,.academic-results-heading) :is(.eyebrow,span){color:#1769b5!important}
+.events-home :is(.event-card,.teacher-grid article,.day-grid article,.mun-card,.mun-note,.sports-detail-card,.academic-results-card,.detail-card,.campus-detail-card,.event-gallery-source){
+  background:linear-gradient(145deg,#fff,#f3f8ff)!important;
+  border:1px solid #d7e5f4!important;color:#244967!important;
+  box-shadow:0 10px 28px rgba(29,69,111,.06)!important;
+}
+.events-home :is(.event-card,.teacher-grid article,.day-grid article,.mun-card,.mun-note,.sports-detail-card,.academic-results-card,.detail-card,.campus-detail-card,.event-gallery-source) :is(h1,h2,h3,h4,p,span,li,strong,small){
+  color:#244967!important;
+}
+.events-home :is(.event-card,.teacher-grid article,.day-grid article,.mun-card,.mun-note,.sports-detail-card,.academic-results-card,.detail-card,.campus-detail-card,.event-gallery-source) :is(.eyebrow,.tag){color:#1769b5!important}
+.events-home .home-event-card{background:linear-gradient(145deg,#fff,#f1f7ff)!important;color:#173b65!important}
+.events-home .home-event-card :is(h3,p){color:#244967!important}
+.events-home :is(.outline,.filter){color:#24547e!important;border-color:#bfd4eb!important}
+.events-home :is(input,textarea,select){background:#fff!important;color:#183653!important;border-color:#cbdced!important}
+.events-home .chat{background:#fff!important;color:#183653!important}
+.events-home .chat-body{background:#f7faff!important}
+.events-home .bot{background:#eaf3ff!important;color:#244967!important}
+.events-home .user{background:#1769d2!important;color:#fff!important}
+.events-home .chat-head{background:linear-gradient(110deg,#14558e,#237bd0)!important;color:#fff!important}
+.events-home .chat-head button{color:#fff!important}
+.events-home footer{background:#e5f0fc!important;color:#244967!important;border-top:1px solid #cbdced!important}
+.events-home footer span,.events-home footer a{color:#245d91!important}
+.events-home .mun-meta span{background:#fff!important;color:#24547e!important;border-color:#cbdced!important}
+.events-home .mun-hero p,.events-home .mun-hero .mun-meta span{color:#244967!important}
+@media(max-width:760px){body.events-home{background-attachment:scroll!important}}
