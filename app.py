@@ -656,19 +656,19 @@ def portal_chat():
     if role not in {"student", "teacher", "parent", "admin"}:
         role = "student"
 
-    # Check the exact same CMS knowledge used by the homepage chatbot first.
-    # A verified CMS answer is returned directly; unknown CMS questions never
-    # get guessed by Gemini. General questions continue to Gemini as before.
-    try:
-        cms_result = _lookup_homepage_cms(message)
-    except Exception:
-        app.logger.exception("Campus Genie could not query the homepage CMS chatbot")
-        cms_result = {}
-    cms_reply = str(cms_result.get("reply", "")).strip()
-    cms_fallback = "I cannot find that information in CMS Events. Please contact the management."
-    if cms_reply and cms_reply != cms_fallback:
-        return jsonify(cms_result)
-    if _is_cms_question(message):
+    # Route CMS/event questions through the exact same knowledge logic as the
+    # homepage chatbot. Unknown CMS questions stay on the CMS fallback and are
+    # never guessed by Gemini. Other questions continue to general AI.
+    is_cms_question = _is_cms_question(message) or bool(
+        session.get("_portal_cms_pending_event_question")
+    )
+    if is_cms_question:
+        cms_fallback = "I cannot find that information in CMS Events. Please contact the management."
+        try:
+            cms_result = _lookup_homepage_cms(message)
+        except Exception:
+            app.logger.exception("Campus Genie could not query the homepage CMS chatbot")
+            return answer(cms_fallback)
         return jsonify(cms_result or {"reply": cms_fallback})
 
     api_key = os.environ.get("GEMINI_API_KEY", "").strip()
