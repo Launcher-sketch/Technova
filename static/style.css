@@ -2902,3 +2902,12 @@ body.events-home > .home-live-card:active{
 }
 @media(max-width:800px){body.events-home > .home-live-card{top:155px!important;right:15px!important;width:205px!important}}
 @media(max-width:560px){body.events-home > .home-live-card{top:125px!important;right:10px!important;width:174px!important}}
+
+
+/* Light CMS admin and utility screens */
+body.admin-page{background:linear-gradient(135deg,#edf4fc,#f8fbff)!important;color:#183653!important}
+.admin-top,.admin-panel,.admin-auth,.event-pass{background:#fff!important;color:#183653!important;border-color:#d7e5f4!important;box-shadow:0 12px 34px rgba(29,69,111,.07)}
+.admin-page :is(h1,h2,h3,strong,label){color:#173b65}
+.admin-page :is(p,.muted,.admin-intro,.admin-back){color:#647b93}
+.admin-page input,.admin-page textarea,.admin-page select{background:#fff!important;color:#183653!important;border:1px solid #cbdced!important}
+.admin-page .admin-records article{background:#f5f9ff!important;border-color:#d7e5f4!important}
