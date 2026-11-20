@@ -2,14 +2,7 @@
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMS Events | Discover. Experience.</title><link rel="stylesheet" href="{{url_for('static',filename='style.css')}}?v=live-card-fixed-20261120-1"><link rel="stylesheet" href="{{url_for('static',filename='intro-background.css')}}"><link rel="stylesheet" href="{{url_for('static',filename='competition.css')}}?v=7"><meta name="description" content="Explore CMS Aliganj Campus I events, academic achievements, sports, cultural programmes and the Campus Genie digital campus demonstration."><meta name="theme-color" content="#173b65"></head>
 <body class="events-home cms-homepage">
-{% if live_card.enabled %}
-<a class="home-live-card" href="{{ live_card.url|e }}" aria-label="{{ live_card.title|e }}: {{ live_card.message|e }}">
-  <span class="home-live-top"><span class="home-live-dot" aria-hidden="true"></span><span>{{ live_card.label }}</span></span>
-  <strong class="home-live-title">{{ live_card.title }}</strong>
-  <span class="home-live-message">{{ live_card.message }}</span>
-  <span class="home-live-link">EXPLORE NOW <b aria-hidden="true">↗</b></span>
-</a>
-{% endif %}
+
 <div class="cms-intro cms-earth-signature" id="cmsIntro" aria-label="City Montessori School welcome">
   <div class="earth-stage">
     <img class="intro-earth" src="{{url_for('static',filename='cms-logo.svg')}}?v=clean-5" alt="City Montessori School logo" width="300" height="300" loading="eager" decoding="sync" fetchpriority="high">
