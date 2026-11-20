@@ -561,10 +561,24 @@ def chat():
     if not message:
         return answer("Please enter a question.")
     data = get_data()
-    q = " ".join(message.lower().replace("?", " ").replace("!", " ").split())
-    # Lightweight query normalisation; the official knowledge files remain read-only.
-    typo_aliases = {"schdelue": "schedule", "scheduele": "schedule", "schedual": "schedule", "technovae": "technova", "celestae": "celesta", "kb": "when", "kab": "when", "kahan": "where", "kaha": "where", "kidhar": "where", "kya": "what", "batao": "tell", "btao": "tell", "dikhao": "show"}
-    q = " ".join(typo_aliases.get(word, word) for word in q.split())
+    # Conservative language normalisation; official knowledge files remain read-only.
+    q = re.sub(r"[^a-z0-9\s]", " ", message.lower())
+    q = " ".join(q.split())
+    typo_aliases = {
+        "schdelue": "schedule", "scheduele": "schedule", "schedual": "schedule",
+        "timimgs": "timings", "timngs": "timings", "technovae": "technova",
+        "tech nova": "technova", "celestae": "celesta", "concordd": "concord",
+        "cms mun": "cmsmun", "mun": "cmsmun", "kb": "when", "kab": "when",
+        "kahan": "where", "kaha": "where", "kidhar": "where", "kya": "what",
+        "batao": "tell", "btao": "tell", "dikhao": "show", "bta": "tell",
+        "btaiye": "tell", "kaise": "how", "kyun": "why",
+        "jankari": "information", "jaankari": "information"
+    }
+    for variant, canonical in sorted(typo_aliases.items(), key=lambda item: len(item[0]), reverse=True):
+        q = re.sub(r"\b" + re.escape(variant) + r"\b", canonical, q)
+    q = re.sub(r"\b(cultural fest|cultural festival|arts festival)\b", "celesta", q)
+    q = re.sub(r"\b(sports olympiad|sports meet|athletics meet)\b", "spardha", q)
+    q = re.sub(r"\b(football tournament|international football)\b", "concord", q)
     # Common event-name variants and everyday wording used by visitors.
     q = re.sub(r"\bmun\b", "cmsmun", q)
     for phrase, canonical in (("sports olympiad", "spardha"), ("international sports meet", "spardha"), ("football tournament", "concord"), ("international football", "concord"), ("cultural festival", "celesta"), ("cultural fest", "celesta"), ("robotics championship", "technova"), ("ai and robotics event", "technova")):
