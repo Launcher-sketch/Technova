@@ -646,7 +646,7 @@ def portal_chat():
         "contents": [{"role": "user", "parts": [{"text": message}]}],
         "generationConfig": {"temperature": 0.6, "maxOutputTokens": 500}
     }
-    primary_model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash-lite").strip()
+    primary_model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite").strip()
     fallback_model = os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-3.8-flash").strip()
     models = [primary_model]
     if fallback_model and fallback_model != primary_model:
@@ -673,8 +673,11 @@ def portal_chat():
             detail = exc.read().decode("utf-8", errors="replace")
             last_error = exc
             app.logger.error("Gemini model %s request failed (%s): %s", model, exc.code, detail[:700])
-            if exc.code in (400, 403, 404):
-                return answer("Gemini could not accept this request. Please ask the administrator to check the API key, project access and model availability.")
+            if exc.code in (400, 403):
+                return answer("Gemini could not accept this request. Please ask the administrator to check the API key and project access.")
+            if exc.code == 404:
+                # A retired or unavailable model should not prevent trying the configured fallback.
+                continue
             if exc.code not in (429, 500, 502, 503, 504):
                 break
         except (URLError, TimeoutError, json.JSONDecodeError, KeyError, IndexError) as exc:
