@@ -385,11 +385,16 @@ def admin_dashboard():
         results = select_rows("results")
         gallery = select_rows("gallery")
         passes = select_rows("passes", limit=100)
+        live_settings = select_rows("site_settings", filters={"key": "eq.home_live_card"}, limit=1)
+        live_card = {"enabled": True, "label": "LIVE EVENTS", "title": "TECHNOVA", "message": "Discover what's happening at TECHNOVA.", "url": "/technova"}
+        if live_settings and isinstance(live_settings[0].get("value"), dict):
+            live_card.update(live_settings[0]["value"])
     except SupabaseError:
         app.logger.exception("Could not load admin dashboard")
         flash("Cloud database is unavailable. Check the Supabase setup.", "error")
         announcements, results, gallery, passes = [], [], [], []
-    return render_template("admin.html", announcements=announcements, results=results, gallery=gallery, passes=passes)
+        live_card = {"enabled": True, "label": "LIVE EVENTS", "title": "TECHNOVA", "message": "Discover what's happening at TECHNOVA.", "url": "/technova"}
+    return render_template("admin.html", announcements=announcements, results=results, gallery=gallery, passes=passes, live_card=live_card)
 
 
 @app.post("/admin/live-card")
@@ -403,7 +408,7 @@ def update_home_live_card():
         "message": request.form.get("message", "").strip()[:180],
         "url": request.form.get("url", "/technova").strip()[:240] or "/technova",
     }
-    if not (value["url"].startswith("/") or value["url"].startswith("https://")):
+    if not ((value["url"].startswith("/") and not value["url"].startswith("//")) or value["url"].startswith("https://")):
         flash("Use a site-relative link or a secure https:// link.", "error")
         return redirect(url_for("admin_dashboard"))
     try:
