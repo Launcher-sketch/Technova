@@ -47,3 +47,12 @@ on conflict (id) do update
 set public = true,
     file_size_limit = 8388608,
     allowed_mime_types = array['image/webp'];
+
+
+-- Single-row public homepage settings. Writes are performed only by the authenticated Flask admin.
+create table if not exists public.site_settings (
+  key text primary key,
+  value jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
+);
+alter table public.site_settings enable row level security;
