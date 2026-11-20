@@ -656,6 +656,81 @@ def portal_chat():
     if role not in {"student", "teacher", "parent", "admin"}:
         role = "student"
 
+    # The current portal is a fictional demo. Resolve only the published sample
+    # identities server-side; never trust a role or ID supplied by the browser.
+    demo_id = str(payload.get("demo_id", "")).strip().upper()
+    demo_profiles = {
+        "CMS-DEMO-001": {"role": "student", "name": "Shashwat Pandey", "class": "IX", "section": "A"},
+        "CMS-DEMO-002": {"role": "student", "name": "Virat Pandey", "class": "IX", "section": "A"},
+        "CMS-TEACHER-001": {"role": "teacher", "name": "Divyansh Mishra"},
+        "CMS-TEACHER-002": {"role": "teacher", "name": "Ansh Yadav"},
+        "CMS-PARENT-001": {"role": "parent", "name": "Parent of Shashwat Pandey", "student": "Shashwat Pandey"},
+        "CMS-PARENT-002": {"role": "parent", "name": "Parent of Virat Pandey", "student": "Virat Pandey"},
+    }
+    profile = demo_profiles.get(demo_id)
+    if not profile or profile["role"] != role:
+        profile = None
+
+    q = re.sub(r"[^a-z0-9\\s]", " ", message.lower())
+    q = " ".join(q.split())
+    # Deterministic answers for the portal's sample modules. These are explicitly
+    # labelled sample data and are never represented as official school records.
+    module_reply = None
+    if any(term in q for term in ("notice", "notices", "announcement", "announcements", "circular", "bulletin")):
+        module_reply = answer("Here are the notices shown in this portal's fictional sample bulletin:", ["Notice", "Details"], [
+            ["Inter-house quiz registrations open", "Today · Activities Office · Sample notice"],
+            ["Campus activity schedule updated", "Yesterday · School Office · Sample notice"],
+            ["TECHNOVA showcase schedule published", "18 Nov · Event Team · Sample notice"],
+        ])
+    elif any(term in q for term in ("assignment", "assignments", "homework", "pending task", "due task")):
+        if role == "student":
+            module_reply = answer("These are the fictional assignments in the student demo workspace:", ["Assignment", "Due", "Status"], [
+                ["Mathematics practice", "21 Nov", "In progress · Sample"],
+                ["Physics worksheet", "22 Nov", "Not started · Sample"],
+                ["Computer Science project", "25 Nov", "Submitted · Sample"],
+            ])
+        elif role == "teacher":
+            module_reply = answer("The teacher demo shows a sample review queue, not live submissions:", ["Item", "Details"], [
+                ["Assignments to review", "12 · Fictional demo figure"],
+                ["Classes", "9A, 10B and 8C · Sample classes"],
+            ])
+        else:
+            module_reply = answer("The parent demo shows a fictional assignment summary: 3 of 4 sample assignments complete. It is not a live student record.")
+    elif any(term in q for term in ("achievement", "achievements", "portfolio", "certificate", "certificates")):
+        module_reply = answer("The Achievement Portfolio contains these fictional sample entries:", ["Entry", "Type"], [
+            ["Robotics showcase", "Participation · Sample"],
+            ["Inter-house quiz", "Certificate · Sample"],
+            ["Science model", "Project entry · Sample"],
+        ])
+    elif any(term in q for term in ("student id", "my id", "digital id", "identity card", "id card")):
+        if role == "student" and profile:
+            module_reply = answer("Your ID in this demonstration is a sample identifier, not an official CMS identity credential.", ["Field", "Sample value"], [
+                ["Name", profile["name"]], ["Demo Student ID", demo_id],
+                ["Class", profile["class"]], ["Section", profile["section"]],
+            ])
+        else:
+            module_reply = answer("I can show a student ID only after a recognised student demo ID is selected. This portal does not verify official CMS identities.")
+    elif any(term in q for term in ("teacher id", "my teacher id", "staff id", "faculty id")):
+        if role == "teacher" and profile:
+            module_reply = answer("Your identifier in this demonstration is a sample ID, not an official staff credential.", ["Field", "Sample value"], [["Name", profile["name"]], ["Demo Teacher ID", demo_id]])
+        else:
+            module_reply = answer("Teacher IDs are not exposed in the student workspace. A teacher must enter a recognised teacher demo ID to view their sample identifier.")
+    elif any(term in q for term in ("calendar", "school dates", "upcoming dates", "what is on tomorrow", "events tomorrow")):
+        module_reply = answer("These are illustrative calendar entries from the portal demo. Please confirm real dates through official school communication.", ["Date", "Entry"], [
+            ["20 Nov", "TECHNOVA competition day · Sample"],
+            ["24 Nov", "Parent interaction · Sample"],
+            ["30 Nov", "Academic review · Sample"],
+        ])
+    elif any(term in q for term in ("teacher directory", "class teacher", "my teacher", "teachers list", "teacher contact")):
+        module_reply = answer("The portal currently contains example teacher names in its fictional timetable, not a verified staff directory or contact list.", ["Sample teacher", "Context"], [
+            ["Ms. Sharma", "Mathematics · Room 204 · Sample timetable"],
+            ["Mr. Khan", "Physics · Lab 2 · Sample timetable"],
+            ["Ms. Das", "English Literature · Room 108 · Sample timetable"],
+            ["Mr. Mehta", "Computer Science · Lab 1 · Sample timetable"],
+        ])
+    if module_reply is not None:
+        return module_reply
+
     # Route CMS/event questions through the exact same knowledge logic as the
     # homepage chatbot. Unknown CMS questions stay on the CMS fallback and are
     # never guessed by Gemini. Other questions continue to general AI.
