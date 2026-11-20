@@ -2869,3 +2869,14 @@ body.cms-homepage .home-genie-shortcuts button:focus-visible{
   .home-live-link{font-size:8px}
 }
 @media(prefers-reduced-motion:reduce){.home-live-dot{animation:none;opacity:1}}
+
+
+/* Keep the floating live card completely stationary on pointer hover/focus. */
+.home-live-card,
+.home-live-card:hover,
+.home-live-card:focus,
+.home-live-card:focus-visible,
+.home-live-card:active{
+  transform:none!important;
+}
+.home-live-card{transition:border-color .22s ease,box-shadow .22s ease!important}
