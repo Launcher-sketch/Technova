@@ -32,6 +32,14 @@
 </div></details>
 </nav><a class="pill" href="/about">ABOUT CAMPUS</a><a class="pill" href="/portal">CAMPUS PORTAL</a><a class="pill" href="https://cmseducation.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit the official City Montessori School website">CITY MONTESSORI SCHOOL</a></header>
 <main class="home-main">
+{% if live_card.enabled %}
+<a class="home-live-card" href="{{ live_card.url|e }}" aria-label="{{ live_card.title|e }}: {{ live_card.message|e }}">
+  <span class="home-live-top"><span class="home-live-dot" aria-hidden="true"></span><span>{{ live_card.label }}</span></span>
+  <strong class="home-live-title">{{ live_card.title }}</strong>
+  <span class="home-live-message">{{ live_card.message }}</span>
+  <span class="home-live-link">EXPLORE NOW <b aria-hidden="true">↗</b></span>
+</a>
+{% endif %}
 <section class="home-hero"><p class="eyebrow">CITY MONTESSORI SCHOOL</p><h1>Explore CMS. Find your inspiration.</h1><p>From academic milestones to cultural showcases and sporting showdowns—find the CMS experiences that inspire you. Pick a category and dive in.</p>
 <aside class="chat open home-chat-embedded" id="chat" aria-label="Campus Genie chat">
   <div class="chat-head"><div><strong>Campus Genie</strong><small>Your interactive guide to CMS Aliganj Campus I</small></div><div class="chat-head-actions"><button id="chatRestart" type="button" aria-label="Restart conversation" title="Restart conversation">↻</button><button id="chatClose" type="button" aria-label="Close chat" title="Close chat">×</button></div></div>
