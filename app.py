@@ -184,18 +184,18 @@ def answer(reply, headers=None, rows=None):
 
 def developer_info_reply(message):
     """Return a fuller, factual introduction to the people who built the site."""
-    q = re.sub(r"[^a-z0-9\\s]", " ", str(message).lower())
+    q = re.sub(r"[^a-z0-9\s]", " ", str(message).lower())
     q = " ".join(q.split())
     developer_names = ("shashwat pandey", "virat pandey", "divyansh mishra",
                        "shashwat", "virat", "divyansh")
     mentions_developer = any(
-        re.search(r"\\b" + re.escape(name) + r"\\b", q)
+        re.search(r"\b" + re.escape(name) + r"\b", q)
         for name in developer_names
     )
     asks_about_developers = bool(re.search(
-        r"\\b(developer|developers|creator|creators|who built|who created|"
+        r"\b(developer|developers|creator|creators|who built|who created|"
         r"who developed|who made|built by|created by|developed by|"
-        r"made by|website team|event manager developers?)\\b",
+        r"made by|website team|event manager developers?)\b",
         q,
     ))
     if mentions_developer or asks_about_developers:
@@ -212,12 +212,12 @@ def developer_info_reply(message):
 
 def principal_info_reply(message):
     """Answer branch-aware CMS Aliganj Campus I principal questions from official CMS sources."""
-    q = re.sub(r"[^a-z0-9\\s]", " ", str(message).lower())
+    q = re.sub(r"[^a-z0-9\s]", " ", str(message).lower())
     q = " ".join(q.split())
-    principal_terms = bool(re.search(r"\\b(principal|headmistress|head of school)\\b", q))
-    shivani_mentioned = bool(re.search(r"\\bshivani(?:\\s+singh)?\\b", q))
-    aliganj_branch = bool(re.search(r"\\b(aliganj|campus\\s*(?:i|1|one)|here)\\b", q))
-    asks_about_person = bool(re.search(r"\\b(who|about|tell me|profile|biography)\\b", q))
+    principal_terms = bool(re.search(r"\b(principal|headmistress|head of school)\b", q))
+    shivani_mentioned = bool(re.search(r"\bshivani(?:\s+singh)?\b", q))
+    aliganj_branch = bool(re.search(r"\b(aliganj|campus\s*(?:i|1|one)|here)\b", q))
+    asks_about_person = bool(re.search(r"\b(who|about|tell me|profile|biography)\b", q))
 
     if shivani_mentioned and (asks_about_person or principal_terms or len(q.split()) <= 4):
         return answer(
