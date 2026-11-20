@@ -2826,3 +2826,46 @@ body.cms-homepage .home-genie-shortcuts button:focus-visible{
 @media(max-width:800px){.home-live-card{top:82px;right:15px;width:218px;padding:13px 15px}.home-live-title{font-size:21px}.home-live-message{font-size:10px}}
 @media(max-width:560px){.home-live-card{top:75px;right:10px;width:184px;padding:11px 12px;gap:6px}.home-live-title{font-size:18px}.home-live-message{font-size:9px}.home-live-link{font-size:8px}}
 @media(prefers-reduced-motion:reduce){.home-live-dot{animation:none}}
+
+
+/* Refine the live card: light CMS palette, aligned beside the hero heading,
+   and fixed to the viewport so it remains visible while scrolling. */
+.home-live-card{
+  top:clamp(150px,22vh,205px);
+  right:max(7%,calc((100vw - 1180px)/2));
+  width:min(236px,calc(100vw - 36px));
+  padding:17px 19px 15px;
+  border:1px solid #b8d9e2;
+  background:linear-gradient(145deg,#f8fdff 0%,#eaf6f8 100%);
+  box-shadow:0 12px 34px #061b3026,0 3px 12px #4a9aa51c;
+  color:#173b55;
+  backdrop-filter:blur(12px);
+}
+.home-live-card:hover{
+  border-color:#69b9c3;
+  box-shadow:0 16px 38px #061b3030,0 0 0 3px #8bd4d733;
+}
+.home-live-top{color:#315f78}
+.home-live-dot{
+  width:10px;height:10px;
+  background:#f02f3d;
+  box-shadow:0 0 0 0 #f02f3d88,0 0 9px #f02f3d88;
+  animation:homeLiveBeacon .95s ease-in-out infinite;
+}
+.home-live-title{color:#173b55}
+.home-live-message{color:#526d80}
+.home-live-link{border-top:1px solid #c9dfe5;color:#287f8b}
+@keyframes homeLiveBeacon{
+  0%,100%{opacity:1;box-shadow:0 0 0 0 #f02f3d88,0 0 9px #f02f3d99}
+  50%{opacity:.48;box-shadow:0 0 0 7px #f02f3d00,0 0 15px #f02f3dcc}
+}
+@media(max-width:800px){
+  .home-live-card{top:clamp(155px,24vh,195px);right:15px;width:205px}
+}
+@media(max-width:560px){
+  .home-live-card{top:185px;right:10px;width:174px;padding:11px 12px;gap:6px}
+  .home-live-title{font-size:18px}
+  .home-live-message{font-size:9px}
+  .home-live-link{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){.home-live-dot{animation:none;opacity:1}}
