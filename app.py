@@ -619,17 +619,17 @@ def _lookup_homepage_cms(message):
 
 def _is_cms_question(message):
     """Identify school/event questions that must not fall through to general AI."""
-    text = re.sub(r"[^a-z0-9\\s]", " ", message.lower())
+    text = re.sub(r"[^a-z0-9\s]", " ", message.lower())
     text = " ".join(text.split())
     cms_terms = (
-        r"\\b(cms|technova|celesta|spardha|concord|cmsmun|model united nations)\\b",
-        r"\\b(upcoming events?|all events?|event list|event details|event schedule|"
+        r"\b(cms|technova|celesta|spardha|concord|cmsmun|model united nations)\b",
+        r"\b(upcoming events?|all events?|event list|event details|event schedule|"
         r"school events?|campus events?|competitions?|registration|register|venue|"
         r"reporting time|teacher in charge|academic results?|board results?|"
         r"sports events?|school announcements?|school notices?|school contact|"
-        r"campus contact|principal|school management|campus facilities)\\b",
-        r"\\b(when|where|what|which|list|show|tell me about)\\b.{0,35}"
-        r"\\b(events?|competitions?)\\b",
+        r"campus contact|principal|school management|campus facilities)\b",
+        r"\b(when|where|what|which|list|show|tell me about)\b.{0,35}"
+        r"\b(events?|competitions?)\b",
     )
     return any(re.search(pattern, text) for pattern in cms_terms)
 
