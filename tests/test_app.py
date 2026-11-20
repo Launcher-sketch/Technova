@@ -87,6 +87,23 @@ class CampusSiteSmokeTests(unittest.TestCase):
         self.assertIn("couldn't find", payload["reply"])
         self.assertNotIn("Vaivaswat", payload["reply"])
 
+    def test_chat_normalizes_word_order_punctuation_and_hinglish(self):
+        cases = [
+            ("TECHNOVA schedule please!!!", "TECHNOVA 2026"),
+            ("schedule of technova", "TECHNOVA 2026"),
+            ("technova ka schedule batao", "TECHNOVA 2026"),
+            ("tell me about sports olympiad", "SPARDHA 2026"),
+            ("football tournament details please", "CONCORD 2026"),
+            ("what is the cultural festival", "CELESTA International 2026"),
+            ("what is MUN?", "CMS Model United Nations 2026"),
+        ]
+        for message, expected in cases:
+            with self.subTest(message=message):
+                response = self.client.post("/api/chat", json={"message": message})
+                payload = response.get_json()
+                self.assertEqual(response.status_code, 200)
+                self.assertIn(expected, payload["reply"] + str(payload.get("table", {})))
+
     def test_generic_event_questions_ask_which_event_then_use_selection(self):
         response = self.client.post("/api/chat", json={"message": "Who are the teachers?"})
         self.assertIn("Which event", response.get_json()["reply"])
