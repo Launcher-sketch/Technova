@@ -86,6 +86,20 @@
 <div class="home-event-grid"><a class="home-event-card snapshot-featured campus-portal-feature-card" href="/portal"><div class="home-card-top"><span>INTERACTIVE CAMPUS CONCEPT</span><span>DEMO ENVIRONMENT</span></div><div><p class="home-card-kicker">STUDENT · TEACHER · PARENT · ADMIN</p><h3>Your school day, all in one place</h3><p>Explore the digital campus experience through role-based sample dashboards and module previews.</p></div><span class="home-card-link">Enter the Campus Portal <b>↗</b></span></a></div>
 </section>
 
+<section class="home-updates" aria-labelledby="homeUpdatesTitle">
+<div class="updates-heading"><div><p class="eyebrow">WHAT'S HAPPENING</p><h2 id="homeUpdatesTitle">Campus news and updates</h2><p>Updates published by the campus website team.</p></div><a href="/contact">Contact the campus ↗</a></div>
+<div class="updates-grid">
+<article class="update-card technova-campus-update"><span class="update-label">TECHNOLOGY &amp; INNOVATION · 19–20 NOVEMBER 2026</span><h3>TECHNOVA 2026 is happening now</h3><p>Every big innovation begins with an idea. TECHNOVA brings students together to imagine, experiment and turn ideas into action through robotics, artificial intelligence and computing challenges. Two days of creativity, problem-solving and building are underway at CMS Aliganj Campus I.</p><a class="home-card-link" href="/technova">Explore TECHNOVA 2026 <b>↗</b></a></article>
+{% if announcements %}
+{% for item in announcements %}
+<article class="update-card"><span class="update-label">CAMPUS UPDATE</span><h3>{{ item.title }}</h3><p>{{ item.body }}</p></article>
+{% endfor %}
+{% else %}
+<article class="update-empty"><span class="update-label">CAMPUS BULLETIN</span><h3>No new announcements yet</h3><p>Check back for campus notices and event updates.</p></article>
+{% endif %}
+</div>
+</section>
+
 <section class="homepage-achievements" aria-labelledby="homeAchievementsTitle">
   <div><p class="eyebrow">ACADEMIC &amp; STUDENT EXCELLENCE</p><h2 id="homeAchievementsTitle">Meet our academic achievers</h2><p>Explore published CMS academic milestones and the students recognised across ICSE, ISC, JEE and AP examinations.</p><a class="home-card-link" href="/academic-results">Explore academic achievements ↗</a></div>
   <div class="achievement-stats"><article><strong>99.8%</strong><span>ICSE 2026 top score</span></article><article><strong>99.75%</strong><span>ISC 2026 top score</span></article><article><strong>58</strong><span>JEE Advanced qualifiers</span></article><article><strong>184</strong><span>AP credits earned</span></article></div>
@@ -115,19 +129,7 @@
 </section>
 
 </section>
-<section class="home-updates" aria-labelledby="homeUpdatesTitle">
-<div class="updates-heading"><div><p class="eyebrow">WHAT'S HAPPENING</p><h2 id="homeUpdatesTitle">Campus news and updates</h2><p>Updates published by the campus website team.</p></div><a href="/contact">Contact the campus ↗</a></div>
-<div class="updates-grid">
-<article class="update-card technova-campus-update"><span class="update-label">TECHNOLOGY &amp; INNOVATION · 19–20 NOVEMBER 2026</span><h3>TECHNOVA 2026 is happening now</h3><p>Every big innovation begins with an idea. TECHNOVA brings students together to imagine, experiment and turn ideas into action through robotics, artificial intelligence and computing challenges. Two days of creativity, problem-solving and building are underway at CMS Aliganj Campus I.</p><a class="home-card-link" href="/technova">Explore TECHNOVA 2026 <b>↗</b></a></article>
-{% if announcements %}
-{% for item in announcements %}
-<article class="update-card"><span class="update-label">CAMPUS UPDATE</span><h3>{{ item.title }}</h3><p>{{ item.body }}</p></article>
-{% endfor %}
-{% else %}
-<article class="update-empty"><span class="update-label">CAMPUS BULLETIN</span><h3>No new announcements yet</h3><p>Check back for campus notices and event updates.</p></article>
-{% endif %}
-</div>
-</section>
+
 <section class="principal-note" aria-labelledby="principalNoteTitle">
 <div class="principal-mark" aria-hidden="true">CMS</div>
 <div><p class="eyebrow">LEADERSHIP &amp; LEARNING</p><h2 id="principalNoteTitle">Learning, leadership and campus life</h2><p>Discover the learning spaces, student opportunities and campus initiatives at CMS Aliganj Campus I. For the latest official message and school information, visit the campus website.</p><a href="https://cmseducation.org/aliganj-campus-1/" target="_blank" rel="noopener noreferrer">Visit the official campus website ↗</a></div>
