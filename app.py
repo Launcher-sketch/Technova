@@ -639,7 +639,7 @@ def portal_chat():
     request_body = {
         "systemInstruction": {"parts": [{"text": system_instruction}]},
         "contents": [{"role": "user", "parts": [{"text": message}]}],
-        "generationConfig": {"temperature": 0.6, "maxOutputTokens": 700}
+        "generationConfig": {"temperature": 0.6, "maxOutputTokens": 500}
     }
     req = Request(
         "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
@@ -648,7 +648,7 @@ def portal_chat():
         method="POST",
     )
     try:
-        with urlopen(req, timeout=30) as response:
+        with urlopen(req, timeout=55) as response:
             result = json.loads(response.read().decode("utf-8"))
         parts = result.get("candidates", [{}])[0].get("content", {}).get("parts", [])
         generated = "\n".join(part.get("text", "") for part in parts if part.get("text")).strip()
