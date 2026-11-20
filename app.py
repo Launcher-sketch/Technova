@@ -184,18 +184,18 @@ def answer(reply, headers=None, rows=None):
 
 def developer_info_reply(message):
     """Return the site's fixed developer attribution when asked or named."""
-    q = re.sub(r"[^a-z0-9\\s]", " ", str(message).lower())
+    q = re.sub(r"[^a-z0-9\s]", " ", str(message).lower())
     q = " ".join(q.split())
     developer_names = ("shashwat pandey", "virat pandey", "divyansh mishra",
                        "shashwat", "virat", "divyansh")
     mentions_developer = any(
-        re.search(r"\\b" + re.escape(name) + r"\\b", q)
+        re.search(r"\b" + re.escape(name) + r"\b", q)
         for name in developer_names
     )
     asks_about_developers = bool(re.search(
-        r"\\b(developer|developers|creator|creators|who built|who created|"
+        r"\b(developer|developers|creator|creators|who built|who created|"
         r"who developed|who made|built by|created by|developed by|"
-        r"made by|website team|event manager developers?)\\b",
+        r"made by|website team|event manager developers?)\b",
         q,
     ))
     if mentions_developer or asks_about_developers:
