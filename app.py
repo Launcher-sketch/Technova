@@ -671,7 +671,7 @@ def portal_chat():
     if not profile or profile["role"] != role:
         profile = None
 
-    q = re.sub(r"[^a-z0-9\\s]", " ", message.lower())
+    q = re.sub(r"[^a-z0-9\s]", " ", message.lower())
     q = " ".join(q.split())
     # Deterministic answers for the portal's sample modules. These are explicitly
     # labelled sample data and are never represented as official school records.
