@@ -111,7 +111,7 @@ function reply(q){
   {terms:["analytics","campus overview","manage users","user accounts"],name:hasAny(["manage users","user accounts"])?"Manage users":"Campus Analytics",roles:["admin"]},
   {terms:["mark attendance","take attendance"],name:"Mark attendance",roles:["teacher"]}
  ]);
- if(hasAny(["help","what can you do","how can you help","what is available","portal features","portal modules","what modules","show my tools","my options"])){
+ if(hasAny(["help","what can you do","what can i do","how can you help","how do i use","guide me","help me","what is available","portal features","portal modules","what modules","show my tools","my options"])){
   answer="I can guide you around this "+activeRole+" demo, explain the sample dashboard, summarise the timetable and describe the available tools. Your available modules are: "+roleModules.join(", ")+". Everything shown here is illustrative demo content, not a live school record.";
  } else if(hasAny(["timetable","schedule","periods","classes today","my day","teaching plan"])){
   answer="Here is the sample "+(activeRole==="teacher"?"teaching plan":activeRole==="admin"?"campus operations schedule":"timetable")+": "+roleData.items.map(function(item){return item[0]+" — "+item[1]+" ("+item[2]+")";}).join("; ")+". These entries are fictional examples, not your actual school schedule.";
