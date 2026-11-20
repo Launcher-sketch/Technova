@@ -642,7 +642,7 @@ def portal_chat():
         "generationConfig": {"temperature": 0.6, "maxOutputTokens": 700}
     }
     req = Request(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
         data=json.dumps(request_body).encode("utf-8"),
         headers={"Content-Type": "application/json", "x-goog-api-key": api_key},
         method="POST",
