@@ -30,6 +30,25 @@ const moduleInfo={
  "Manage users":["User Management Preview","This is a visual workflow preview only. It cannot create accounts or change permissions.","Student accounts · Not connected","Teacher accounts · Not connected","Parent accounts · Not connected"]
 };
 function addText(parent,tag,text,className){const el=document.createElement(tag);el.textContent=text;if(className)el.className=className;parent.appendChild(el);return el}
+function appendInlineMarkdown(parent,text){
+ const pattern=/(\*\*|__)(.+?)\1|(?<!\*)\*([^*\n]+)\*(?!\*)|`([^`]+)`/g;
+ let last=0,match;while((match=pattern.exec(text))){
+  if(match.index>last)parent.appendChild(document.createTextNode(text.slice(last,match.index)));
+  if(match[1])addText(parent,'strong',match[2]);else if(match[3])addText(parent,'em',match[3]);else addText(parent,'code',match[4]);last=pattern.lastIndex;
+ }if(last<text.length)parent.appendChild(document.createTextNode(text.slice(last)));
+}
+function renderAssistantMessage(parent,text){
+ const source=String(text||'').replace(/\r\n?/g,'\n').trim();if(!source){addText(parent,'p','No response available. Please try again.');return;}
+ const lines=source.split('\n');let paragraph=[],list=null,listType='';
+ const flushParagraph=()=>{if(!paragraph.length)return;const p=addText(parent,'p','');appendInlineMarkdown(p,paragraph.join(' ').trim());paragraph=[];};
+ const closeList=()=>{list=null;listType='';};
+ for(const raw of lines){const line=raw.trim();if(!line){flushParagraph();closeList();continue;}
+  const heading=line.match(/^#{1,6}\s+(.+)$/);if(heading){flushParagraph();closeList();const h=addText(parent,'h4','');appendInlineMarkdown(h,heading[1].replace(/\s+#+$/,''));continue;}
+  const bullet=line.match(/^\s*[-*+]\s+(.+)$/),ordered=line.match(/^\s*\d+[.)]\s+(.+)$/);
+  if(bullet||ordered){flushParagraph();const type=bullet?'ul':'ol';if(!list||listType!==type){closeList();list=addText(parent,type,'');listType=type;}const item=addText(list,'li','');appendInlineMarkdown(item,(bullet||ordered)[1]);continue;}
+  closeList();paragraph.push(line);
+ }flushParagraph();
+}
 function render(role){
  activeRole=role;const d={...roles[role]};
  if(role==="student"){d.name="Welcome, "+activeStudentName;d.avatar=activeStudentName.split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase()}
@@ -100,7 +119,8 @@ async function reply(q){
   });
   const data=await response.json();
   typing.remove();
-  addText(log,"div",data.reply||"I couldn't prepare a response. Please try again.","bubble bot");
+  const answer=addText(log,"div","","bubble bot");
+  renderAssistantMessage(answer,data.reply||"No response available. Please try again.");
  }catch(error){
   typing.remove();
   addText(log,"div","Campus Genie is temporarily unavailable. Please try again.","bubble bot");
