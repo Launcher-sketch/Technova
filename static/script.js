@@ -53,9 +53,25 @@ const leaveGenie=()=>{
   chat?.classList.remove('open','fullscreen');
 };
 document.getElementById('chatClose')?.addEventListener('click',leaveGenie);
-// Returning from a destination with the browser Back button should show the homepage, not the open chat.
+// Browser Back/Forward can restore this page from the back-forward cache without re-running
+// the script. Normalize the embedded homepage chatbot whenever the homepage is restored.
+function restoreHomepageGenie(){
+  if(!isEventsHome||!chat)return;
+  document.body.classList.remove('genie-mode');
+  chat.classList.remove('fullscreen');
+  chat.classList.add('open');
+  pendingCommonQuestion='';
+  if(body)body.replaceChildren();
+  bubble(welcomeMessage,'bot');
+  if(input)input.value='';
+  if(sendButton)sendButton.disabled=false;
+}
+window.addEventListener('pageshow',restoreHomepageGenie);
 window.addEventListener('popstate',()=>{
-  if(window.location.pathname==='/'||window.location.pathname==='/index')leaveGenie();
+  if(window.location.pathname==='/'||window.location.pathname==='/index'){
+    leaveGenie();
+    restoreHomepageGenie();
+  }
 });
 
 // Campus Genie is a fixed, full-screen experience; its header is not draggable.
