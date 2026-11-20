@@ -186,7 +186,7 @@ function findCampusDestination(message){
   if(informationIntent)return null;
 
   // Recognise common natural-language requests to open a destination.
-  const navigationIntent=/\\b(go to|go|take me to|open|visit|navigate to|show me|where can i (?:see|find|open)|i want to (?:see|visit|open)|bring me to|redirect me to|let me see)\\b/.test(q);
+  const navigationIntent=/\b(go to|go|take me to|open|visit|navigate to|show me|where can i (?:see|find|open)|i want to (?:see|visit|open)|bring me to|redirect me to|let me see)\b/.test(q);
   if(!navigationIntent)return null;
 
   return campusDestinations.find(destination=>
