@@ -80,7 +80,7 @@ function showModule(name){
  box.hidden=false;box.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 function normalizePortalQuery(value){
- let q=String(value||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9\\s]/g," ").replace(/\\s+/g," ").trim();
+ let q=String(value||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9\s]/g," ").replace(/\s+/g," ").trim();
  const fixes={"ttable":"timetable","time table":"timetable","time-table":"timetable","assigment":"assignment","assignmnt":"assignment","homewrk":"homework","attendence":"attendance","attandance":"attendance","achievment":"achievement","calender":"calendar","circluar":"circular","anouncement":"announcement","announcment":"announcement","analytcs":"analytics","digi id":"digital id","idcard":"id card","clas":"class","schedul":"schedule","techer":"teacher","studnt":"student","parant":"parent"};
  Object.keys(fixes).forEach(function(key){q=q.replace(new RegExp("\\b"+key+"\\b","g"),fixes[key]);});
  return q;
@@ -90,7 +90,7 @@ function reply(q){
  const roleData=roles[activeRole];
  let answer="";
  let target="";
- const asksToOpen=/\\b(open|go to|take me to|navigate to|launch|access|view|bring up|kholo|dikhao)\\b/.test(text);
+ const asksToOpen=/\b(open|go to|take me to|navigate to|launch|access|view|bring up|kholo|dikhao)\b/.test(text);
  const hasAny=function(list){return list.some(function(term){return text.includes(term);});};
  const roleModules=roleData.modules.map(function(item){return item[0];});
  const choose=function(map){for(let i=0;i<map.length;i++){if(hasAny(map[i].terms)){return map[i];}}return null;};
