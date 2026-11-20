@@ -8,7 +8,7 @@ import logging
 from functools import wraps
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote, urlencode
+from urllib.parse import quote, urlencode, urlsplit
 from urllib.request import Request, urlopen
 
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session, flash, abort
@@ -333,6 +333,7 @@ def contact_page():
 
 @app.get("/portal")
 def school_portal():
+    session["portal_chat_enabled"] = True
     return render_template("portal.html")
 
 
@@ -595,6 +596,77 @@ def pass_view(token):
 @app.get("/api/data")
 def api_data():
     return jsonify(get_data())
+
+
+@app.post("/api/portal-chat")
+def portal_chat():
+    # This endpoint is deliberately separate from the CMS-only public chatbot.
+    # Require a portal session and a same-site request originating on /portal.
+    referer = request.headers.get("Referer", "")
+    try:
+        referer_path = urlsplit(referer).path
+    except ValueError:
+        referer_path = ""
+    if not session.get("portal_chat_enabled") or referer_path != "/portal":
+        return answer("I cannot find that information in CMS Events. Please contact the management.")
+
+    payload = request.get_json(silent=True) or {}
+    message = str(payload.get("message", "")).strip()
+    role = str(payload.get("role", "student")).strip().lower()
+    if not message:
+        return answer("Please enter a question.")
+    if len(message) > 4000:
+        return answer("Please keep your question under 4,000 characters.")
+    if role not in {"student", "teacher", "parent", "admin"}:
+        role = "student"
+
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
+    if not api_key:
+        app.logger.error("GEMINI_API_KEY is not configured for Campus Portal.")
+        return answer("Campus Genie is not configured yet. Please ask the site administrator to check the Gemini API key in Render.")
+
+    system_instruction = (
+        "You are Campus Genie, the general AI assistant inside the CMS Digital Campus demonstration. "
+        "Answer general educational and everyday knowledge questions clearly and helpfully. "
+        "You may explain science, mathematics, technology, writing, coding, and general topics. "
+        "The user's selected portal role is " + role + ". "
+        "This portal currently contains fictional demonstration data, not live school records. "
+        "Never claim to access real attendance, grades, timetables, student identities, messages, or official CMS systems. "
+        "For questions about personal school records, explain that the portal is a demo and direct the user to official school channels. "
+        "Do not invent official school policies, staff details, event schedules, or campus facts. "
+        "Keep answers age-appropriate, respectful, and concise."
+    )
+    request_body = {
+        "systemInstruction": {"parts": [{"text": system_instruction}]},
+        "contents": [{"role": "user", "parts": [{"text": message}]}],
+        "generationConfig": {"temperature": 0.6, "maxOutputTokens": 700}
+    }
+    req = Request(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        data=json.dumps(request_body).encode("utf-8"),
+        headers={"Content-Type": "application/json", "x-goog-api-key": api_key},
+        method="POST",
+    )
+    try:
+        with urlopen(req, timeout=30) as response:
+            result = json.loads(response.read().decode("utf-8"))
+        parts = result.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+        generated = "\n".join(part.get("text", "") for part in parts if part.get("text")).strip()
+        if not generated:
+            app.logger.warning("Gemini returned no text for a Campus Portal request.")
+            return answer("I couldn't prepare a response just now. Please try asking in a different way.")
+        return answer(generated)
+    except HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        app.logger.error("Gemini API request failed (%s): %s", exc.code, detail[:700])
+        if exc.code in (400, 403, 404):
+            return answer("Gemini could not accept this request. Please ask the administrator to check the API key, project access and model availability.")
+        if exc.code == 429:
+            return answer("Campus Genie has reached its current Gemini usage limit. Please try again later.")
+        return answer("Campus Genie is temporarily unavailable. Please try again shortly.")
+    except (URLError, TimeoutError, json.JSONDecodeError, KeyError, IndexError) as exc:
+        app.logger.error("Campus Portal Gemini request failed: %s", exc)
+        return answer("Campus Genie is temporarily unavailable. Please try again shortly.")
 
 
 @app.post("/api/chat")
