@@ -189,7 +189,14 @@ def home():
     except SupabaseError:
         app.logger.exception("Could not load homepage announcements")
         announcements = []
-    return render_template("home.html", announcements=announcements, celesta=get_cultural_data())
+    live_card = {"enabled": True, "label": "LIVE EVENTS", "title": "TECHNOVA", "message": "Discover what's happening at TECHNOVA.", "url": "/technova"}
+    try:
+        settings = select_rows("site_settings", filters={"key": "eq.home_live_card"}, limit=1)
+        if settings and isinstance(settings[0].get("value"), dict):
+            live_card.update(settings[0]["value"])
+    except SupabaseError:
+        app.logger.exception("Could not load homepage live card settings")
+    return render_template("home.html", announcements=announcements, celesta=get_cultural_data(), live_card=live_card)
 
 
 @app.get("/technova")
@@ -382,7 +389,44 @@ def admin_dashboard():
         app.logger.exception("Could not load admin dashboard")
         flash("Cloud database is unavailable. Check the Supabase setup.", "error")
         announcements, results, gallery, passes = [], [], [], []
-    return render_template("admin.html", announcements=announcements, results=results, gallery=gallery, passes=passes)
+    live_card = {"enabled": True, "label": "LIVE EVENTS", "title": "TECHNOVA", "message": "Discover what's happening at TECHNOVA.", "url": "/technova"}
+    try:
+        live_settings = select_rows("site_settings", filters={"key": "eq.home_live_card"}, limit=1)
+        if live_settings and isinstance(live_settings[0].get("value"), dict):
+            live_card.update(live_settings[0]["value"])
+    except SupabaseError:
+        app.logger.exception("Could not load homepage live card settings")
+    return render_template("admin.html", announcements=announcements, results=results, gallery=gallery, passes=passes, live_card=live_card)
+
+
+@app.post("/admin/live-card")
+@admin_required
+def update_home_live_card():
+    require_csrf()
+    value = {
+        "enabled": request.form.get("enabled") == "yes",
+        "label": request.form.get("label", "LIVE EVENTS").strip()[:32] or "LIVE EVENTS",
+        "title": request.form.get("title", "TECHNOVA").strip()[:48] or "TECHNOVA",
+        "message": request.form.get("message", "").strip()[:180],
+        "url": request.form.get("url", "/technova").strip()[:240] or "/technova",
+    }
+    if not ((value["url"].startswith("/") and not value["url"].startswith("//")) or value["url"].startswith("https://")):
+        flash("Use a site-relative link or a secure https:// link.", "error")
+        return redirect(url_for("admin_dashboard"))
+    try:
+        existing = select_rows("site_settings", filters={"key": "eq.home_live_card"}, limit=1)
+        if existing:
+            supabase_request("/rest/v1/site_settings", method="PATCH", payload={"value": value},
+                params={"key": "eq.home_live_card"}, extra_headers={"Prefer": "return=minimal"})
+        else:
+            supabase_request("/rest/v1/site_settings", method="POST",
+                payload={"key": "home_live_card", "value": value},
+                extra_headers={"Prefer": "return=minimal"})
+        flash("Homepage live card settings saved.", "success")
+    except SupabaseError:
+        app.logger.exception("Homepage live card settings update failed")
+        flash("Could not save the live card. Apply the site_settings SQL setup and try again.", "error")
+    return redirect(url_for("admin_dashboard"))
 
 
 @app.post("/admin/announcements")
