@@ -79,22 +79,66 @@ function showModule(name){
  }
  box.hidden=false;box.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
+function normalizePortalQuery(value){
+ let q=String(value||"").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9\\s]/g," ").replace(/\\s+/g," ").trim();
+ const fixes={"ttable":"timetable","time table":"timetable","time-table":"timetable","assigment":"assignment","assignmnt":"assignment","homewrk":"homework","attendence":"attendance","attandance":"attendance","achievment":"achievement","calender":"calendar","circluar":"circular","anouncement":"announcement","announcment":"announcement","analytcs":"analytics","digi id":"digital id","idcard":"id card","clas":"class","schedul":"schedule","techer":"teacher","studnt":"student","parant":"parent"};
+ Object.keys(fixes).forEach(function(key){q=q.replace(new RegExp("\\b"+key+"\\b","g"),fixes[key]);});
+ return q;
+}
 function reply(q){
- const text=q.toLowerCase();let answer;let target="";
- if(/digital id|student id|identity card/.test(text)){target="Digital Student ID";answer="I opened the sample Digital Student ID module. It is a demonstration card, not an official school ID."}
- else if(/assignment|homework/.test(text)){target="Assignment Manager";answer="I opened the sample Assignment Manager. Its tasks and deadlines are fictional."}
- else if(/achievement|portfolio|certificate/.test(text)){target="Achievement Portfolio";answer="I opened the sample Achievement Portfolio. It contains fictional project and certificate entries."}
- else if(/calendar|upcoming date|event|technova|celesta|cmsmun/.test(text)){target="School Calendar";answer="The calendar preview contains sample dates. For official event details, use the event pages and confirm dates with the organisers."}
- else if(/class overview|my classes|overview/.test(text)){target=activeRole==="admin"?"Campus Analytics":"Class Overview";answer="I opened the sample overview. All figures and records are fictional."}
- else if(/timetable|class|schedule/.test(text)){answer="Your sample timetable is displayed in the overview panel. The entries are illustrative and are not a live school timetable."}
- else if(/attendance/.test(text)){target=activeRole==="teacher"?"Mark attendance":"";answer="Attendance figures and any attendance workflow here are demonstration-only. No real attendance is recorded."}
- else if(/notice|message|teacher|circular/.test(text)){target=activeRole==="admin"?"Announcement Manager":activeRole==="parent"?( /report|circular/.test(text)?"Reports & Circulars":"Teacher Communication"):"Notice Publisher";answer="I opened the relevant sample communication area. This demo does not send messages or publish notices."}
- else if(/lesson|plan/.test(text)){target="Lesson Planner";answer="I opened the sample Lesson Planner. Its topics are illustrative."}
- else if(/manage users|user accounts/.test(text)){target="Manage users";answer="I opened the user-management preview. This demo cannot create accounts or change permissions."}
- else if(/report|analytics/.test(text)){target=activeRole==="admin"?"Campus Analytics":activeRole==="parent"?"Reports & Circulars":"Reports";answer="I opened the sample reports view. No live school data is connected."}
- else answer="I can help you explore the "+activeRole+" demo, its timetable and role-based modules. This prototype does not access real CMS records.";
- if(target&&moduleInfo[target])showModule(target);
- const log=$("chatLog");addText(log,"div",q,"bubble user");addText(log,"div",answer,"bubble bot");log.scrollTop=log.scrollHeight
+ const text=normalizePortalQuery(q);
+ const roleData=roles[activeRole];
+ let answer="";
+ let target="";
+ const asksToOpen=/\\b(open|go to|take me to|navigate to|launch|access|view|bring up|kholo|dikhao)\\b/.test(text);
+ const hasAny=function(list){return list.some(function(term){return text.includes(term);});};
+ const roleModules=roleData.modules.map(function(item){return item[0];});
+ const choose=function(map){for(let i=0;i<map.length;i++){if(hasAny(map[i].terms)){return map[i];}}return null;};
+ const moduleMatch=choose([
+  {terms:["digital id","student id","identity card","id card"],name:"Digital Student ID",roles:["student"]},
+  {terms:["assignment","homework","task","submission","due date"],name:"Assignment Manager",roles:["student","teacher"]},
+  {terms:["achievement","portfolio","certificate","project showcase"],name:"Achievement Portfolio",roles:["student"]},
+  {terms:["calendar","school dates","upcoming dates","event dates"],name:"School Calendar",roles:["student","parent"]},
+  {terms:["class overview","my classes","class list","sections"],name:"Class Overview",roles:["teacher"]},
+  {terms:["lesson planner","lesson plan","plan a lesson","teaching plan"],name:"Lesson Planner",roles:["teacher"]},
+  {terms:["notice publisher","publish notice","class notice"],name:"Notice Publisher",roles:["teacher"]},
+  {terms:["student updates","child progress","my child","childs progress"],name:"Student Updates",roles:["parent"]},
+  {terms:["teacher communication","message teacher","contact teacher"],name:"Teacher Communication",roles:["parent"]},
+  {terms:["reports","report card","circular","school circular"],name:activeRole==="parent"?"Reports & Circulars":"Reports",roles:["parent","student","teacher"]},
+  {terms:["event management"],name:"Event Management",roles:["admin"]},
+  {terms:["announcement manager","publish announcement","campus announcement"],name:"Announcement Manager",roles:["admin"]},
+  {terms:["gallery management","campus gallery"],name:"Gallery Management",roles:["admin"]},
+  {terms:["analytics","campus overview","manage users","user accounts"],name:hasAny(["manage users","user accounts"])?"Manage users":"Campus Analytics",roles:["admin"]},
+  {terms:["mark attendance","take attendance"],name:"Mark attendance",roles:["teacher"]}
+ ]);
+ if(hasAny(["help","what can you do","how can you help","what is available","portal features","portal modules","what modules","show my tools","my options"])){
+  answer="I can guide you around this "+activeRole+" demo, explain the sample dashboard, summarise the timetable and describe the available tools. Your available modules are: "+roleModules.join(", ")+". Everything shown here is illustrative demo content, not a live school record.";
+ } else if(hasAny(["timetable","schedule","periods","classes today","my day","teaching plan"])){
+  answer="Here is the sample "+(activeRole==="teacher"?"teaching plan":activeRole==="admin"?"campus operations schedule":"timetable")+": "+roleData.items.map(function(item){return item[0]+" — "+item[1]+" ("+item[2]+")";}).join("; ")+". These entries are fictional examples, not your actual school schedule.";
+ } else if(hasAny(["attendance","present","absent","attendance percentage"])){
+  const metric=roleData.stats.find(function(item){return item[0].toLowerCase().includes("attendance");});
+  answer=metric?"The dashboard displays "+metric[1]+" for "+metric[0].toLowerCase()+" ("+metric[2]+"). This is sample data only; the demo does not check or change real attendance.":"This role view does not provide an attendance record. No real attendance system is connected.";
+ } else if(hasAny(["stats","statistics","overview","dashboard","numbers","figures","progress","performance"])){
+  answer="Your "+activeRole+" dashboard currently shows these sample figures: "+roleData.stats.map(function(item){return item[0]+": "+item[1]+" ("+item[2]+")";}).join("; ")+". All figures are fictional demo metrics, not live CMS data.";
+ } else if(hasAny(["assignment","homework","task","submission","due date"])){
+  if(activeRole==="parent"){answer="The Parent workspace has a Student Updates panel for a fictional progress snapshot and a Reports & Circulars module. Its sample summary shows 3 of 4 assignments complete; this is not linked to a real student record.";}
+  else if(activeRole==="teacher"){answer="The Teacher workspace includes an Assignment Manager for creating and reviewing demonstration assignments. Its queue shows 12 sample assignments; no real student submissions are connected.";}
+  else{answer="The Student workspace includes an Assignment Manager. The sample panel lists Mathematics practice (due 21 Nov), a Physics worksheet (due 22 Nov) and a Computer Science project (due 25 Nov). These are fictional tasks, not actual homework.";}
+ } else if(hasAny(["event","technova","celesta","cmsmun","school calendar","upcoming"])){
+  answer="The portal includes a School Calendar module with illustrative dates and an Event Management preview for admins. For verified event details, use the main CMS Events website; the portal calendar is sample-only.";
+ } else if(hasAny(["notice","announcement","message","circular","communicate"])){
+  answer=activeRole==="parent"?"The Parent workspace has Teacher Communication and Reports & Circulars previews. They do not send messages or access real circulars.":activeRole==="teacher"?"The Teacher workspace has a Notice Publisher for local draft previews. It does not publish notices to school users.":"The portal shows role-specific communication previews. They are demonstrations only; no real message is sent or notice published.";
+ } else if(moduleMatch && moduleMatch.roles.includes(activeRole)){
+  target=moduleMatch.name;
+  answer="The "+moduleMatch.name+" is available in your "+activeRole+" workspace. "+(moduleInfo[moduleMatch.name]?moduleInfo[moduleMatch.name][1]:"It is a demonstration module.")+" "+(asksToOpen?"I have opened its sample preview below.":"Ask me to open it if you want to explore the module.") ;
+  if(asksToOpen)showModule(target);
+ } else if(hasAny(["real data","live data","actual records","official records","real account","login","password","secure"])){
+  answer="This is a concept demonstration that uses fictional sample content. It is not connected to official CMS accounts, attendance, marks, messages or student records. Do not enter real passwords, IDs or private information here.";
+ } else {
+  answer="I can help with the "+activeRole+" workspace. Try asking about your timetable, assignments, attendance, achievements, school calendar, notices, reports or available modules. You can also say “open assignments” or “open my timetable”. This portal uses fictional demo data only.";
+ }
+ if(target && asksToOpen && moduleInfo[target] && !answer.includes("opened its sample preview"))showModule(target);
+ const log=$("chatLog");addText(log,"div",q,"bubble user");addText(log,"div",answer,"bubble bot");log.scrollTop=log.scrollHeight;
 }
 
 $("genieForm").addEventListener("submit",e=>{e.preventDefault();const input=$("genieInput");const q=input.value.trim();if(!q)return;reply(q);input.value=""});
