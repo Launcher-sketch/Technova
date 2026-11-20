@@ -583,6 +583,13 @@ def chat():
     q = re.sub(r"\bmun\b", "cmsmun", q)
     for phrase, canonical in (("sports olympiad", "spardha"), ("international sports meet", "spardha"), ("football tournament", "concord"), ("international football", "concord"), ("cultural festival", "celesta"), ("cultural fest", "celesta"), ("robotics championship", "technova"), ("ai and robotics event", "technova")):
         q = q.replace(phrase, canonical)
+    # Personal timetable questions belong in the Digital Campus portal, not the public event helper.
+    personal_timetable = (
+        re.search(r"\b(my|our|personal)\b.{0,24}\b(timetable|schedule|class routine|periods)\b", q)
+        or re.search(r"\b(timetable|schedule)\b.{0,24}\b(for me|for my class)\b", q)
+    )
+    if personal_timetable:
+        return answer("For a personal timetable, open the Digital Campus portal and choose your role. The current portal is a demonstration with fictional sample schedules; it is not connected to official student, teacher or parent records.")
     # Do not silently assume the current page's event for questions shared by many events.
     shared_event_question = any(term in q for term in (
         "teacher", "teachers", "timing", "time", "schedule", "student", "students",

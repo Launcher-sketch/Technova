@@ -112,7 +112,8 @@ form?.addEventListener('submit',async event=>{
     return;
   }
   const hasActiveEventPage=["/technova","/celesta","/cmsmun"].includes(window.location.pathname);
-  const asksCommonDetail=commonQuestionTerms.some(term=>lowerMessage.includes(term))&&!eventContextTerms.some(term=>lowerMessage.includes(term))&&!hasActiveEventPage;
+  const asksPersonalTimetable=/\b(my|our|personal)\b.{0,24}\b(timetable|schedule|class routine|periods)\b|\b(timetable|schedule)\b.{0,24}\b(for me|for my class)\b/.test(lowerMessage);
+  const asksCommonDetail=commonQuestionTerms.some(term=>lowerMessage.includes(term))&&!eventContextTerms.some(term=>lowerMessage.includes(term))&&!hasActiveEventPage&&!asksPersonalTimetable;
   if(asksCommonDetail){
     pendingCommonQuestion=message;
     bubble('Which event are you asking about? Choose TECHNOVA, CELESTA, CMSMUN, SPARDHA, CONCORD, or Academic Achievements.','bot');
