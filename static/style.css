@@ -2898,7 +2898,7 @@ body.events-home > .home-live-card:active{
   transform:none!important;
   translate:none!important;
   animation:none!important;
-  z-index:1001!important;
+  z-index:999!important;
 }
 @media(max-width:800px){body.events-home > .home-live-card{top:155px!important;right:15px!important;width:205px!important}}
 @media(max-width:560px){body.events-home > .home-live-card{top:125px!important;right:10px!important;width:174px!important}}
