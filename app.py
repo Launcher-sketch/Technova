@@ -222,40 +222,32 @@ def principal_info_reply(message):
     if shivani_mentioned and (asks_about_person or principal_terms or len(q.split()) <= 4):
         return answer(
             "Mrs Shivani Singh is the Principal of CMS Aliganj Campus I and the "
-            "Cambridge Campus. She joined CMS in 2006 as a Kindergarten teacher and "
-            "holds master's degrees in Education and Sociology, along with a B.Ed. "
-            "During her career at CMS, she served as Kindergarten Coordinator and "
-            "Pre-Primary In-Charge before becoming Principal of Aliganj Campus II "
-            "in 2015 and Principal of Aliganj Campus I in 2018. The CMS Cambridge "
-            "Prospectus describes her as having over 20 years of educational experience. "
-            "Her recognised achievements include being named among the 100 Best "
-            "Principals and receiving the Women Leadership Achievement Award in 2023. "
-            "She is also the Convenor of Celesta International 2026. Her educational "
-            "vision focuses on holistic, child-centred learning and the 6 Cs: Critical "
-            "Thinking, Creativity, Collaboration, Communication, Character and Citizenship, "
-            "with the aim of nurturing responsible global citizens. "
-            "You can read more in the official CMS profile: "
-            "https://cmseducation.org/cambridge/cms-cambridge-team/ and the "
+            "Cambridge Campus. According to CMS's official Cambridge Team profile, "
+            "she joined CMS in 2006 as a Kindergarten teacher. She holds master's "
+            "degrees in Education and Sociology, as well as a B.Ed. She later served "
+            "as Kindergarten Coordinator and Pre-Primary In-Charge, became Principal "
+            "of Aliganj Campus II in 2015, and took charge of Aliganj Campus I in 2018. "
+            "The CMS Cambridge Prospectus describes her as having over 20 years of "
+            "educational experience and records that she was included among the "
+            "100 Best Principals and received the Women Leadership Achievement Award "
+            "in 2023. She is also the Convenor of Celesta International 2026. "
+            "Her Principal's message emphasises holistic, child-centred education, "
+            "the 6 Cs—Critical Thinking, Creativity, Collaboration, Communication, "
+            "Character and Citizenship—and developing responsible global citizens. "
+            "Official profile: https://cmseducation.org/cambridge/cms-cambridge-team/ "
             "Principal's Desk: https://cmseducation.org/aliganj-campus-1/principals-desk/"
         )
 
     if principal_terms and aliganj_branch:
         return answer(
-            "The Principal of CMS Aliganj Campus I is Mrs Shivani Singh, who also "
-            "serves as Principal of the Cambridge Campus. She joined CMS in 2006 as "
-            "a Kindergarten teacher and has since held academic leadership roles, "
-            "including Kindergarten Coordinator and Pre-Primary In-Charge. She became "
-            "Principal of Aliganj Campus II in 2015 and took charge of Aliganj Campus I "
-            "in 2018. Her approach emphasises holistic, child-centred education and "
-            "helping students develop the 6 Cs: Critical Thinking, Creativity, "
-            "Collaboration, Communication, Character and Citizenship. For her full "
-            "official profile, visit https://cmseducation.org/aliganj-campus-1/principals-desk/"
+            "The Principal of CMS Aliganj Campus I is Mrs Shivani Singh. "
+            "She also serves as Principal of the Cambridge Campus."
         )
 
     if principal_terms:
         return answer(
-            "CMS has multiple branches, and each campus may have a different principal. "
-            "Which CMS campus are you asking about? For example, CMS Aliganj Campus I."
+            "CMS has multiple branches. Which CMS campus are you asking about? "
+            "For example, Aliganj Campus I."
         )
     return None
 
