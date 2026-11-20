@@ -664,7 +664,7 @@ def portal_chat():
             with urlopen(req, timeout=35) as response:
                 result = json.loads(response.read().decode("utf-8"))
             parts = result.get("candidates", [{}])[0].get("content", {}).get("parts", [])
-            generated = "\\n".join(part.get("text", "") for part in parts if part.get("text")).strip()
+            generated = "\n".join(part.get("text", "") for part in parts if part.get("text")).strip()
             if not generated:
                 app.logger.warning("Gemini model %s returned no text for a Campus Portal request.", model)
                 return answer("I couldn't prepare a response just now. Please try asking in a different way.")
