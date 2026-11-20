@@ -183,7 +183,7 @@ def answer(reply, headers=None, rows=None):
 
 
 def developer_info_reply(message):
-    """Return the site's fixed developer attribution when asked or named."""
+    """Return a fuller, factual introduction to the people who built the site."""
     q = re.sub(r"[^a-z0-9\s]", " ", str(message).lower())
     q = " ".join(q.split())
     developer_names = ("shashwat pandey", "virat pandey", "divyansh mishra",
@@ -201,7 +201,11 @@ def developer_info_reply(message):
     if mentions_developer or asks_about_developers:
         return answer(
             "This CMS website and its event-management platform were developed "
-            "by Shashwat Pandey, Virat Pandey, and Divyansh Mishra."
+            "collaboratively by Shashwat Pandey, Virat Pandey, and Divyansh Mishra. "
+            "They worked together to build the website and its features, including "
+            "the event-management experience and the digital interface used by visitors. "
+            "If you are asking about a particular developer, you can ask for Shashwat "
+            "Pandey, Virat Pandey, or Divyansh Mishra by name."
         )
     return None
 
@@ -246,7 +250,6 @@ def principal_info_reply(message):
             "For example, Aliganj Campus I."
         )
     return None
-
 
 @app.get("/")
 def home():
