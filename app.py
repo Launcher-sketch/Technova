@@ -656,6 +656,81 @@ def portal_chat():
     if role not in {"student", "teacher", "parent", "admin"}:
         role = "student"
 
+    # The current portal is a fictional demo. Resolve only the published sample
+    # identities server-side; never trust a role or ID supplied by the browser.
+    demo_id = str(payload.get("demo_id", "")).strip().upper()
+    demo_profiles = {
+        "CMS-DEMO-001": {"role": "student", "name": "Shashwat Pandey", "class": "IX", "section": "A"},
+        "CMS-DEMO-002": {"role": "student", "name": "Virat Pandey", "class": "IX", "section": "A"},
+        "CMS-TEACHER-001": {"role": "teacher", "name": "Divyansh Mishra"},
+        "CMS-TEACHER-002": {"role": "teacher", "name": "Ansh Yadav"},
+        "CMS-PARENT-001": {"role": "parent", "name": "Parent of Shashwat Pandey", "student": "Shashwat Pandey"},
+        "CMS-PARENT-002": {"role": "parent", "name": "Parent of Virat Pandey", "student": "Virat Pandey"},
+    }
+    profile = demo_profiles.get(demo_id)
+    if not profile or profile["role"] != role:
+        profile = None
+
+    q = re.sub(r"[^a-z0-9\s]", " ", message.lower())
+    q = " ".join(q.split())
+    # Deterministic answers for the portal's sample modules. These are explicitly
+    # labelled sample data and are never represented as official school records.
+    module_reply = None
+    if any(term in q for term in ("notice", "notices", "announcement", "announcements", "circular", "bulletin")):
+        module_reply = answer("Here are the notices shown in this portal's fictional sample bulletin:", ["Notice", "Details"], [
+            ["Inter-house quiz registrations open", "Today · Activities Office · Sample notice"],
+            ["Campus activity schedule updated", "Yesterday · School Office · Sample notice"],
+            ["TECHNOVA showcase schedule published", "18 Nov · Event Team · Sample notice"],
+        ])
+    elif any(term in q for term in ("assignment", "assignments", "homework", "pending task", "due task")):
+        if role == "student":
+            module_reply = answer("These are the fictional assignments in the student demo workspace:", ["Assignment", "Due", "Status"], [
+                ["Mathematics practice", "21 Nov", "In progress · Sample"],
+                ["Physics worksheet", "22 Nov", "Not started · Sample"],
+                ["Computer Science project", "25 Nov", "Submitted · Sample"],
+            ])
+        elif role == "teacher":
+            module_reply = answer("The teacher demo shows a sample review queue, not live submissions:", ["Item", "Details"], [
+                ["Assignments to review", "12 · Fictional demo figure"],
+                ["Classes", "9A, 10B and 8C · Sample classes"],
+            ])
+        else:
+            module_reply = answer("The parent demo shows a fictional assignment summary: 3 of 4 sample assignments complete. It is not a live student record.")
+    elif any(term in q for term in ("achievement", "achievements", "portfolio", "certificate", "certificates")):
+        module_reply = answer("The Achievement Portfolio contains these fictional sample entries:", ["Entry", "Type"], [
+            ["Robotics showcase", "Participation · Sample"],
+            ["Inter-house quiz", "Certificate · Sample"],
+            ["Science model", "Project entry · Sample"],
+        ])
+    elif any(term in q for term in ("student id", "my id", "digital id", "identity card", "id card")):
+        if role == "student" and profile:
+            module_reply = answer("Your ID in this demonstration is a sample identifier, not an official CMS identity credential.", ["Field", "Sample value"], [
+                ["Name", profile["name"]], ["Demo Student ID", demo_id],
+                ["Class", profile["class"]], ["Section", profile["section"]],
+            ])
+        else:
+            module_reply = answer("I can show a student ID only after a recognised student demo ID is selected. This portal does not verify official CMS identities.")
+    elif any(term in q for term in ("teacher id", "my teacher id", "staff id", "faculty id")):
+        if role == "teacher" and profile:
+            module_reply = answer("Your identifier in this demonstration is a sample ID, not an official staff credential.", ["Field", "Sample value"], [["Name", profile["name"]], ["Demo Teacher ID", demo_id]])
+        else:
+            module_reply = answer("Teacher IDs are not exposed in the student workspace. A teacher must enter a recognised teacher demo ID to view their sample identifier.")
+    elif any(term in q for term in ("calendar", "school dates", "upcoming dates", "what is on tomorrow", "events tomorrow")):
+        module_reply = answer("These are illustrative calendar entries from the portal demo. Please confirm real dates through official school communication.", ["Date", "Entry"], [
+            ["20 Nov", "TECHNOVA competition day · Sample"],
+            ["24 Nov", "Parent interaction · Sample"],
+            ["30 Nov", "Academic review · Sample"],
+        ])
+    elif any(term in q for term in ("teacher directory", "class teacher", "my teacher", "teachers list", "teacher contact")):
+        module_reply = answer("The portal currently contains example teacher names in its fictional timetable, not a verified staff directory or contact list.", ["Sample teacher", "Context"], [
+            ["Ms. Sharma", "Mathematics · Room 204 · Sample timetable"],
+            ["Mr. Khan", "Physics · Lab 2 · Sample timetable"],
+            ["Ms. Das", "English Literature · Room 108 · Sample timetable"],
+            ["Mr. Mehta", "Computer Science · Lab 1 · Sample timetable"],
+        ])
+    if module_reply is not None:
+        return module_reply
+
     # Route CMS/event questions through the exact same knowledge logic as the
     # homepage chatbot. Unknown CMS questions stay on the CMS fallback and are
     # never guessed by Gemini. Other questions continue to general AI.
@@ -772,6 +847,11 @@ def chat():
     q = re.sub(r"\bmun\b", "cmsmun", q)
     for phrase, canonical in (("sports olympiad", "spardha"), ("international sports meet", "spardha"), ("football tournament", "concord"), ("international football", "concord"), ("cultural festival", "celesta"), ("cultural fest", "celesta"), ("robotics championship", "technova"), ("ai and robotics event", "technova")):
         q = q.replace(phrase, canonical)
+    # On an event page, schedule follow-ups are scoped to that event unless another event is named.
+    # Venue questions remain ambiguous because TECHNOVA competitions use different venues.
+    if page_context == "/technova" and any(term in q for term in ("schedule", "timing", "timings", "date wise", "date-wise")):
+        if not any(name in q for name in ("celesta", "spardha", "concord", "cmsmun", "model united nations")):
+            q += " technova"
     # Personal timetable questions belong in the Digital Campus portal, not the public event helper.
     personal_timetable = (
         re.search(r"\b(my|our|personal)\b.{0,24}\b(timetable|schedule|class routine|periods)\b", q)
@@ -889,7 +969,7 @@ def chat():
             return answer("Committees and forums listed in the CMSMUN 5th Edition brochure:", ["Committee / forum", "Agenda"], committees)
         if any(term in q for term in ("date", "when", "venue", "where", "campus", "edition", "fifth", "5th", "about", "what is", "overview", "registration", "register", "fee", "fees", "eligibility", "age", "contact", "email", "phone", "guideline", "guidelines")):
             return answer("CMS Model United Nations 2026 was the 5th Edition, organised by City Montessori School, Aliganj Campus I. The brochure cover lists 24–25 April; the conference is now a past event. Registration and fee information below is historical brochure information, not an active offer.", ["Detail", "Brochure information"], [["Event", "CMS Model United Nations 2026 · 5th Edition"], ["Dates", "24–25 April 2026"], ["Host", "CMS Aliganj Campus I, Sector O, Aliganj, Lucknow, India"], ["Eligibility", "Grades 8–12; brochure states ages 13–19"], ["School delegation", "At least 8 students"], ["Registration fee", "INR 2,700 per participant (Lucknow delegates and outstation delegates not opting for accommodation); INR 3,500 for outstation delegates opting for accommodation"], ["Accommodation", "Brochure says accommodation included all meals on both conference days and dinner at the CISV/KAIZEN Guest House, CMS Kanpur Road"], ["Status", "Completed · 2026 archive"], ["Registration link printed in brochure", "https://linktr.ee/cmsagmun2026 (historical; availability not verified)"], ["Contact email", "mun.aliganj1@cmseducation.org"], ["Conference phone", "+91 522-2320897"]])
-        return answer("CMSMUN 2026 was the 5th Edition of the Model United Nations conference hosted by CMS Aliganj Campus I on 24–25 April 2026. Ask me about its committees, agendas, eligibility or brochure details.")
+        return answer("CMS Model United Nations 2026 (CMSMUN) was the 5th Edition hosted by CMS Aliganj Campus I on 24–25 April 2026. Delegates should review their committee agenda, background guide, country or role allocation, conference rules and position-paper requirements in the official brochure. Ask me about a specific committee or brochure detail.")
     if any(term in q for term in ("celesta", "nazakat", "cultural event", "cultural competition", "folk dance", "choreography", "orchestra", "choir", "crescendo", "harmonic clash", "mix media", "painting", "timeless frames", "through my lens", "3d collage", "photography", "videography")):
         # Competition aliases make brochure details available for every listed category.
         # Keep generic festival questions ("What is CELESTA?") separate from individual entries.
@@ -1103,7 +1183,7 @@ def chat():
     if q in ("hello", "hi", "hey", "good morning", "good afternoon", "good evening") or q.startswith(("hello ", "hi ", "hey ")):
         return answer("Hi! I’m the CMS Events Chatbot. Feel free to ask me anything about CMS events, competitions, schedules, teachers, and registrations.")
     # TECHNOVA is the current featured event (19–20 November 2026).
-    technova_about_terms = ("what is technova", "what's technova", "tell me about technova", "about technova", "explain technova", "technova overview", "ongoing event", "current event", "which event is ongoing", "which event is happening", "event happening now", "is technova happening", "technova status", "technova update")
+    technova_about_terms = ("what is technova", "what is the technova", "what's technova", "tell me about technova", "about technova", "explain technova", "technova overview", "ongoing event", "current event", "which event is ongoing", "which event is happening", "event happening now", "is technova happening", "technova status", "technova update")
     if any(term in q for term in technova_about_terms) or q in ("technova", "technova 2026", "current event at cms"):
         return answer(
             "TECHNOVA 2026 is the ongoing Robotics & Artificial Intelligence Championship hosted by City Montessori School, Aliganj-I, on 19–20 November 2026. The event brings together robotics, AI, computing and innovation competitions. The AI & Robotics Quiz Challenge is scheduled for 19 November; the remaining listed competitions are scheduled for 20 November. Registration closed on 16 November. Exact reporting times and individual slots are not listed in the available schedule, so participants should confirm them with the event team.",

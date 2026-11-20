@@ -7,6 +7,7 @@ const roles={
 };
 const $=id=>document.getElementById(id);
 let activeRole="student";
+let activeDemoId="";
 let activeStudentName="Student";
 let activeTeacherName="Teacher";
 let activeParentStudentName="Student";
@@ -113,7 +114,7 @@ async function reply(q){
   const response=await fetch("/api/portal-chat",{
    method:"POST",
    headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({message:q,role:activeRole})
+   body:JSON.stringify({message:q,role:activeRole,demo_id:activeDemoId})
   });
   const data=await response.json();
   typing.remove();
@@ -155,7 +156,7 @@ document.querySelectorAll("[data-entry-role]").forEach(button=>button.addEventLi
  if(role==="student"){$("studentDemoId").focus();return;}
  if(role==="teacher"){$("teacherDemoId").focus();return;}
  if(role==="parent"){$("parentDemoId").focus();return;}
- if(role==="admin"){window.location.href="/admin/login";return;}
+ if(role==="admin"){activeDemoId="";window.location.href="/admin/login";return;}
  activeStudentName=roles[role].name.replace(/^Welcome,?\s*/,"");
  render(role);
  $("entryOverlay").hidden=true;
@@ -171,14 +172,14 @@ $("studentIdForm").addEventListener("submit",event=>{
  const id=$("studentDemoId").value.trim().toUpperCase();
  const name=demoStudents[id];
  if(!name){$("idFeedback").textContent="ID not recognised. Use CMS-DEMO-001 or CMS-DEMO-002.";return;}
- activeStudentName=name;render("student");$("entryOverlay").hidden=true;
+ activeStudentName=name;activeDemoId=id;render("student");$("entryOverlay").hidden=true;
 });
 $("teacherIdForm").addEventListener("submit",event=>{
  event.preventDefault();
  const id=$("teacherDemoId").value.trim().toUpperCase();
  const name=demoTeachers[id];
  if(!name){$("teacherIdFeedback").textContent="ID not recognised. Use CMS-TEACHER-001 or CMS-TEACHER-002.";return;}
- activeTeacherName=name;render("teacher");$("entryOverlay").hidden=true;
+ activeTeacherName=name;activeDemoId=id;render("teacher");$("entryOverlay").hidden=true;
 });
 
 $("parentIdForm").addEventListener("submit",event=>{
@@ -186,5 +187,5 @@ $("parentIdForm").addEventListener("submit",event=>{
  const id=$("parentDemoId").value.trim().toUpperCase();
  const studentName=demoParents[id];
  if(!studentName){$("parentIdFeedback").textContent="ID not recognised. Use CMS-PARENT-001 or CMS-PARENT-002.";return;}
- activeParentStudentName=studentName;render("parent");$("entryOverlay").hidden=true;
+ activeParentStudentName=studentName;activeDemoId=id;render("parent");$("entryOverlay").hidden=true;
 });
