@@ -123,7 +123,7 @@ function reply(q){
  } else if(hasAny(["assignment","homework","task","submission","due date"])){
   if(activeRole==="parent"){answer="The Parent workspace has a Student Updates panel for a fictional progress snapshot and a Reports & Circulars module. Its sample summary shows 3 of 4 assignments complete; this is not linked to a real student record.";}
   else if(activeRole==="teacher"){answer="The Teacher workspace includes an Assignment Manager for creating and reviewing demonstration assignments. Its queue shows 12 sample assignments; no real student submissions are connected.";}
-  else{answer="The Student workspace includes an Assignment Manager. The sample panel lists Mathematics practice (due 21 Nov), a Physics worksheet (due 22 Nov) and a Computer Science project (due 25 Nov). These are fictional tasks, not actual homework.";}
+  else{answer="The Student workspace includes an Assignment Manager. The sample panel lists Mathematics practice (due 21 Nov), a Physics worksheet (due 22 Nov) and a Computer Science project (due 25 Nov). These are fictional tasks, not actual homework.";} if(asksToOpen)target=activeRole==="parent"?"Student Updates":"Assignment Manager";
  } else if(hasAny(["event","technova","celesta","cmsmun","school calendar","upcoming"])){
   answer="The portal includes a School Calendar module with illustrative dates and an Event Management preview for admins. For verified event details, use the main CMS Events website; the portal calendar is sample-only.";
  } else if(hasAny(["notice","announcement","message","circular","communicate"])){
