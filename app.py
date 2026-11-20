@@ -182,6 +182,30 @@ def answer(reply, headers=None, rows=None):
     return jsonify(result)
 
 
+def developer_info_reply(message):
+    """Return the site's fixed developer attribution when asked or named."""
+    q = re.sub(r"[^a-z0-9\\s]", " ", str(message).lower())
+    q = " ".join(q.split())
+    developer_names = ("shashwat pandey", "virat pandey", "divyansh mishra",
+                       "shashwat", "virat", "divyansh")
+    mentions_developer = any(
+        re.search(r"\\b" + re.escape(name) + r"\\b", q)
+        for name in developer_names
+    )
+    asks_about_developers = bool(re.search(
+        r"\\b(developer|developers|creator|creators|who built|who created|"
+        r"who developed|who made|built by|created by|developed by|"
+        r"made by|website team|event manager developers?)\\b",
+        q,
+    ))
+    if mentions_developer or asks_about_developers:
+        return answer(
+            "This CMS website and its event-management platform were developed "
+            "by Shashwat Pandey, Virat Pandey, and Divyansh Mishra."
+        )
+    return None
+
+
 @app.get("/")
 def home():
     try:
@@ -656,6 +680,10 @@ def portal_chat():
     if role not in {"student", "teacher", "parent", "admin"}:
         role = "student"
 
+    developer_reply = developer_info_reply(message)
+    if developer_reply is not None:
+        return developer_reply
+
     # The current portal is a fictional demo. Resolve only the published sample
     # identities server-side; never trust a role or ID supplied by the browser.
     demo_id = str(payload.get("demo_id", "")).strip().upper()
@@ -824,6 +852,9 @@ def chat():
     page_context = str(payload.get("page_context", "")).lower().strip()
     if not message:
         return answer("Please enter a question.")
+    developer_reply = developer_info_reply(message)
+    if developer_reply is not None:
+        return developer_reply
     data = get_data()
     # Conservative language normalisation; official knowledge files remain read-only.
     q = re.sub(r"[^a-z0-9\s]", " ", message.lower())
