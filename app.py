@@ -898,6 +898,9 @@ def chat():
     page_context = str(payload.get("page_context", "")).lower().strip()
     if not message:
         return answer("Please enter a question.")
+    principal_reply = principal_info_reply(message)
+    if principal_reply is not None:
+        return principal_reply
     developer_reply = developer_info_reply(message)
     if developer_reply is not None:
         return developer_reply
