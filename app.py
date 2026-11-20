@@ -646,32 +646,46 @@ def portal_chat():
         "contents": [{"role": "user", "parts": [{"text": message}]}],
         "generationConfig": {"temperature": 0.6, "maxOutputTokens": 500}
     }
-    req = Request(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent",
-        data=json.dumps(request_body).encode("utf-8"),
-        headers={"Content-Type": "application/json", "x-goog-api-key": api_key},
-        method="POST",
-    )
-    try:
-        with urlopen(req, timeout=55) as response:
-            result = json.loads(response.read().decode("utf-8"))
-        parts = result.get("candidates", [{}])[0].get("content", {}).get("parts", [])
-        generated = "\n".join(part.get("text", "") for part in parts if part.get("text")).strip()
-        if not generated:
-            app.logger.warning("Gemini returned no text for a Campus Portal request.")
-            return answer("I couldn't prepare a response just now. Please try asking in a different way.")
-        return answer(generated)
-    except HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")
-        app.logger.error("Gemini API request failed (%s): %s", exc.code, detail[:700])
-        if exc.code in (400, 403, 404):
-            return answer("Gemini could not accept this request. Please ask the administrator to check the API key, project access and model availability.")
-        if exc.code == 429:
-            return answer("Campus Genie has reached its current Gemini usage limit. Please try again later.")
-        return answer("Campus Genie is temporarily unavailable. Please try again shortly.")
-    except (URLError, TimeoutError, json.JSONDecodeError, KeyError, IndexError) as exc:
-        app.logger.error("Campus Portal Gemini request failed: %s", exc)
-        return answer("Campus Genie is temporarily unavailable. Please try again shortly.")
+    primary_model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash-lite").strip()
+    fallback_model = os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-3.8-flash").strip()
+    models = [primary_model]
+    if fallback_model and fallback_model != primary_model:
+        models.append(fallback_model)
+
+    last_error = None
+    for model in models:
+        req = Request(
+            f"https://generativelanguage.googleapis.com/v1beta/models/{quote(model, safe='-')}:generateContent",
+            data=json.dumps(request_body).encode("utf-8"),
+            headers={"Content-Type": "application/json", "x-goog-api-key": api_key},
+            method="POST",
+        )
+        try:
+            with urlopen(req, timeout=35) as response:
+                result = json.loads(response.read().decode("utf-8"))
+            parts = result.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+            generated = "\\n".join(part.get("text", "") for part in parts if part.get("text")).strip()
+            if not generated:
+                app.logger.warning("Gemini model %s returned no text for a Campus Portal request.", model)
+                return answer("I couldn't prepare a response just now. Please try asking in a different way.")
+            return answer(generated)
+        except HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            last_error = exc
+            app.logger.error("Gemini model %s request failed (%s): %s", model, exc.code, detail[:700])
+            if exc.code in (400, 403, 404):
+                return answer("Gemini could not accept this request. Please ask the administrator to check the API key, project access and model availability.")
+            if exc.code not in (429, 500, 502, 503, 504):
+                break
+        except (URLError, TimeoutError, json.JSONDecodeError, KeyError, IndexError) as exc:
+            last_error = exc
+            app.logger.error("Campus Portal Gemini request failed for model %s: %s", model, exc)
+            # A network failure or timeout may also affect the fallback; don't add a long second wait.
+            break
+
+    if isinstance(last_error, HTTPError) and last_error.code == 429:
+        return answer("Campus Genie has reached its current Gemini usage limit. Please try again later.")
+    return answer("Campus Genie is temporarily unavailable. Please try again shortly.")
 
 
 @app.post("/api/chat")
