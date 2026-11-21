@@ -2985,3 +2985,8 @@ body.cms-homepage .home-event-calendar.compact-date-calendar{width:276px!importa
  body.cms-homepage .home-hero-topline{grid-template-columns:1fr;gap:18px}
  body.cms-homepage .home-event-calendar.compact-date-calendar{width:min(100%,320px)!important;margin:0!important}
 }
+
+
+/* Small title-only popup for calendar event dates */
+.home-event-calendar.compact-date-calendar{position:relative}
+.home-calendar-event-popup{position:absolute;z-index:5;top:54px;left:50%;transform:translateX(-50%);display:block;width:max-content;max-width:calc(100% - 18px);padding:7px 10px;border:1px solid #b9d8ef;border-radius:8px;background:#fff;box-shadow:0 5px 16px rgba(23,59,96,.13);color:#173b60;font:800 11px/1.35 'Open Sans',Arial,sans-serif;text-align:center}
