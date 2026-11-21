@@ -182,6 +182,36 @@ def answer(reply, headers=None, rows=None):
     return jsonify(result)
 
 
+def campus_genie_moderation_reply(message):
+    """Apply a conservative CMS/education-only boundary before any portal chatbot response or AI call."""
+    raw = str(message or "").strip().lower()
+    q = re.sub(r"[^a-z0-9\\s]", " ", raw)
+    q = " ".join(q.split())
+
+    # Explicitly inappropriate content is rejected regardless of how it is phrased.
+    inappropriate_patterns = (
+        r"\\b(sex|sexual|porn|xxx|nude|nudes|erotic|adult content|"
+        r"fuck|fucking|motherfucker|bitch|bastard|slut|whore|"
+        r"rape|molest|explicit pics|dirty talk)\\b",
+        r"\\b(chutiya|madarchod|bhenchod|behenchod|gaand|gandu|"
+        r" harami|kamina|randi|lund|choot)\\b",
+    )
+    if any(re.search(pattern, q) for pattern in inappropriate_patterns):
+        return answer("I can help with studies, learning and appropriate CMS-related questions only. Please keep the conversation respectful and school-focused.")
+
+    # Explicitly unrelated entertainment/gaming requests are outside this school assistant's scope.
+    unrelated_patterns = (
+        r"\\b(play|download|install|cheat|hack)\\b.{0,35}\\b(game|games|gaming|pubg|bgmi|free fire|minecraft|fortnite|gta)\\b",
+        r"\\b(game|games|gaming|pubg|bgmi|free fire|minecraft|fortnite|gta)\\b",
+        r"\\b(movie|movies|web series|celebrity gossip|dating advice|"
+        r"prank ideas|social media followers|instagram reels)\\b",
+    )
+    if any(re.search(pattern, q) for pattern in unrelated_patterns):
+        return answer("I’m Campus Genie, the CMS learning assistant. I can help with school subjects, homework, concepts, study skills and CMS portal information—not games or unrelated entertainment.")
+
+    return None
+
+
 def developer_info_reply(message):
     """Return a fuller, factual introduction to the people who built the site."""
     q = re.sub(r"[^a-z0-9\s]", " ", str(message).lower())
@@ -724,6 +754,10 @@ def portal_chat():
         return answer("Please keep your question under 4,000 characters.")
     if role not in {"student", "teacher", "parent", "admin"}:
         role = "student"
+
+    moderation_reply = campus_genie_moderation_reply(message)
+    if moderation_reply is not None:
+        return moderation_reply
 
     principal_reply = principal_info_reply(message)
     if principal_reply is not None:
