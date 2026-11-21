@@ -316,6 +316,6 @@ if(countdown){
   }
  }
  document.getElementById('homeCalendarPrev').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()-1,1);root.querySelector('.home-calendar-event-popup')?.remove();render();});
- document.getElementById('homeCalendarNext').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()+1,1);details.hidden=true;render();});
+ document.getElementById('homeCalendarNext').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()+1,1);root.querySelector('.home-calendar-event-popup')?.remove();render();});
  render();
 })();
