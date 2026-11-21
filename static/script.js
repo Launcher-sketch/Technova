@@ -293,7 +293,7 @@ if(countdown){
   const existing=root.querySelector('.home-calendar-event-popup');
   if(existing)existing.remove();
   const popup=document.createElement('div');popup.className='home-calendar-event-popup';popup.setAttribute('role','status');popup.textContent=events.map(event=>event.title).join(' · ');
-  button.insertAdjacentElement('afterend',popup);
+  root.appendChild(popup);
  }
 
  function render(){
