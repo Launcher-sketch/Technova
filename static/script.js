@@ -272,36 +272,54 @@ if(countdown){
 
 
 
-// Compact homepage calendar: display date numbers only; dots mark published event dates.
+// Interactive homepage calendar: event dates open their published event details.
 (function initHomepageEventCalendar(){
  const root=document.getElementById('homeEventCalendar');if(!root)return;
  const eventRanges=[
-  ['2026-04-24','2026-04-25'],
-  ['2026-08-21','2026-08-25'],
-  ['2026-10-24','2026-10-27'],
-  ['2026-11-02','2026-11-06'],
-  ['2026-11-19','2026-11-20']
+  {start:'2026-04-24',end:'2026-04-25',title:'CMSMUN · 5th Edition',dateLabel:'24–25 April 2026',category:'Academic Events & Conferences',description:'A Model United Nations experience focused on diplomacy, global affairs, committee discussions and policy. Explore the conference archive and its learning experience at CMS Aliganj Campus I.',href:'/cmsmun',venue:'CMS Aliganj Campus I'},
+  {start:'2026-08-21',end:'2026-08-25',title:'CELESTA International 2026',dateLabel:'21–25 August 2026',category:'Arts, Culture & Creativity',description:'A cultural festival celebrating creativity and expression through art, music, dance and performance. Explore the CELESTA experience and its published festival highlights.',href:'/celesta',venue:'CMS Aliganj Campus I'},
+  {start:'2026-10-24',end:'2026-10-27',title:'SPARDHA 2026',dateLabel:'24–27 October 2026',category:'Sports',description:'The International Sports Olympiad brings sporting disciplines and competition together, celebrating teamwork, participation and athletic achievement.',href:'/sports#spardha',venue:'CMS Aliganj Campus I'},
+  {start:'2026-11-02',end:'2026-11-06',title:'CONCORD 2026',dateLabel:'2–6 November 2026',category:'Sports',description:'An international football tournament featuring boys’ and girls’ football, bringing teams together for competition and sporting exchange.',href:'/sports#concord',venue:'CMS Aliganj Campus I'},
+  {start:'2026-11-19',end:'2026-11-20',title:'TECHNOVA 2026',dateLabel:'19–20 November 2026',category:'Technology & Innovation',description:'A technology and innovation event exploring robotics, artificial intelligence and computing through student creativity, experimentation and problem-solving.',href:'/technova',venue:'CMS Aliganj Campus I'}
  ];
- const monthLabel=document.getElementById('homeCalendarMonth'),daysNode=document.getElementById('homeCalendarDays');
+ const monthLabel=document.getElementById('homeCalendarMonth'),daysNode=document.getElementById('homeCalendarDays'),details=document.getElementById('homeCalendarEventDetails');
  const today=new Date();today.setHours(0,0,0,0);let shownMonth=new Date(today.getFullYear(),today.getMonth(),1);
  const parseDate=value=>{const p=value.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);};
  const keyDate=date=>[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
- const hasEvent=date=>eventRanges.some(([start,end])=>date>=parseDate(start)&&date<=parseDate(end));
+ const eventsFor=date=>eventRanges.filter(event=>date>=parseDate(event.start)&&date<=parseDate(event.end));
+ function showDetails(date){
+  const events=eventsFor(date),dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  details.replaceChildren();details.hidden=false;
+  const heading=document.createElement('h3');heading.textContent=dateLabel;details.appendChild(heading);
+  if(!events.length){const note=document.createElement('p');note.textContent='No event is currently published for this date.';details.appendChild(note);return;}
+  events.forEach(event=>{
+   const title=document.createElement('h3');title.textContent=event.title;details.appendChild(title);
+   const category=document.createElement('p');category.textContent=event.category+' · '+event.dateLabel;details.appendChild(category);
+   const description=document.createElement('p');description.textContent=event.description;details.appendChild(description);
+   const venue=document.createElement('p');venue.textContent='Venue: '+event.venue;details.appendChild(venue);
+   const link=document.createElement('a');link.href=event.href;link.textContent='Explore event details →';details.appendChild(link);
+  });
+ }
  function render(){
   const year=shownMonth.getFullYear(),month=shownMonth.getMonth();
   monthLabel.textContent=shownMonth.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
   const offset=new Date(year,month,1).getDay(),count=new Date(year,month+1,0).getDate(),cells=Math.ceil((offset+count)/7)*7;
   daysNode.replaceChildren();
   for(let i=0;i<cells;i++){
-   const date=new Date(year,month,1-offset+i),inMonth=date.getMonth()===month,marked=hasEvent(date),button=document.createElement('button');
+   const date=new Date(year,month,1-offset+i),inMonth=date.getMonth()===month,marked=eventsFor(keyDate(date)).length>0,button=document.createElement('button');
    button.type='button';button.className='home-calendar-day'+(!inMonth?' is-outside':'')+(date.getTime()===today.getTime()?' is-today':'')+(marked?' has-event':'');
    button.textContent=String(date.getDate());
    button.setAttribute('aria-label',date.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+(marked?', event scheduled':''));
-   if(marked)button.title='Event scheduled';
+   button.setAttribute('aria-pressed','false');
+   if(marked)button.title='Select to view event details';
+   button.addEventListener('click',()=>{
+    daysNode.querySelectorAll('.home-calendar-day').forEach(day=>day.setAttribute('aria-pressed','false'));
+    button.setAttribute('aria-pressed','true');showDetails(keyDate(date));
+   });
    daysNode.appendChild(button);
   }
  }
- document.getElementById('homeCalendarPrev').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()-1,1);render();});
- document.getElementById('homeCalendarNext').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()+1,1);render();});
+ document.getElementById('homeCalendarPrev').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()-1,1);details.hidden=true;render();});
+ document.getElementById('homeCalendarNext').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()+1,1);details.hidden=true;render();});
  render();
 })();
