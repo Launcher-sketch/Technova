@@ -269,3 +269,53 @@ if(countdown){
     detail.textContent=descriptions[button.dataset.space]||'';
   }));
 })();
+
+
+// Homepage calendar: dates match the published event pages and schedules.
+(function initHomepageEventCalendar(){
+ const root=document.getElementById('homeEventCalendar');if(!root)return;
+ const events=[
+  {title:'CMSMUN · 5th Edition',start:'2026-04-24',end:'2026-04-25',category:'Academic · Model United Nations',venue:'CMS Aliganj Campus I',url:'/cmsmun'},
+  {title:'CELESTA International 2026',start:'2026-08-21',end:'2026-08-25',category:'Cultural · Arts and performance',venue:'See the official CELESTA event page',url:'/celesta'},
+  {title:'SPARDHA 2026',start:'2026-10-24',end:'2026-10-27',category:'Sports · International Sports Olympiad',venue:'CMS RDSO Campus',url:'/sports#spardha'},
+  {title:'CONCORD 2026',start:'2026-11-02',end:'2026-11-06',category:'Sports · International Football Tournament',venue:'CMS Station Road Campus',url:'/sports#concord'},
+  {title:'TECHNOVA 2026',start:'2026-11-19',end:'2026-11-20',category:'Technology · Robotics and Artificial Intelligence',venue:'CMS Aliganj Campus I',url:'/technova'}
+ ];
+ const monthLabel=document.getElementById('homeCalendarMonth'),daysNode=document.getElementById('homeCalendarDays'),listNode=document.getElementById('homeCalendarEventList');
+ const today=new Date();today.setHours(0,0,0,0);let shownMonth=new Date(today.getFullYear(),today.getMonth(),1),selectedDate='',activeFilter='all';
+ const parseDate=value=>{const p=value.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);};
+ const keyDate=date=>[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
+ const sameDay=(a,b)=>keyDate(a)===keyDate(b);
+ const occurs=(event,date)=>date>=parseDate(event.start)&&date<=parseDate(event.end);
+ const isPast=event=>parseDate(event.end)<today;
+ const isUpcoming=event=>parseDate(event.start)>today;
+ const range=event=>{const a=parseDate(event.start),b=parseDate(event.end),opts={day:'numeric',month:'short'};return sameDay(a,b)?a.toLocaleDateString('en-IN',opts):a.toLocaleDateString('en-IN',opts)+' – '+b.toLocaleDateString('en-IN',opts);};
+ function renderDays(){
+  const year=shownMonth.getFullYear(),month=shownMonth.getMonth();monthLabel.textContent=shownMonth.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  const offset=new Date(year,month,1).getDay(),count=new Date(year,month+1,0).getDate(),cells=Math.ceil((offset+count)/7)*7;daysNode.replaceChildren();
+  for(let i=0;i<cells;i++){
+   const date=new Date(year,month,1-offset+i),dateKey=keyDate(date),inMonth=date.getMonth()===month,matched=events.filter(event=>occurs(event,date)),button=document.createElement('button');
+   button.type='button';button.className='home-calendar-day'+(!inMonth?' is-outside':'')+(sameDay(date,today)?' is-today':'')+(matched.length?' has-event':'')+(matched.length&&matched.every(isPast)?' is-past-event':'')+(selectedDate===dateKey?' is-selected':'');
+   button.textContent=String(date.getDate());button.setAttribute('aria-label',date.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+(matched.length?', '+matched.length+' event(s)':''));
+   if(matched.length)button.title=matched.map(event=>event.title).join(', ');button.setAttribute('aria-pressed',selectedDate===dateKey?'true':'false');
+   button.addEventListener('click',()=>{selectedDate=selectedDate===dateKey?'':dateKey;renderDays();renderList();});daysNode.appendChild(button);
+  }
+ }
+ function renderList(){
+  let visible=events.filter(event=>activeFilter==='upcoming'?!isPast(event):activeFilter==='past'?isPast(event):true);
+  if(selectedDate){const date=parseDate(selectedDate);visible=visible.filter(event=>occurs(event,date));}
+  visible.sort((a,b)=>{const ap=isPast(a),bp=isPast(b);if(ap!==bp)return ap?1:-1;return ap?parseDate(b.start)-parseDate(a.start):parseDate(a.start)-parseDate(b.start);});
+  listNode.replaceChildren();
+  if(!visible.length){const empty=document.createElement('p');empty.className='home-calendar-empty';empty.textContent=selectedDate?'No published event is listed for this date.':activeFilter==='upcoming'?'No upcoming events have been published yet.':'No events match this view.';listNode.appendChild(empty);return;}
+  visible.forEach(event=>{
+   const past=isPast(event),link=document.createElement('a'),start=parseDate(event.start);link.className='home-calendar-event';link.href=event.url;
+   const dateBox=document.createElement('span');dateBox.className='home-calendar-event-date';const day=document.createElement('strong');day.textContent=String(start.getDate());const mon=document.createElement('span');mon.textContent=start.toLocaleDateString('en-IN',{month:'short'}).toUpperCase();dateBox.append(day,mon);
+   const copy=document.createElement('span');copy.className='home-calendar-event-copy';const title=document.createElement('strong');title.textContent=event.title;const meta=document.createElement('small');meta.textContent=range(event)+' · '+event.category;const venue=document.createElement('small');venue.textContent=event.venue;const status=document.createElement('span');status.className='home-calendar-event-status'+(past?' past':'');status.textContent=past?'PAST EVENT':isUpcoming(event)?'UPCOMING':'IN PROGRESS / TODAY';
+   copy.append(title,meta,venue,status);link.append(dateBox,copy);listNode.appendChild(link);
+  });
+ }
+ document.getElementById('homeCalendarPrev').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()-1,1);selectedDate='';renderDays();renderList();});
+ document.getElementById('homeCalendarNext').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()+1,1);selectedDate='';renderDays();renderList();});
+ root.querySelectorAll('[data-calendar-filter]').forEach(button=>button.addEventListener('click',()=>{activeFilter=button.dataset.calendarFilter;root.querySelectorAll('[data-calendar-filter]').forEach(item=>{const active=item===button;item.classList.toggle('active',active);item.setAttribute('aria-pressed',active?'true':'false');});renderList();}));
+ renderDays();renderList();
+})();
