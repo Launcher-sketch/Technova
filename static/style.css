@@ -2967,3 +2967,21 @@ body.cms-homepage .home-event-calendar.compact-date-calendar{width:276px!importa
 .compact-date-calendar .home-calendar-day.has-event:after{width:4px;height:4px;bottom:2px}
 .compact-date-calendar .home-calendar-day.is-selected{background:#e4f2ff;color:#176fb7;border-color:#79b7e8}
 @media(max-width:700px){body.cms-homepage .home-event-calendar.compact-date-calendar{width:100%!important;max-width:300px!important;margin:0 auto 20px!important;padding:13px!important}}
+
+
+/* Homepage calendar placement and selectable event-date details */
+body.cms-homepage .home-hero{max-width:1180px!important}
+body.cms-homepage .home-hero-topline{display:grid;grid-template-columns:minmax(0,1fr) 276px;gap:34px;align-items:start}
+body.cms-homepage .home-hero-copy{min-width:0;padding-top:10px}
+body.cms-homepage .home-event-calendar.compact-date-calendar{width:276px!important;max-width:100%!important;margin:0!important;align-self:start!important}
+.home-calendar-event-details{margin-top:12px;padding:12px;border:1px solid #d7e7f5;border-radius:11px;background:#fff;color:#244967}
+.home-calendar-event-details[hidden]{display:none}
+.home-calendar-event-details h3{margin:0 0 6px;color:#173b60;font:800 13px/1.35 'Open Sans',Arial,sans-serif}
+.home-calendar-event-details p{margin:5px 0;color:#536d86;font:11px/1.55 'Open Sans',Arial,sans-serif}
+.home-calendar-event-details a{display:inline-block;margin-top:7px;color:#176fb7;font:800 10px 'Open Sans',Arial,sans-serif;text-decoration:none}
+.home-calendar-day[aria-pressed="true"]{background:#176fb7!important;color:#fff!important;border-color:#176fb7!important}
+.home-calendar-day[aria-pressed="true"]:after{background:#fff!important}
+@media(max-width:760px){
+ body.cms-homepage .home-hero-topline{grid-template-columns:1fr;gap:18px}
+ body.cms-homepage .home-event-calendar.compact-date-calendar{width:min(100%,320px)!important;margin:0!important}
+}
