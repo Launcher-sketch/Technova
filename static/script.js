@@ -286,7 +286,7 @@ if(countdown){
  const today=new Date();today.setHours(0,0,0,0);let shownMonth=new Date(today.getFullYear(),today.getMonth(),1);
  const parseDate=value=>{const p=value.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);};
  const keyDate=date=>[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
- const eventsFor=date=>eventRanges.filter(event=>date>=parseDate(event.start)&&date<=parseDate(event.end));
+ const eventsFor=date=>{const selected=parseDate(date);return eventRanges.filter(event=>selected>=parseDate(event.start)&&selected<=parseDate(event.end));};
  function showDetails(date){
   const events=eventsFor(date),dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   details.replaceChildren();details.hidden=false;
