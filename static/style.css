@@ -2952,3 +2952,18 @@ body.cms-homepage .home-event-calendar{align-self:flex-start!important;width:min
 .home-calendar-empty{margin:4px 0;color:#6b8299;font:11px/1.6 'Open Sans',Arial,sans-serif}
 .home-calendar-note{margin:10px 0 0!important;color:#7a8fa4!important;font:10px/1.5 'Open Sans',Arial,sans-serif!important;text-align:left!important}
 @media(max-width:700px){body.cms-homepage .home-event-calendar{width:100%!important;max-width:430px!important;margin-bottom:25px!important;padding:17px!important}.home-calendar-event-list{max-height:220px}}
+
+
+/* Compact date-only homepage calendar */
+body.cms-homepage .home-event-calendar.compact-date-calendar{width:276px!important;max-width:100%!important;margin:0 20px 24px 0!important;padding:14px!important;border-radius:15px!important;align-self:flex-start!important}
+.compact-date-calendar .home-calendar-heading{margin:0 0 7px}
+.compact-date-calendar .home-calendar-heading h2{font-size:16px!important}
+.compact-date-calendar .home-calendar-monthbar{grid-template-columns:27px 1fr 27px;gap:5px;margin:7px 0}
+.compact-date-calendar .home-calendar-monthbar button{width:26px;height:26px;font-size:19px}
+.compact-date-calendar .home-calendar-monthbar strong{font-size:11px}
+.compact-date-calendar .home-calendar-weekdays,.compact-date-calendar .home-calendar-days{gap:2px}
+.compact-date-calendar .home-calendar-weekdays span{font-size:9px;padding:3px 0}
+.compact-date-calendar .home-calendar-day{min-height:27px;border-radius:7px;font-size:10px}
+.compact-date-calendar .home-calendar-day.has-event:after{width:4px;height:4px;bottom:2px}
+.compact-date-calendar .home-calendar-day.is-selected{background:#e4f2ff;color:#176fb7;border-color:#79b7e8}
+@media(max-width:700px){body.cms-homepage .home-event-calendar.compact-date-calendar{width:100%!important;max-width:300px!important;margin:0 auto 20px!important;padding:13px!important}}
