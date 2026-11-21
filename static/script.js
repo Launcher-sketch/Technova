@@ -287,19 +287,15 @@ if(countdown){
  const parseDate=value=>{const p=value.split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);};
  const keyDate=date=>[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
  const eventsFor=date=>{const selected=parseDate(date);return eventRanges.filter(event=>selected>=parseDate(event.start)&&selected<=parseDate(event.end));};
- function showDetails(date){
-  const events=eventsFor(date),dateLabel=date.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  details.replaceChildren();details.hidden=false;
-  const heading=document.createElement('h3');heading.textContent=dateLabel;details.appendChild(heading);
-  if(!events.length){const note=document.createElement('p');note.textContent='No event is currently published for this date.';details.appendChild(note);return;}
-  events.forEach(event=>{
-   const title=document.createElement('h3');title.textContent=event.title;details.appendChild(title);
-   const category=document.createElement('p');category.textContent=event.category+' · '+event.dateLabel;details.appendChild(category);
-   const description=document.createElement('p');description.textContent=event.description;details.appendChild(description);
-   const venue=document.createElement('p');venue.textContent='Venue: '+event.venue;details.appendChild(venue);
-   const link=document.createElement('a');link.href=event.href;link.textContent='Explore event details →';details.appendChild(link);
-  });
+ function showDetails(date,button){
+  const events=eventsFor(date);
+  if(!events.length)return;
+  const existing=root.querySelector('.home-calendar-event-popup');
+  if(existing)existing.remove();
+  const popup=document.createElement('div');popup.className='home-calendar-event-popup';popup.setAttribute('role','status');popup.textContent=events.map(event=>event.title).join(' · ');
+  button.insertAdjacentElement('afterend',popup);
  }
+
  function render(){
   const year=shownMonth.getFullYear(),month=shownMonth.getMonth();
   monthLabel.textContent=shownMonth.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
@@ -314,12 +310,12 @@ if(countdown){
    if(marked)button.title='Select to view event details';
    button.addEventListener('click',()=>{
     daysNode.querySelectorAll('.home-calendar-day').forEach(day=>day.setAttribute('aria-pressed','false'));
-    button.setAttribute('aria-pressed','true');showDetails(keyDate(date));
+    button.setAttribute('aria-pressed','true');showDetails(keyDate(date),button);
    });
    daysNode.appendChild(button);
   }
  }
- document.getElementById('homeCalendarPrev').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()-1,1);details.hidden=true;render();});
+ document.getElementById('homeCalendarPrev').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()-1,1);root.querySelector('.home-calendar-event-popup')?.remove();render();});
  document.getElementById('homeCalendarNext').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()+1,1);details.hidden=true;render();});
  render();
 })();
