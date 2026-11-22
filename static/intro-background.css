@@ -17,3 +17,13 @@
 @media(prefers-reduced-motion:reduce){
   .cms-intro.cms-earth-signature.is-leaving{transition:none!important}
 }
+
+/* Remove legacy decorative rings inherited from the original intro. */
+.cms-intro.cms-earth-signature::before,
+.cms-intro.cms-earth-signature::after{
+  content:none!important;
+  display:none!important;
+  animation:none!important;
+  background:none!important;
+  box-shadow:none!important;
+}
