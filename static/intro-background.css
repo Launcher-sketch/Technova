@@ -57,10 +57,6 @@
   letter-spacing:.18em;text-shadow:0 0 10px rgba(95,192,255,.8);
   opacity:0;animation:introTextArrive .8s ease-out 1.55s forwards;
 }
-.cms-intro .intro-tagline{
-  margin-top:12px;color:rgba(211,239,255,.88);font:500 8px/1.4 Arial,sans-serif;
-  letter-spacing:.2em;opacity:0;animation:introTextArrive .8s ease-out 1.85s forwards;
-}
 .cms-intro.cms-earth-signature.is-leaving{opacity:0!important;visibility:hidden!important;pointer-events:none}
 @keyframes introAurora{0%{transform:translate3d(-2%,-1%,0) scale(1)}100%{transform:translate3d(2%,1.5%,0) scale(1.08)}}
 @keyframes introGlow{from{opacity:.55;transform:scale(.86)}to{opacity:1;transform:scale(1.14)}}
@@ -72,5 +68,5 @@
 @media(prefers-reduced-motion:reduce){
   .cms-intro::before,.cms-intro::after,.cms-intro .intro-aurora,.cms-intro .intro-stars,
   .cms-intro .intro-center,.cms-intro .intro-logo-frame,.cms-intro .intro-title,
-  .cms-intro .intro-caption,.cms-intro .intro-tagline{animation:none!important;opacity:1!important;transform:none!important}
+  .cms-intro .intro-caption{animation:none!important;opacity:1!important;transform:none!important}
 }
