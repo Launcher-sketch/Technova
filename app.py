@@ -182,36 +182,6 @@ def answer(reply, headers=None, rows=None):
     return jsonify(result)
 
 
-def campus_genie_moderation_reply(message):
-    """Apply a conservative CMS/education-only boundary before any portal chatbot response or AI call."""
-    raw = str(message or "").strip().lower()
-    q = re.sub(r"[^a-z0-9\s]", " ", raw)
-    q = " ".join(q.split())
-
-    # Explicitly inappropriate content is rejected regardless of how it is phrased.
-    inappropriate_patterns = (
-        r"\b(sex|sexual|porn|xxx|nude|nudes|erotic|adult content|"
-        r"fuck|fucking|motherfucker|bitch|bastard|slut|whore|"
-        r"rape|molest|explicit pics|dirty talk)\b",
-        r"\b(chutiya|madarchod|bhenchod|behenchod|gaand|gandu|"
-        r" harami|kamina|randi|lund|choot)\b",
-    )
-    if any(re.search(pattern, q) for pattern in inappropriate_patterns):
-        return answer("I can help with studies, learning and appropriate CMS-related questions only. Please keep the conversation respectful and school-focused.")
-
-    # Explicitly unrelated entertainment/gaming requests are outside this school assistant's scope.
-    unrelated_patterns = (
-        r"\b(play|download|install|cheat|hack)\b.{0,35}\b(game|games|gaming|pubg|bgmi|free fire|minecraft|fortnite|gta)\b",
-        r"\b(game|games|gaming|pubg|bgmi|free fire|minecraft|fortnite|gta)\b",
-        r"\b(movie|movies|web series|celebrity gossip|dating advice|"
-        r"prank ideas|social media followers|instagram reels)\b",
-    )
-    if any(re.search(pattern, q) for pattern in unrelated_patterns):
-        return answer("I’m Campus Genie, the CMS learning assistant. I can help with school subjects, homework, concepts, study skills and CMS portal information—not games or unrelated entertainment.")
-
-    return None
-
-
 def developer_info_reply(message):
     """Return a fuller, factual introduction to the people who built the site."""
     q = re.sub(r"[^a-z0-9\s]", " ", str(message).lower())
@@ -428,12 +398,6 @@ def about_page():
 @app.get("/contact")
 def contact_page():
     return render_template("contact.html")
-
-
-@app.get("/portal")
-def school_portal():
-    session["portal_chat_enabled"] = True
-    return render_template("portal.html")
 
 
 @app.get("/media/<path:filename>")
@@ -697,237 +661,6 @@ def api_data():
     return jsonify(get_data())
 
 
-def _lookup_homepage_cms(message):
-    """Reuse the homepage chatbot's existing, read-only CMS knowledge logic."""
-    pending_question = session.get("_portal_cms_pending_event_question")
-    with app.test_client() as cms_client:
-        with cms_client.session_transaction() as cms_session:
-            if pending_question:
-                cms_session["pending_event_question"] = pending_question
-        response = cms_client.post("/api/chat", json={"message": message})
-        cms_result = response.get_json(silent=True) or {}
-        with cms_client.session_transaction() as cms_session:
-            next_pending_question = cms_session.get("pending_event_question")
-
-    if next_pending_question:
-        session["_portal_cms_pending_event_question"] = next_pending_question
-    else:
-        session.pop("_portal_cms_pending_event_question", None)
-    return cms_result
-
-
-def _is_cms_question(message):
-    """Identify school/event questions that must not fall through to general AI."""
-    text = re.sub(r"[^a-z0-9\s]", " ", message.lower())
-    text = " ".join(text.split())
-    cms_terms = (
-        r"\b(cms|technova|celesta|spardha|concord|cmsmun|model united nations)\b",
-        r"\b(upcoming events?|all events?|event list|event details|event schedule|"
-        r"school events?|campus events?|competitions?|registration|register|venue|"
-        r"reporting time|teacher in charge|academic results?|board results?|"
-        r"sports events?|school announcements?|school notices?|school contact|"
-        r"campus contact|principal|school management|campus facilities)\b",
-        r"\b(when|where|what|which|list|show|tell me about)\b.{0,35}"
-        r"\b(events?|competitions?)\b",
-    )
-    return any(re.search(pattern, text) for pattern in cms_terms)
-
-
-@app.post("/api/portal-chat")
-def portal_chat():
-    # This endpoint is deliberately separate from the CMS-only public chatbot.
-    # Require a portal session and a same-site request originating on /portal.
-    referer = request.headers.get("Referer", "")
-    try:
-        referer_path = urlsplit(referer).path
-    except ValueError:
-        referer_path = ""
-    if not session.get("portal_chat_enabled") or referer_path != "/portal":
-        return answer("I cannot find that information in CMS Events. Please contact the management.")
-
-    payload = request.get_json(silent=True) or {}
-    message = str(payload.get("message", "")).strip()
-    role = str(payload.get("role", "student")).strip().lower()
-    if not message:
-        return answer("Please enter a question.")
-    if len(message) > 4000:
-        return answer("Please keep your question under 4,000 characters.")
-    if role not in {"student", "teacher", "parent", "admin"}:
-        role = "student"
-
-    moderation_reply = campus_genie_moderation_reply(message)
-    if moderation_reply is not None:
-        return moderation_reply
-
-    principal_reply = principal_info_reply(message)
-    if principal_reply is not None:
-        return principal_reply
-
-    developer_reply = developer_info_reply(message)
-    if developer_reply is not None:
-        return developer_reply
-
-    # The current portal is a fictional demo. Resolve only the published sample
-    # identities server-side; never trust a role or ID supplied by the browser.
-    demo_id = str(payload.get("demo_id", "")).strip().upper()
-    demo_profiles = {
-        "CMS-DEMO-001": {"role": "student", "name": "Shashwat Pandey", "class": "IX", "section": "A"},
-        "CMS-DEMO-002": {"role": "student", "name": "Virat Pandey", "class": "IX", "section": "A"},
-        "CMS-TEACHER-001": {"role": "teacher", "name": "Divyansh Mishra"},
-        "CMS-TEACHER-002": {"role": "teacher", "name": "Ansh Yadav"},
-        "CMS-PARENT-001": {"role": "parent", "name": "Parent of Shashwat Pandey", "student": "Shashwat Pandey"},
-        "CMS-PARENT-002": {"role": "parent", "name": "Parent of Virat Pandey", "student": "Virat Pandey"},
-    }
-    profile = demo_profiles.get(demo_id)
-    if not profile or profile["role"] != role:
-        profile = None
-
-    q = re.sub(r"[^a-z0-9\s]", " ", message.lower())
-    q = " ".join(q.split())
-    # Deterministic answers for the portal's sample modules. These are explicitly
-    # labelled sample data and are never represented as official school records.
-    module_reply = None
-    if any(term in q for term in ("notice", "notices", "announcement", "announcements", "circular", "bulletin")):
-        module_reply = answer("Here are the notices shown in this portal's fictional sample bulletin:", ["Notice", "Details"], [
-            ["Inter-house quiz registrations open", "Today · Activities Office · Sample notice"],
-            ["Campus activity schedule updated", "Yesterday · School Office · Sample notice"],
-            ["TECHNOVA showcase schedule published", "18 Nov · Event Team · Sample notice"],
-        ])
-    elif any(term in q for term in ("assignment", "assignments", "homework", "pending task", "due task")):
-        if role == "student":
-            module_reply = answer("These are the fictional assignments in the student demo workspace:", ["Assignment", "Due", "Status"], [
-                ["Mathematics practice", "21 Nov", "In progress · Sample"],
-                ["Physics worksheet", "22 Nov", "Not started · Sample"],
-                ["Computer Science project", "25 Nov", "Submitted · Sample"],
-            ])
-        elif role == "teacher":
-            module_reply = answer("The teacher demo shows a sample review queue, not live submissions:", ["Item", "Details"], [
-                ["Assignments to review", "12 · Fictional demo figure"],
-                ["Classes", "9A, 10B and 8C · Sample classes"],
-            ])
-        else:
-            module_reply = answer("The parent demo shows a fictional assignment summary: 3 of 4 sample assignments complete. It is not a live student record.")
-    elif any(term in q for term in ("achievement", "achievements", "portfolio", "certificate", "certificates")):
-        module_reply = answer("The Achievement Portfolio contains these fictional sample entries:", ["Entry", "Type"], [
-            ["Robotics showcase", "Participation · Sample"],
-            ["Inter-house quiz", "Certificate · Sample"],
-            ["Science model", "Project entry · Sample"],
-        ])
-    elif any(term in q for term in ("student id", "my id", "digital id", "identity card", "id card")):
-        if role == "student" and profile:
-            module_reply = answer("Your ID in this demonstration is a sample identifier, not an official CMS identity credential.", ["Field", "Sample value"], [
-                ["Name", profile["name"]], ["Demo Student ID", demo_id],
-                ["Class", profile["class"]], ["Section", profile["section"]],
-            ])
-        else:
-            module_reply = answer("I can show a student ID only after a recognised student demo ID is selected. This portal does not verify official CMS identities.")
-    elif any(term in q for term in ("teacher id", "my teacher id", "staff id", "faculty id")):
-        if role == "teacher" and profile:
-            module_reply = answer("Your identifier in this demonstration is a sample ID, not an official staff credential.", ["Field", "Sample value"], [["Name", profile["name"]], ["Demo Teacher ID", demo_id]])
-        else:
-            module_reply = answer("Teacher IDs are not exposed in the student workspace. A teacher must enter a recognised teacher demo ID to view their sample identifier.")
-    elif any(term in q for term in ("calendar", "school dates", "upcoming dates", "what is on tomorrow", "events tomorrow")):
-        module_reply = answer("These are illustrative calendar entries from the portal demo. Please confirm real dates through official school communication.", ["Date", "Entry"], [
-            ["20 Nov", "TECHNOVA competition day · Sample"],
-            ["24 Nov", "Parent interaction · Sample"],
-            ["30 Nov", "Academic review · Sample"],
-        ])
-    elif any(term in q for term in ("teacher directory", "class teacher", "my teacher", "teachers list", "teacher contact")):
-        module_reply = answer("The portal currently contains example teacher names in its fictional timetable, not a verified staff directory or contact list.", ["Sample teacher", "Context"], [
-            ["Ms. Sharma", "Mathematics · Room 204 · Sample timetable"],
-            ["Mr. Khan", "Physics · Lab 2 · Sample timetable"],
-            ["Ms. Das", "English Literature · Room 108 · Sample timetable"],
-            ["Mr. Mehta", "Computer Science · Lab 1 · Sample timetable"],
-        ])
-    if module_reply is not None:
-        return module_reply
-
-    # Route CMS/event questions through the exact same knowledge logic as the
-    # homepage chatbot. Unknown CMS questions stay on the CMS fallback and are
-    # never guessed by Gemini. Other questions continue to general AI.
-    is_cms_question = _is_cms_question(message) or bool(
-        session.get("_portal_cms_pending_event_question")
-    )
-    if is_cms_question:
-        cms_fallback = "I cannot find that information in CMS Events. Please contact the management."
-        try:
-            cms_result = _lookup_homepage_cms(message)
-        except Exception:
-            app.logger.exception("Campus Genie could not query the homepage CMS chatbot")
-            return answer(cms_fallback)
-        return jsonify(cms_result or {"reply": cms_fallback})
-
-    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
-    if not api_key:
-        app.logger.error("GEMINI_API_KEY is not configured for Campus Portal.")
-        return answer("Campus Genie is not configured yet. Please ask the site administrator to check the Gemini API key in Render.")
-
-    system_instruction = (
-        "You are Campus Genie, the general AI assistant inside the CMS Digital Campus demonstration. "
-        "Answer general educational and everyday knowledge questions clearly, accurately, and in a well-explained, easy-to-follow format. "
-        "Use Markdown formatting only when it improves readability: give a short direct answer first, use descriptive headings for longer explanations, numbered steps for processes, and bullet points for lists. Use bold sparingly for a few key terms only; never bold whole paragraphs or every sentence. Do not add Markdown heading markers to ordinary sentences. "
-        "When explaining a concept, include what it means, how or why it works, and a simple relevant example. Define technical terms in plain language. "
-        "For coding questions, explain the purpose of the code, walk through important lines or steps, and include a clean code example when useful. "
-        "For comparisons, use a compact table when it makes differences clearer. For simple questions, answer briefly without unnecessary headings. "
-        "Use clear paragraphs and sensible spacing; avoid huge unbroken blocks of text, excessive emojis, repeating the question, or filler introductions. "
-        "Adapt the depth to the question: teach the idea without overwhelming the reader. If a question is ambiguous, state the likely interpretation or ask one focused clarification. "
-        "The user's selected portal role is " + role + ". "
-        "This portal currently contains fictional demonstration data, not live school records. "
-        "Never claim to access real attendance, grades, timetables, student identities, messages, or official CMS systems. "
-        "For questions about personal school records, explain that the portal is a demo and direct the user to official school channels. "
-        "Do not invent official school policies, staff details, event schedules, or campus facts. "
-        "Keep answers age-appropriate, respectful, and concise."
-    )
-    request_body = {
-        "systemInstruction": {"parts": [{"text": system_instruction}]},
-        "contents": [{"role": "user", "parts": [{"text": message}]}],
-        "generationConfig": {"temperature": 0.6, "maxOutputTokens": 500}
-    }
-    primary_model = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash-lite").strip()
-    fallback_model = os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-3.8-flash").strip()
-    models = [primary_model]
-    if fallback_model and fallback_model != primary_model:
-        models.append(fallback_model)
-
-    last_error = None
-    for model in models:
-        req = Request(
-            f"https://generativelanguage.googleapis.com/v1beta/models/{quote(model, safe='-')}:generateContent",
-            data=json.dumps(request_body).encode("utf-8"),
-            headers={"Content-Type": "application/json", "x-goog-api-key": api_key},
-            method="POST",
-        )
-        try:
-            with urlopen(req, timeout=35) as response:
-                result = json.loads(response.read().decode("utf-8"))
-            parts = result.get("candidates", [{}])[0].get("content", {}).get("parts", [])
-            generated = "\n".join(part.get("text", "") for part in parts if part.get("text")).strip()
-            if not generated:
-                app.logger.warning("Gemini model %s returned no text for a Campus Portal request.", model)
-                return answer("I couldn't prepare a response just now. Please try asking in a different way.")
-            return answer(generated)
-        except HTTPError as exc:
-            detail = exc.read().decode("utf-8", errors="replace")
-            last_error = exc
-            app.logger.error("Gemini model %s request failed (%s): %s", model, exc.code, detail[:700])
-            if exc.code in (400, 403):
-                return answer("Gemini could not accept this request. Please ask the administrator to check the API key and project access.")
-            if exc.code == 404:
-                # A retired or unavailable model should not prevent trying the configured fallback.
-                continue
-            if exc.code not in (429, 500, 502, 503, 504):
-                break
-        except (URLError, TimeoutError, json.JSONDecodeError, KeyError, IndexError) as exc:
-            last_error = exc
-            app.logger.error("Campus Portal Gemini request failed for model %s: %s", model, exc)
-            # A network failure or timeout may also affect the fallback; don't add a long second wait.
-            break
-
-    if isinstance(last_error, HTTPError) and last_error.code == 429:
-        return answer("Campus Genie has reached its current Gemini usage limit. Please try again later.")
-    return answer("Campus Genie is temporarily unavailable. Please try again shortly.")
-
-
 @app.post("/api/chat")
 def chat():
     payload = request.get_json(silent=True) or {}
@@ -969,13 +702,6 @@ def chat():
     if page_context == "/technova" and any(term in q for term in ("schedule", "timing", "timings", "date wise", "date-wise")):
         if not any(name in q for name in ("celesta", "spardha", "concord", "cmsmun", "model united nations")):
             q += " technova"
-    # Personal timetable questions belong in the Digital Campus portal, not the public event helper.
-    personal_timetable = (
-        re.search(r"\b(my|our|personal)\b.{0,24}\b(timetable|schedule|class routine|periods)\b", q)
-        or re.search(r"\b(timetable|schedule)\b.{0,24}\b(for me|for my class)\b", q)
-    )
-    if personal_timetable:
-        return answer("For a personal timetable, open the Digital Campus portal and choose your role. The current portal is a demonstration with fictional sample schedules; it is not connected to official student, teacher or parent records.")
     # Do not silently assume the current page's event for questions shared by many events.
     shared_event_question = any(term in q for term in (
         "teacher", "teachers", "timing", "time", "schedule", "student", "students",
@@ -1290,7 +1016,6 @@ def chat():
         "education impact": ("Education Impact", "Education Impact explains how CMS connects learning with peace education, universal values, global citizenship, community service and environmental responsibility."),
         "our founders": ("Our Founders", "CMS was founded in Lucknow in 1959 by Dr Jagdish Gandhi and Dr Bharti Gandhi. The founders' vision connects education with universal values, peace, global understanding and responsibility to humanity."),
         "cms management": ("CMS Management", "CMS Management describes the school-wide leadership and the campus teams that support teaching, student services and the day-to-day running of Aliganj Campus I."),
-        "digital campus": ("Digital Campus", "Digital Campus is the online school portal. It brings together role-based sample workspaces for Students, Teachers, Parents and School Admin. The current portal is a demonstration and is not connected to live school accounts or records.")
     }
     for topic, (title, summary) in campus_summaries.items():
         if topic in q and any(term in q for term in ("what is", "what are", "tell me", "explain", "describe", "short", "brief", "meaning", "about")):
