@@ -163,7 +163,6 @@ if(intro){
 
 // Campus Genie destination shortcuts: send visitors to real sections/pages in this site.
 const campusDestinations=[
-  {terms:['digital campus','school portal','campus portal','student portal','portal'],url:'/portal',label:'Digital Campus'},
   {terms:['learning spaces','learning space','spaces built for curiosity','infrastructure','facilities','labs and library'],url:'/campus/infrastructure',label:'Learning Spaces & Infrastructure'},
   {terms:['student development','child development','student growth','holistic development'],url:'/campus/child-development',label:'Student Development'},
   {terms:['academic milestones','academic achievements','academic achievement','achievements','achievement','academic results','results','result','board results','icse','isc','jee','ap results'],url:'/academic-results',label:'Academic Achievements'},
