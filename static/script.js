@@ -157,7 +157,7 @@ if(intro){
     };
     document.getElementById('introSkip')?.addEventListener('click',finishIntro);
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(finishIntro,500);
-    else setTimeout(finishIntro,4600);
+    else setTimeout(finishIntro,1800);
   }
 }
 
