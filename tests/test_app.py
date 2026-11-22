@@ -16,7 +16,7 @@ class CampusSiteSmokeTests(unittest.TestCase):
         self.assertIn(b"Discover. Experience.", response.data)
 
     def test_core_pages_render(self):
-        for path in ("/about", "/portal", "/celesta", "/academic-results", "/sports", "/cmsmun", "/contact"):
+        for path in ("/about", "/celesta", "/academic-results", "/sports", "/cmsmun", "/contact"):
             with self.subTest(path=path):
                 response = self.client.get(path)
                 self.assertEqual(response.status_code, 200)
@@ -47,7 +47,8 @@ class CampusSiteSmokeTests(unittest.TestCase):
         self.assertIn(b"/campus/infrastructure#learning-spaces", home.data)
         self.assertIn(b"/campus/child-development#student-development", home.data)
         self.assertIn(b"Academic Milestones", home.data)
-        self.assertIn(b"Digital Campus", home.data)
+        self.assertNotIn(b"Digital Campus", home.data)
+        self.assertNotIn(b"href=\"/portal\"", home.data)
 
     def test_unknown_campus_information_page_returns_404(self):
         response = self.client.get("/campus/not-a-page")
@@ -165,12 +166,9 @@ class CampusSiteSmokeTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"TECHNOVA", response.data)
 
-    def test_portal_marks_roles_and_notices_as_demo_content(self):
-        response = self.client.get("/portal")
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b"DEMO ENVIRONMENT", response.data)
-        self.assertIn(b"SAMPLE CAMPUS BULLETIN", response.data)
-        self.assertIn(b"aria-controls=\"workspacePanel\"", response.data)
+    def test_campus_portal_page_and_chat_api_are_removed(self):
+        self.assertEqual(self.client.get("/portal").status_code, 404)
+        self.assertEqual(self.client.post("/api/portal-chat", json={"message": "hello"}).status_code, 404)
 
     def test_public_event_data_endpoint_returns_competitions(self):
         response = self.client.get("/api/data")

@@ -18,6 +18,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Check JavaScript syntax
-        run: node --check static/script.js && node --check static/portal.js
+        run: node --check static/script.js
       - name: Run application smoke tests
         run: python -m unittest discover -s tests -v

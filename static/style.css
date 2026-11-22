@@ -2800,20 +2800,6 @@ body.cms-homepage .home-genie-shortcuts button:focus-visible{
   }
 }
 
-/* Campus Portal homepage feature — clearer type, contrast and responsive spacing */
-.home-campus-portal .section-head h2{font-size:clamp(30px,4.2vw,46px);line-height:1.12;letter-spacing:-.035em;color:#f2f7ff}
-.home-campus-portal .section-head p:not(.eyebrow){max-width:720px;font-size:15px;line-height:1.8;color:#c0cede}
-.campus-portal-feature-card{min-height:340px;padding:clamp(25px,4vw,38px);border-color:#3b8291;background:radial-gradient(ellipse at 88% 12%,#1c687455 0,transparent 48%),linear-gradient(135deg,#17334a 0%,#102338 58%,#0c1929 100%);box-shadow:0 16px 42px #0003,inset 0 1px #ffffff12;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
-.campus-portal-feature-card:hover,.campus-portal-feature-card:focus-visible{transform:translateY(-4px);border-color:#70e2dc;box-shadow:0 22px 48px #0005,0 0 0 1px #70e2dc33;outline:none}
-.campus-portal-feature-card .home-card-top{font-size:12px;letter-spacing:.13em;color:#8de8e2;gap:12px;flex-wrap:wrap}
-.campus-portal-feature-card .home-card-kicker{font-size:11px;letter-spacing:.12em;color:#b5c9dc;margin:30px 0 12px}
-.campus-portal-feature-card h3{max-width:650px;font-size:clamp(30px,4.4vw,44px);line-height:1.12;letter-spacing:-.035em;color:#f5f9ff;margin-bottom:16px}
-.campus-portal-feature-card p:not(.home-card-kicker){max-width:600px;color:#d0dce9;font-size:15px;line-height:1.85}
-.campus-portal-feature-card .home-card-link{font-size:15px;color:#8de8e2;margin-top:28px}
-.campus-portal-feature-card:focus-visible{outline:3px solid #8de8e2;outline-offset:4px}
-@media(max-width:600px){.home-campus-portal .section-head h2{font-size:clamp(27px,8vw,34px)}.home-campus-portal .section-head p:not(.eyebrow){font-size:14px}.campus-portal-feature-card{min-height:300px;padding:22px}.campus-portal-feature-card h3{font-size:clamp(27px,7.5vw,34px)}.campus-portal-feature-card p:not(.home-card-kicker){font-size:14px}.campus-portal-feature-card .home-card-top{font-size:10px}}
-
-
 /* Admin-controlled homepage live event card */
 .home-live-card{position:fixed;z-index:8;top:94px;right:max(28px,calc((100vw - 1180px)/2));width:min(258px,calc(100vw - 36px));padding:17px 19px 15px;border:1px solid #ef444477;border-radius:15px;background:linear-gradient(145deg,#172538f5,#0b1422f7);box-shadow:0 12px 38px #0007,0 0 26px #ef44441a;backdrop-filter:blur(14px);color:#f5f8ff;text-decoration:none;display:flex;flex-direction:column;gap:9px;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
 .home-live-card:hover{transform:translateY(-3px);border-color:#ff5555;box-shadow:0 16px 42px #0008,0 0 30px #ef444433}

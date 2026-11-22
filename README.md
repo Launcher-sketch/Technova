@@ -1,6 +1,6 @@
 # CMS TECHNOVA 2026 Event Portal
 
-Flask-based event portal with competition listings, schedule, teacher information, search filters and an event chatbot.
+Flask-based CMS events website with competition listings, schedules, campus information, event updates and a CMS-focused chatbot.
 
 ## Run locally
 ```bash
@@ -26,13 +26,6 @@ Check event details against the official brochure before publishing, especially 
 - Homepage — live campus announcements when the cloud database is configured, with a clear empty state when none are available
 - `/technova`, `/celesta`, `/cmsmun` — event information pages
 - `/academic-results`, `/sports`, `/contact` — campus information sections
-- `/portal` — interactive role-based concept demonstration for Student, Teacher, Parent and School Admin
-
-## Campus Portal demonstration
-
-The portal is intentionally a prototype. Its attendance figures, timetables, notices, identities and role dashboards are fictional sample content. Module forms create temporary in-page previews only; they do not save records, send messages, publish notices, authenticate school users or connect to a student information system. Do not enter real student or family information.
-
-A production school portal requires school-approved data access, real authentication, server-side role authorization, secure session management, privacy review and operational ownership. The browser-only role selector is not an access-control system.
 
 ## Campus Genie and source data
 
@@ -49,4 +42,3 @@ Run the Python smoke tests locally with:
 Check browser JavaScript syntax with:
 
     node --check static/script.js
-    node --check static/portal.js
