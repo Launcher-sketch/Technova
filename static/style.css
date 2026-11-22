@@ -3518,3 +3518,20 @@ footer span{color:#dbe6f2}
   .home-event-card,.campus-space-tile,.pill,.button{transition:none!important}
   .home-event-card:hover,.campus-space-tile:hover{transform:none}
 }
+
+
+/* Exact page background image used by the original CMS student/help-desk page */
+body{
+  position:relative;
+  isolation:isolate;
+  background:#e9eef5 url("https://images.bhaskarassets.com/thumb/1200x900/web2images/521/2024/05/29/img-20240529-wa0025-1_1717001498.jpg") center center/cover fixed no-repeat;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:rgba(245,247,249,.06);
+}
+@media(max-width:760px){body{background-attachment:scroll}}
