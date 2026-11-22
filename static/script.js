@@ -142,7 +142,7 @@ document.querySelectorAll('[data-prompt]').forEach(button=>button.addEventListen
   if(input){input.value=button.dataset.prompt||'';form?.requestSubmit();}
 }));
 
-// Remove the brief blank royal-blue opening screen without opening the chatbot.
+// Finish the animated CMS welcome intro without opening the chatbot.
 const intro=document.getElementById('cmsIntro');
 if(intro){
   const skipIntro=new URLSearchParams(window.location.search).has('skipIntro');
@@ -156,7 +156,7 @@ if(intro){
       }
     };
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)setTimeout(finishIntro,500);
-    else setTimeout(finishIntro,1800);
+    else setTimeout(finishIntro,6200);
   }
 }
 
