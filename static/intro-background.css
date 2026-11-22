@@ -1,58 +1,19 @@
-/* Static royal-blue welcome screen: no photo, motion, or animated effects. */
+/* Blank solid royal-blue opening screen. */
 .cms-intro.cms-earth-signature{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:block;
   background:#4169E1!important;
   background-image:none!important;
   animation:none!important;
   transition:none!important;
 }
-.cms-intro.cms-earth-signature::before,
-.cms-intro.cms-earth-signature::after,
-.cms-intro .earth-stage::before,
-.cms-intro .earth-stage::after,
-.cms-intro .earth-halo{
-  display:none!important;
-  content:none!important;
-  animation:none!important;
-  box-shadow:none!important;
+.cms-intro.cms-earth-signature.is-leaving{
+  opacity:0!important;
+  visibility:hidden!important;
+  transition:opacity .75s ease,visibility .75s ease!important;
 }
-.cms-intro.cms-earth-signature *,
-.cms-intro.cms-earth-signature *::before,
-.cms-intro.cms-earth-signature *::after{
-  animation:none!important;
-  transition:none!important;
-  filter:none!important;
-}
-.cms-intro.cms-earth-signature .earth-stage{
-  width:150px!important;
-  height:150px!important;
-  display:grid!important;
-  place-items:center!important;
-  transform:none!important;
-  perspective:none!important;
-}
-.cms-intro.cms-earth-signature .intro-earth{
-  display:block!important;
-  width:min(150px,38vw)!important;
-  height:auto!important;
-  opacity:1!important;
-  visibility:visible!important;
-  transform:none!important;
-}
-.cms-intro.cms-earth-signature .signature-wordmark{
-  opacity:1!important;
-  visibility:visible!important;
-  transform:none!important;
-}
-.cms-intro.cms-earth-signature .signature-wordmark .signature-jai,
-.cms-intro.cms-earth-signature .signature-wordmark .signature-cms{
-  opacity:1!important;
-  visibility:visible!important;
-  transform:none!important;
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-  text-shadow:none!important;
-}
-.cms-intro.cms-earth-signature .intro-skip{
-  animation:none!important;
-  transition:none!important;
+@media(prefers-reduced-motion:reduce){
+  .cms-intro.cms-earth-signature.is-leaving{transition:none!important}
 }
